@@ -75,6 +75,13 @@ module.exports = configure(function (/* ctx */) {
       // vitePlugins: [
       //   [ 'package-name', { ..options.. } ]
       // ]
+
+      extendWebpack(cfg) {
+        cfg.module.rules.push({
+          test: /\.pug$/,
+          loader: "pug-plain-loader",
+        });
+      },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer

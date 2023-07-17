@@ -1,31 +1,15 @@
 <template>
   <div class="q-pa-md">
-    <q-table
-      selection="single"
-      v-model:selected="selected"
-      class="my-sticky-table no-select"
-      flat
-      bordered
-      row-key="id"
-      :rows="rows"
-      :hide-pagination="true"
-      v-model:pagination="pagination"
-      :columns="columns"
-      :separator="separator"
-      style="border: solid black 1px"
-      table-header-style="height: 0px;"
-    >
+    <q-table selection="single" v-model:selected="selected" class="my-sticky-table no-select" flat bordered row-key="id"
+      :rows="rows" :hide-pagination="true" v-model:pagination="pagination" :columns="columns" :separator="separator"
+      style="border: solid black 1px" table-header-style="height: 0px;">
       <template v-slot:header-cell="props">
         <q-th :props="props" style="font-size: medium">
           {{ props.col.label }}
         </q-th>
       </template>
       <template v-slot:body="props">
-        <q-tr
-          :props="props"
-          style="border: solid black 1px"
-          @click="props.selected = !props.selected"
-        >
+        <q-tr :props="props" style="border: solid black 1px" @click="props.selected = !props.selected">
           <q-td style="border: solid black 1px">
             <q-checkbox v-model="props.selected" />
           </q-td>
@@ -41,18 +25,10 @@
           <q-td key="timeEnd" :props="props" style="border: solid black 1px">
             {{ props.row.timeEnd }}
           </q-td>
-          <q-td
-            key="objectInitiator"
-            :props="props"
-            style="border: solid black 1px"
-          >
+          <q-td key="objectInitiator" :props="props" style="border: solid black 1px">
             {{ props.row.objectInitiator }}
           </q-td>
-          <q-td
-            key="objectInvited"
-            :props="props"
-            style="border: solid black 1px"
-          >
+          <q-td key="objectInvited" :props="props" style="border: solid black 1px">
             <li v-for="item in props.row.objectInvited" v-bind:key="item">
               {{ item }}
             </li>
@@ -63,34 +39,18 @@
           <q-td key="topic" :props="props" style="border: solid black 1px">
             {{ props.row.topic }}
           </q-td>
-          <q-td
-            key="departamentInitiator"
-            :props="props"
-            style="border: solid black 1px"
-          >
+          <q-td key="departamentInitiator" :props="props" style="border: solid black 1px">
             {{ props.row.departamentInitiator }}
           </q-td>
-          <q-td
-            key="departamentInvited"
-            :props="props"
-            style="border: solid black 1px"
-          >
+          <q-td key="departamentInvited" :props="props" style="border: solid black 1px">
             <li v-for="item in props.row.departamentInvited" v-bind:key="item">
               {{ item }}
             </li>
           </q-td>
-          <q-td
-            key="contactName"
-            :props="props"
-            style="border: solid black 1px"
-          >
+          <q-td key="contactName" :props="props" style="border: solid black 1px">
             {{ props.row.contactName }}
           </q-td>
-          <q-td
-            key="contactPhone"
-            :props="props"
-            style="border: solid black 1px"
-          >
+          <q-td key="contactPhone" :props="props" style="border: solid black 1px">
             {{ props.row.contactPhone }}
           </q-td>
         </q-tr>
@@ -107,42 +67,24 @@
         <q-form class="q-gutter-md">
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-input
-                outlined
-                v-model="selectedView.date"
-                mask="##.##.####"
-                label="Дата"
-                style="max-width: 200px"
-                readonly
-              >
+              <q-input outlined v-model="selectedView.date" mask="##.##.####" label="Дата" style="max-width: 200px"
+                readonly>
                 <template v-slot:append>
                   <q-icon name="event" class="cursor-pointer"> </q-icon>
                 </template>
               </q-input>
             </div>
             <div class="col-3">
-              <q-input
-                outlined
-                v-model="selectedView.timeStart"
-                mask="time"
-                label="Дата начала ВКС"
-                style="max-width: 200px"
-                readonly
-              >
+              <q-input outlined v-model="selectedView.timeStart" mask="time" label="Дата начала ВКС"
+                style="max-width: 200px" readonly>
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer"> </q-icon>
                 </template>
               </q-input>
             </div>
             <div class="col-3">
-              <q-input
-                outlined
-                v-model="selectedView.timeEnd"
-                mask="time"
-                label="Дата окончания ВКС"
-                style="max-width: 200px"
-                readonly
-              >
+              <q-input outlined v-model="selectedView.timeEnd" mask="time" label="Дата окончания ВКС"
+                style="max-width: 200px" readonly>
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer"> </q-icon>
                 </template>
@@ -151,103 +93,48 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select
-                outlined
-                v-model="selectedView.objectInitiator"
-                :options="optionsObject"
-                label="Обособленное подразделение инцииатор ВКС"
-                style="max-width: 500px"
-                readonly
-              />
+              <q-select outlined v-model="selectedView.objectInitiator" :options="optionsObject"
+                label="Обособленное подразделение инцииатор ВКС" style="max-width: 500px" readonly />
             </div>
             <div class="col-5">
-              <q-select
-                outlined
-                v-model="selectedView.objectInvited"
-                multiple
-                use-chips
-                stack-label
-                :options="optionsObject"
-                label="Вызываемые обособленные подразделения"
-                style="max-width: 500px"
-                readonly
-              />
+              <q-select outlined v-model="selectedView.objectInvited" multiple use-chips stack-label
+                :options="optionsObject" label="Вызываемые обособленные подразделения" style="max-width: 500px"
+                readonly />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-select
-                outlined
-                v-model="selectedView.type"
-                :options="optionsType"
-                label="Тип совещания"
-                style="max-width: 250px"
-                readonly
-              />
+              <q-select outlined v-model="selectedView.type" :options="optionsType" label="Тип совещания"
+                style="max-width: 250px" readonly />
             </div>
             <div class="col-5">
-              <q-input
-                outlined
-                v-model="selectedView.topic"
-                label="Тема совещания"
-                style="max-width: 380px"
-                readonly
-              />
+              <q-input outlined v-model="selectedView.topic" label="Тема совещания" style="max-width: 380px" readonly />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select
-                outlined
-                v-model="selectedView.departamentInitiator"
-                :options="optionsDepartament"
-                label="Отдел инициатор ВКС"
-                style="max-width: 500px"
-                readonly
-              />
+              <q-select outlined v-model="selectedView.departamentInitiator" :options="optionsDepartament"
+                label="Отдел инициатор ВКС" style="max-width: 500px" readonly />
             </div>
             <div class="col-5">
-              <q-select
-                outlined
-                v-model="selectedView.departamentInvited"
-                multiple
-                use-chips
-                stack-label
-                :options="optionsDepartament"
-                label="Приглашенные отделы"
-                style="max-width: 500px"
-                readonly
-              />
+              <q-select outlined v-model="selectedView.departamentInvited" multiple use-chips stack-label
+                :options="optionsDepartament" label="Приглашенные отделы" style="max-width: 500px" readonly />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-4">
-              <q-input
-                outlined
-                v-model="selectedView.contactName"
-                label="ФИО инициатора ВКС"
-                readonly
-              />
+              <q-input outlined v-model="selectedView.contactName" label="ФИО инициатора ВКС" readonly />
             </div>
             <div class="col-4">
-              <q-input
-                outlined
-                v-model="selectedView.contactPhone"
-                label="Контактный номер телефона инициатора ВКС"
-                readonly
-              />
+              <q-input outlined v-model="selectedView.contactPhone" label="Контактный номер телефона инициатора ВКС"
+                readonly />
             </div>
           </div>
         </q-form>
       </q-card-section>
     </q-card>
   </q-dialog>
-  <q-dialog
-    v-model="dialogVicoAdd"
-    style="width: 900px"
-    position="top"
-    persistent
-  >
+  <q-dialog v-model="dialogVicoAdd" style="width: 900px" position="top" persistent>
     <q-card style="min-width: 1200px">
       <q-card-section class="row items-center q-pb-none">
         <q-space />
@@ -257,28 +144,13 @@
         <q-form class="q-gutter-md">
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-input
-                outlined
-                v-model="date"
-                mask="##.##.####"
-                label="Дата"
-                style="max-width: 200px"
-              >
+              <q-input outlined v-model="date" mask="##.##.####" label="Дата" style="max-width: 200px">
                 <template v-slot:append>
                   <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
+                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                       <q-date v-model="date" mask="DD.MM.YYYY">
                         <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Закрыть"
-                            color="primary"
-                            flat
-                          />
+                          <q-btn v-close-popup label="Закрыть" color="primary" flat />
                         </div>
                       </q-date>
                     </q-popup-proxy>
@@ -287,28 +159,13 @@
               </q-input>
             </div>
             <div class="col-3">
-              <q-input
-                outlined
-                v-model="timeStart"
-                mask="time"
-                label="Дата начала ВКС"
-                style="max-width: 200px"
-              >
+              <q-input outlined v-model="timeStart" mask="time" label="Дата начала ВКС" style="max-width: 200px">
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
-                    <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
+                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                       <q-time v-model="timeStart">
                         <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Закрыть"
-                            color="primary"
-                            flat
-                          />
+                          <q-btn v-close-popup label="Закрыть" color="primary" flat />
                         </div>
                       </q-time>
                     </q-popup-proxy>
@@ -317,28 +174,13 @@
               </q-input>
             </div>
             <div class="col-3">
-              <q-input
-                outlined
-                v-model="timeEnd"
-                mask="time"
-                label="Дата окончания ВКС"
-                style="max-width: 200px"
-              >
+              <q-input outlined v-model="timeEnd" mask="time" label="Дата окончания ВКС" style="max-width: 200px">
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
-                    <q-popup-proxy
-                      cover
-                      transition-show="scale"
-                      transition-hide="scale"
-                    >
+                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
                       <q-time v-model="timeEnd">
                         <div class="row items-center justify-end">
-                          <q-btn
-                            v-close-popup
-                            label="Закрыть"
-                            color="primary"
-                            flat
-                          />
+                          <q-btn v-close-popup label="Закрыть" color="primary" flat />
                         </div>
                       </q-time>
                     </q-popup-proxy>
@@ -349,89 +191,48 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select
-                outlined
-                v-model="objectInitiator"
-                :options="optionsObject"
-                label="Обособленное подразделение инцииатор ВКС"
-                style="max-width: 500px"
-              />
+              <q-select outlined v-model="objectInitiator" :options="optionsObject"
+                label="Обособленное подразделение инцииатор ВКС" style="max-width: 500px" />
             </div>
             <div class="col-5">
-              <q-select
-                outlined
-                v-model="objectInvited"
-                multiple
-                :options="optionsObject"
-                label="Вызываемые обособленные подразделения"
-                style="
+              <q-select outlined v-model="objectInvited" multiple :options="optionsObject"
+                label="Вызываемые обособленные подразделения" style="
                   max-width: 500px;
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                "
-              />
+                " />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-select
-                outlined
-                v-model="type"
-                :options="optionsType"
-                label="Тип совещания"
-                style="max-width: 250px"
-              />
+              <q-select outlined v-model="type" :options="optionsType" label="Тип совещания" style="max-width: 250px" />
             </div>
             <div class="col-5">
-              <q-input
-                outlined
-                v-model="topic"
-                label="Тема совещания"
-                style="max-width: 380px"
-              />
+              <q-input outlined v-model="topic" label="Тема совещания" style="max-width: 380px" />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select
-                outlined
-                v-model="departamentInitiator"
-                :options="optionsDepartament"
-                label="Отдел инициатор ВКС"
-                style="max-width: 500px"
-              />
+              <q-select outlined v-model="departamentInitiator" :options="optionsDepartament" label="Отдел инициатор ВКС"
+                style="max-width: 500px" />
             </div>
             <div class="col-5">
-              <q-select
-                outlined
-                v-model="departamentInvited"
-                multiple
-                :options="optionsDepartament"
-                label="Приглашенные отделы"
-                style="
+              <q-select outlined v-model="departamentInvited" multiple :options="optionsDepartament"
+                label="Приглашенные отделы" style="
                   max-width: 500px;
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                "
-              />
+                " />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-4">
-              <q-input
-                outlined
-                v-model="contactName"
-                label="ФИО инициатора ВКС"
-              />
+              <q-input outlined v-model="contactName" label="ФИО инициатора ВКС" />
             </div>
             <div class="col-4">
-              <q-input
-                outlined
-                v-model="contactPhone"
-                label="Контактный номер телефона инициатора ВКС"
-              />
+              <q-input outlined v-model="contactPhone" label="Контактный номер телефона инициатора ВКС" />
             </div>
           </div>
         </q-form>
@@ -443,22 +244,8 @@
   </q-dialog>
   <q-page-sticky class="my-button" position="bottom-left" :offset="[18, 18]">
     <q-btn-group push class="my-button">
-      <q-btn
-        push
-        color="brown-5"
-        icon="visibility"
-        padding="8px"
-        size="24px"
-        @click="openDialogVicoView"
-      />
-      <q-btn
-        push
-        color="green"
-        icon="add"
-        padding="8px"
-        size="24px"
-        @click="openDialogVicoAdd"
-      />
+      <q-btn push color="brown-5" icon="visibility" padding="8px" size="24px" @click="openDialogVicoView" />
+      <q-btn push color="green" icon="add" padding="8px" size="24px" @click="openDialogVicoAdd" />
       <q-btn push color="orange" icon="edit" padding="8px" size="24px" />
     </q-btn-group>
   </q-page-sticky>

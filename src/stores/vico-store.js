@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 
-export const useVicoStore = defineStore('vico', {
+export const useVicoStore = defineStore("vico", {
   state: () => ({
     vicos: [],
   }),
