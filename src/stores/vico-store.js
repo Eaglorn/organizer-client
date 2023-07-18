@@ -5,8 +5,16 @@ export const useVicoStore = defineStore("vico", {
     vicos: [],
   }),
   getters: {
+    getVicos: () => {
+      return vicos;
+    },
     getVicoById: (state) => {
       return (vicoId) => state.vicos.find((vico) => vico.id === vicoId);
     },
   },
+  actions: {
+    addVico: (vico) => {
+      this.vicos.push(vico);
+    },
+  }
 });
