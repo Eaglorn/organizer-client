@@ -355,7 +355,7 @@
       </q-card-section>
       <q-card-actions align="right" class="bg-white text-teal">
         <q-btn label="Отмена" @click="closeDialogVicoEdit" text-color="black" />
-        <q-btn label="Создать" color="accent" @click="saveDialogVicoEdit" text-color="black" />
+        <q-btn label="Сохранить" color="accent" @click="saveDialogVicoEdit" text-color="white" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -367,8 +367,8 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn label="Отмена" color="primary" v-close-popup text-color="black" />
-        <q-btn label="Перенести" color="primary" @click="saveDialogVicoArchive" text-color="black" />
+        <q-btn label="Отмена" color="primary" v-close-popup text-color="white" />
+        <q-btn label="Перенести" color="warning" @click="saveDialogVicoArchive" text-color="black" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -380,8 +380,8 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn label="Отмена" color="primary" v-close-popup text-color="black" />
-        <q-btn label="Удалить" color="danger" @click="saveDialogVicoDelete" text-color="red" />
+        <q-btn label="Отмена" color="primary" v-close-popup text-color="white" />
+        <q-btn label="Удалить" color="negative" @click="saveDialogVicoDelete" text-color="white" />
       </q-card-actions>
     </q-card>
   </q-dialog>
