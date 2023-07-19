@@ -387,16 +387,46 @@
   </q-dialog>
   <q-page-sticky class="my-button" position="bottom-left" :offset="[18, 18]">
     <q-btn-group push class="my-button">
-      <q-btn push color="brown-5" icon="visibility" padding="8px" size="24px" @click="openDialogVicoView" />
-      <q-btn push color="green" icon="add" padding="8px" size="24px" @click="openDialogVicoAdd" />
-      <q-btn push color="orange" icon="edit" padding="8px" size="24px" @click="openDialogVicoEdit" />
+      <q-btn push color="brown-5" icon="visibility" padding="8px" size="24px" @click="openDialogVicoView">
+        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
+          self="center middle">
+          Посмотреть
+        </q-tooltip>
+      </q-btn>
+      <q-btn push color="green" icon="add" padding="8px" size="24px" @click="openDialogVicoAdd">
+        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
+          self="center middle">
+          Создать
+        </q-tooltip>
+      </q-btn>
+      <q-btn push color="orange" icon="edit" padding="8px" size="24px" @click="openDialogVicoEdit">
+        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
+          self="center middle">
+          Редактировать
+        </q-tooltip>
+      </q-btn>
     </q-btn-group>
   </q-page-sticky>
   <q-page-sticky class="my-button" position="bottom-right" :offset="[18, 18]">
     <q-btn-group push class="my-button">
-      <q-btn push color="green" icon="autorenew" padding="8px" size="24px" />
-      <q-btn push color="blue" icon="archive" padding="8px" size="24px" @click="openDialogVicoArchive" />
-      <q-btn push color="red" icon="delete" padding="8px" size="24px" @click="openDialogVicoDelete" />
+      <q-btn push color="green" icon="autorenew" padding="8px" size="24px">
+        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
+          self="center middle">
+          Обновить страницу
+        </q-tooltip>
+      </q-btn>
+      <q-btn push color="blue" icon="archive" padding="8px" size="24px" @click="openDialogVicoArchive">
+        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
+          self="center middle">
+          Архивировать
+        </q-tooltip>
+      </q-btn>
+      <q-btn push color="red" icon="delete" padding="8px" size="24px" @click="openDialogVicoDelete">
+        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
+          self="center middle">
+          Удалить
+        </q-tooltip>
+      </q-btn>
     </q-btn-group>
   </q-page-sticky>
 </template>
