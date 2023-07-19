@@ -14,13 +14,19 @@ export const useVicoStore = defineStore('vico', {
     },
   },
   actions: {
-    addVico: (vico) => {
+    setVicos(vicos) {
+      this.vicos = vicos;
+    },
+    addVicoFirst(vico) {
+      this.vicos.unshift(vico);
+    },
+    addVico(vico) {
       this.vicos.push(vico);
     },
-    setServer(arg) {
-      this.server = arg;
+    setServer(server) {
+      this.server = server;
     },
-    getServer(arg) {
+    getServer() {
       return this.server;
     },
     getAjaxUri(response) {

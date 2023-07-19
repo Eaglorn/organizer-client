@@ -14,7 +14,7 @@
         selectAction(props.row.id);
         ">
           <q-td class="my-table-border">
-            <q-checkbox v-model="props.selected" />
+            <q-checkbox v-model="props.selected" @click="selectAction(props.row.id)" />
           </q-td>
           <q-td key="id" :props="props" class="my-table-border">
             {{ props.row.id }}
@@ -60,11 +60,10 @@
       </template>
     </q-table>
   </div>
-  <q-dialog v-model="dialogVicoView" class="my-dialog">
+  <q-dialog v-model="dialogVicoView" class="my-dialog" transition-show="none" transition-hide="none">
     <q-card class="my-card">
       <q-card-section class="row items-center q-pb-none">
         <q-space />
-        <q-btn icon="close" flat round dense @click="closeDialogVicoView" />
       </q-card-section>
       <q-card-section>
         <q-form class="q-gutter-md">
@@ -95,17 +94,17 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-select outlined v-model="vicoView.objectInitiator" :options="optionsObject"
+              <q-select outlined v-model="vicoView.objectInitiator" :options="optionObject"
                 label="Обособленное подразделение инцииатор ВКС" style="max-width: 500px" readonly />
             </div>
             <div class="col-7">
-              <q-select outlined v-model="vicoView.objectInvited" multiple use-chips stack-label :options="optionsObject"
+              <q-select outlined v-model="vicoView.objectInvited" multiple use-chips stack-label :options="optionObject"
                 label="Вызываемые обособленные подразделения" style="max-width: 750px" readonly />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-select outlined v-model="vicoView.typeVico" :options="optionsTypeVico" label="Тип совещания"
+              <q-select outlined v-model="vicoView.typeVico" :options="optionTypeVico" label="Тип совещания"
                 style="max-width: 250px" readonly />
             </div>
             <div class="col-5">
@@ -114,12 +113,12 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-select outlined v-model="vicoView.departamentInitiator" :options="optionsDepartament"
+              <q-select outlined v-model="vicoView.departamentInitiator" :options="optionDepartament"
                 label="Отдел инициатор ВКС" style="max-width: 500px" readonly />
             </div>
             <div class="col-7">
               <q-select outlined v-model="vicoView.departamentInvited" multiple use-chips stack-label
-                :options="optionsDepartament" label="Приглашенные отделы" style="max-width: 750px" readonly />
+                :options="optionDepartament" label="Приглашенные отделы" style="max-width: 750px" readonly />
             </div>
           </div>
           <div class="row justify-evenly">
@@ -133,13 +132,16 @@
           </div>
         </q-form>
       </q-card-section>
+      <q-card-actions align="right" class="bg-white text-teal">
+        <q-btn label="Закрыть" @click="closeDialogVicoView" text-color="black" />
+      </q-card-actions>
     </q-card>
   </q-dialog>
-  <q-dialog v-model="dialogVicoAdd" class="my-dialog" position="top" persistent>
+  <q-dialog v-model="dialogVicoAdd" class="my-dialog" position="top" persistent transition-show="none"
+    transition-hide="none">
     <q-card class="my-card">
       <q-card-section class="row items-center q-pb-none">
         <q-space />
-        <q-btn icon="close" flat round dense @click="closeDialogVicoAdd" />
       </q-card-section>
       <q-card-section>
         <q-form class="q-gutter-md">
@@ -192,11 +194,11 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select outlined v-model="vicoAdd.objectInitiator" :options="optionsObject"
+              <q-select outlined v-model="vicoAdd.objectInitiator" :options="optionObject"
                 label="Обособленное подразделение инцииатор ВКС" style="max-width: 500px" />
             </div>
             <div class="col-5">
-              <q-select outlined v-model="vicoAdd.objectInvited" multiple :options="optionsObject"
+              <q-select outlined v-model="vicoAdd.objectInvited" multiple :options="optionObject"
                 label="Вызываемые обособленные подразделения" style="
                   max-width: 500px;
                   white-space: nowrap;
@@ -207,7 +209,7 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-select outlined v-model="vicoAdd.typeVico" :options="optionsTypeVico" label="Тип совещания"
+              <q-select outlined v-model="vicoAdd.typeVico" :options="optionTypeVico" label="Тип совещания"
                 style="max-width: 250px" />
             </div>
             <div class="col-5">
@@ -216,11 +218,11 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select outlined v-model="vicoAdd.departamentInitiator" :options="optionsDepartament"
+              <q-select outlined v-model="vicoAdd.departamentInitiator" :options="optionDepartament"
                 label="Отдел инициатор ВКС" style="max-width: 500px" />
             </div>
             <div class="col-5">
-              <q-select outlined v-model="vicoAdd.departamentInvited" multiple :options="optionsDepartament"
+              <q-select outlined v-model="vicoAdd.departamentInvited" multiple :options="optionDepartament"
                 label="Приглашенные отделы" style="
                   max-width: 500px;
                   white-space: nowrap;
@@ -240,11 +242,13 @@
         </q-form>
       </q-card-section>
       <q-card-actions align="right" class="bg-white text-teal">
-        <q-btn flat label="Создать" @click="saveDialogVicoAdd" />
+        <q-btn label="Отмена" @click="closeDialogVicoAdd" text-color="black" />
+        <q-btn label="Создать" color="positive" @click="saveDialogVicoAdd" text-color="black" />
       </q-card-actions>
     </q-card>
   </q-dialog>
-  <q-dialog v-model="dialogVicoEdit" class="my-dialog" position="top" persistent>
+  <q-dialog v-model="dialogVicoEdit" class="my-dialog" position="top" persistent transition-show="none"
+    transition-hide="none">
     <q-card class="my-card">
       <q-card-section class="row items-center q-pb-none">
         <q-space />
@@ -302,11 +306,11 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select outlined v-model="vicoEdit.objectInitiator" :options="optionsObject"
+              <q-select outlined v-model="vicoEdit.objectInitiator" :options="optionObject"
                 label="Обособленное подразделение инцииатор ВКС" style="max-width: 500px" />
             </div>
             <div class="col-5">
-              <q-select outlined v-model="vicoEdit.objectInvited" multiple :options="optionsObject"
+              <q-select outlined v-model="vicoEdit.objectInvited" multiple :options="optionObject"
                 label="Вызываемые обособленные подразделения" style="
                   max-width: 500px;
                   white-space: nowrap;
@@ -317,7 +321,7 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-select outlined v-model="vicoEdit.typeVico" :options="optionsTypeVico" label="Тип совещания"
+              <q-select outlined v-model="vicoEdit.typeVico" :options="optionTypeVico" label="Тип совещания"
                 style="max-width: 250px" />
             </div>
             <div class="col-5">
@@ -326,11 +330,11 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select outlined v-model="vicoEdit.departamentInitiator" :options="optionsDepartament"
+              <q-select outlined v-model="vicoEdit.departamentInitiator" :options="optionDepartament"
                 label="Отдел инициатор ВКС" style="max-width: 500px" />
             </div>
             <div class="col-5">
-              <q-select outlined v-model="vicoEdit.departamentInvited" multiple :options="optionsDepartament"
+              <q-select outlined v-model="vicoEdit.departamentInvited" multiple :options="optionDepartament"
                 label="Приглашенные отделы" style="
                   max-width: 500px;
                   white-space: nowrap;
@@ -350,7 +354,34 @@
         </q-form>
       </q-card-section>
       <q-card-actions align="right" class="bg-white text-teal">
-        <q-btn flat label="Создать" @click="saveDialogVicoEdit" />
+        <q-btn label="Отмена" @click="closeDialogVicoEdit" text-color="black" />
+        <q-btn label="Создать" color="accent" @click="saveDialogVicoEdit" text-color="black" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+  <q-dialog v-model="dialogVicoArchive" persistent>
+    <q-card>
+      <q-card-section class="row items-center">
+        <q-avatar icon="archive" color="blue" text-color="white" />
+        <span class="q-ml-sm">Подтвердите действие переноса записи об ВКС в архив.</span>
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn label="Отмена" color="primary" v-close-popup text-color="black" />
+        <q-btn label="Перенести" color="primary" @click="saveDialogVicoArchive" text-color="black" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
+  <q-dialog v-model="dialogVicoDelete" persistent>
+    <q-card>
+      <q-card-section class="row items-center">
+        <q-avatar icon="delete" color="red" text-color="white" />
+        <span class="q-ml-sm">Подтвердите действие удаления записи об ВКС.</span>
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn label="Отмена" color="primary" v-close-popup text-color="black" />
+        <q-btn label="Удалить" color="danger" @click="saveDialogVicoDelete" text-color="red" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -364,8 +395,8 @@
   <q-page-sticky class="my-button" position="bottom-right" :offset="[18, 18]">
     <q-btn-group push class="my-button">
       <q-btn push color="green" icon="autorenew" padding="8px" size="24px" />
-      <q-btn push color="blue" icon="archive" padding="8px" size="24px" />
-      <q-btn push color="red" icon="delete" padding="8px" size="24px" />
+      <q-btn push color="blue" icon="archive" padding="8px" size="24px" @click="openDialogVicoArchive" />
+      <q-btn push color="red" icon="delete" padding="8px" size="24px" @click="openDialogVicoDelete" />
     </q-btn-group>
   </q-page-sticky>
 </template>
@@ -456,302 +487,6 @@ const columns = [
   },
 ];
 
-const optionsObject = [
-  {
-    label: 'УФНС России по Хабаровскому краю, Дзержинского 41',
-    value: 1,
-  },
-  {
-    label: 'ЦА ФНС России',
-    value: 2,
-  },
-  {
-    label: 'ОП №1 УФНС России по Хабаровскому краю, ул.Ленина д.57',
-    value: 3,
-  },
-  {
-    label: 'ОП №2 УФНС России по Хабаровскому краю, Станционная д.18',
-    value: 4,
-  },
-  {
-    label: 'ОП №3 УФНС России по Хабаровскому краю, ул. Союзная 23д',
-    value: 5,
-  },
-  {
-    label: 'ОП №4 УФНС России по Хабаровскому краю, О.Кошевого 3',
-    value: 6,
-  },
-  {
-    label: 'ОП №5 УФНС России по Хабаровскому краю, Шмидта 40',
-    value: 7,
-  },
-  {
-    label: 'ОП №6 УФНС России по Хабаровскому краю, Островского 8а',
-    value: 8,
-  },
-  {
-    label:
-      'ОП №7 УФНС России по Хабаровскому краю, г. Комсомольск-на-Амуре, ул. Кирова, д. 68',
-    value: 9,
-  },
-  {
-    label:
-      'ОП №8 УФНС России по Хабаровскому краю, г. Комсомольск-на-Амуре, ул. Пионерская 64',
-    value: 10,
-  },
-  {
-    label:
-      'ОП №9 УФНС России по Хабаровскому краю, г. Советская Гавань, пл. Победы, д. 7',
-    value: 11,
-  },
-  {
-    label:
-      'ОП №10 УФНС России по Хабаровскому краю,  г. Николаевск-на-Амуре, ул. Орлова, 15',
-    value: 12,
-  },
-  {
-    label: 'Все обособленные подразделения',
-    value: 13,
-  },
-  {
-    label: 'Налогоплательщик',
-    value: 14,
-  },
-  {
-    label: 'Администрация',
-    value: 15,
-  },
-];
-
-const optionsTypeVico = [
-  {
-    label: 'ВКС',
-    value: 1,
-  },
-  {
-    label: 'Допрос',
-    value: 2,
-  },
-  {
-    label: 'Федеральный ВКС',
-    value: 3,
-  },
-  {
-    label: 'Совещание',
-    value: 4,
-  },
-];
-
-const optionsDepartament = [
-  {
-    label: 'Налогоплательщик',
-    value: 1,
-  },
-  {
-    label: 'Руководство',
-    value: 2,
-  },
-  {
-    label: 'ЦА ФНС России',
-    value: 3,
-  },
-  {
-    label: '01 - Общий отдел',
-    value: 4,
-  },
-  {
-    label: '02 - Отдел кадров',
-    value: 5,
-  },
-  {
-    label: '03 - Отдел безопасности',
-    value: 6,
-  },
-  {
-    label: '04 - Отдел финансового и хозяйственного обеспечения',
-    value: 7,
-  },
-  {
-    label:
-      '06 - Отдел контроля выполнения технологических процессов и информационных технологий',
-    value: 8,
-  },
-  {
-    label: '05 - Отдел информационной безопасности',
-    value: 9,
-  },
-  {
-    label: '07 - Отдел внутреннего аудита',
-    value: 10,
-  },
-  {
-    label: '08 - Отдел оказания государственных услуг №1',
-    value: 11,
-  },
-  {
-    label: '09 - Отдел оказания государственных услуг №2',
-    value: 12,
-  },
-  {
-    label: '10 - Отдел регистрации и учета налогоплательщиков №1',
-    value: 13,
-  },
-  {
-    label: '11 - Отдел регистрации и учета налогоплательщиков №2',
-    value: 14,
-  },
-  {
-    label: '12 - Отдел регистрации и учета налогоплательщиков №3',
-    value: 15,
-  },
-  {
-    label: '13 - Отдел камерального контроля специальных налоговых режимов',
-    value: 16,
-  },
-  {
-    label:
-      '14 - Отдел камерального контроля в сфере налогообложения имущества №1',
-    value: 17,
-  },
-  {
-    label:
-      '15 - Отдел камерального контроля в сфере налогообложения имущества №2',
-    value: 18,
-  },
-  {
-    label: '16 - Отдел камерального контроля НДФЛ и СВ №1',
-    value: 19,
-  },
-  {
-    label: '17 - Отдел камерального контроля НДФЛ и СВ №2',
-    value: 20,
-  },
-  {
-    label: '18 - Отдел камерального контроля НДФЛ и СВ №3',
-    value: 21,
-  },
-  {
-    label: '19 - Отдел камерального контроля НДФЛ и СВ №4',
-    value: 22,
-  },
-  {
-    label: '20 - Отдел камерального контроля №1',
-    value: 23,
-  },
-  {
-    label: '21 - Отдел камерального контроля №2',
-    value: 24,
-  },
-  {
-    label: '22 - Отдел камерального контроля НДС №1',
-    value: 25,
-  },
-  {
-    label: '23 - Отдел камерального контроля НДС №2',
-    value: 26,
-  },
-  {
-    label: '24 - Отдел камерального контроля НДС №3',
-    value: 27,
-  },
-  {
-    label: '25 - Отдел камерального контроля НДС №4',
-    value: 28,
-  },
-  {
-    label: '26 - Контрольно-аналитический отдел',
-    value: 29,
-  },
-  {
-    label: '27 - Отдел предпроверочного анализа и план. налоговых проверок №1',
-    value: 30,
-  },
-  {
-    label: '28 - Отдел предпроверочного анализа и план. налоговых проверок №2',
-    value: 31,
-  },
-  {
-    label: '29 - Отдел предпроверочного анализа и план. налоговых проверок №3',
-    value: 32,
-  },
-  {
-    label: '30 - Отдел предпроверочного анализа и план. налоговых проверок №4',
-    value: 33,
-  },
-  {
-    label: '31 - Отдел выездных налоговых проверок №1',
-    value: 34,
-  },
-  {
-    label: '32 - Отдел выездных налоговых проверок №2',
-    value: 35,
-  },
-  {
-    label: '33 - Отдел выездных налоговых проверок №3',
-    value: 36,
-  },
-  {
-    label: '34 - Отдел выездных налоговых проверок №4',
-    value: 37,
-  },
-  {
-    label: '35 - Отдел выездных налоговых проверок №5',
-    value: 38,
-  },
-  {
-    label: '36 - Отдел оперативного контроля №1',
-    value: 39,
-  },
-  {
-    label: '37 - Отдел оперативного контроля №2',
-    value: 40,
-  },
-  {
-    label: '38 - Аналитический отдел',
-    value: 41,
-  },
-  {
-    label: '39 - Отдел урегулирования состояния расчетов с бюджетом',
-    value: 42,
-  },
-  {
-    label: '40 - Отдел процессного взыскания задолженности',
-    value: 43,
-  },
-  {
-    label: '41 - Отдел проектного управления долгом',
-    value: 44,
-  },
-  {
-    label: '42 - Отдел урегулирования задолженности физических лиц',
-    value: 45,
-  },
-  {
-    label: '43 - Отдел обеспечения процедур банкротства №1',
-    value: 46,
-  },
-  {
-    label: '44 - Отдел обеспечения процедур банкротства №2',
-    value: 47,
-  },
-  {
-    label: '45 - Правовой отдел №1',
-    value: 48,
-  },
-  {
-    label: '46 - Правовой отдел №2',
-    value: 49,
-  },
-  {
-    label: '47 - Правовой отдел №3',
-    value: 50,
-  },
-  {
-    label: '48 - Правовой отдел №4',
-    value: 51,
-  },
-];
-
 const getRandomIntInclusive = function (min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -762,9 +497,13 @@ export default defineComponent({
   name: 'IndexPage',
   components: {},
   setup() {
+    const optionObject = ref([]);
+    const optionTypeVico = ref([]);
+    const optionDepartament = ref([]);
+
     const store = useVicoStore();
 
-    store.setServer('http://127.0.0.1:3000/');
+    store.setServer('http://10.27.0.243:3000/');
 
     const socket = io(store.getServer());
 
@@ -819,22 +558,35 @@ export default defineComponent({
     const dialogVicoAdd = ref(false);
     const dialogVicoEdit = ref(false);
 
+    const dialogVicoArchive = ref(false);
+    const dialogVicoDelete = ref(false);
+
     socket.on('vicoAdd', (data) => {
-      rows.value.push(data);
+      store.addVicoFirst(data);
     });
 
     socket.on('vicoAll', (data) => {
-      data.forEach((vico) => {
-        rows.value.push(vico);
+      optionObject.value = data.optionObject;
+      optionTypeVico.value = data.optionTypeVico;
+      optionDepartament.value = data.optionDepartament;
+      data.vicos.forEach((vico) => {
+        store.addVico(vico);
       });
     });
 
-    const update = () => {
-      var recieve = [];
-      rows.value.push(recieve.at(0));
-    };
+    socket.on('vicoArchive', (data) => {
+      dialogVicoArchive.value = false;
+      const vicos = rows.value.filter((vico) => vico.id != data.id);
+      store.setVicos(vicos);
+    });
 
-    //update();
+    socket.on('vicoDelete', (data) => {
+      dialogVicoDelete.value = false;
+      const vicos = rows.value.filter((vico) => vico.id != data.id);
+      store.setVicos(vicos);
+    });
+
+    const update = () => { };
 
     const clearDialogVicoAdd = () => {
       const d = DateTime.now();
@@ -989,6 +741,92 @@ export default defineComponent({
       dialogVicoEdit.value = false;
     };
 
+    const openDialogVicoArchive = () => {
+      if (selectedId.value.isSelect) {
+        dialogVicoArchive.value = true;
+      }
+    };
+
+    const saveDialogVicoArchive = () => {
+      api({
+        method: 'post',
+        url: store.getAjaxUri('vico/archive'),
+        data: {
+          id: selectedId.value.id,
+        },
+        timeout: 10000,
+        responseType: 'json',
+      })
+        .then((response) => {
+          if (response.data.success === false) {
+            Notify.create({
+              progress: true,
+              color: 'negative',
+              position: 'top',
+              message: 'Ошибка переноcа записи об ВКС.',
+              icon: 'report_problem',
+            });
+          }
+          Loading.hide();
+        })
+        .catch(function () {
+          Notify.create({
+            color: 'negative',
+            position: 'top',
+            message: 'Нет соединения с сервером.',
+            icon: 'report_problem',
+          });
+          Loading.hide();
+        });
+    };
+
+    const closeDialogVicoArchive = () => {
+      dialogVicoArchive.value = false;
+    };
+
+    const openDialogVicoDelete = () => {
+      if (selectedId.value.isSelect) {
+        dialogVicoDelete.value = true;
+      }
+    };
+
+    const saveDialogVicoDelete = () => {
+      api({
+        method: 'post',
+        url: store.getAjaxUri('vico/delete'),
+        data: {
+          id: selectedId.value.id,
+        },
+        timeout: 10000,
+        responseType: 'json',
+      })
+        .then((response) => {
+          if (response.data.success === false) {
+            Notify.create({
+              progress: true,
+              color: 'negative',
+              position: 'top',
+              message: 'Ошибка удаления записи об ВКС.',
+              icon: 'report_problem',
+            });
+          }
+          Loading.hide();
+        })
+        .catch(function () {
+          Notify.create({
+            color: 'negative',
+            position: 'top',
+            message: 'Нет соединения с сервером.',
+            icon: 'report_problem',
+          });
+          Loading.hide();
+        });
+    };
+
+    const closeDialogVicoDelete = () => {
+      dialogVicoDelete.value = false;
+    };
+
     return {
       rows,
       selected,
@@ -1004,6 +842,8 @@ export default defineComponent({
       dialogVicoAdd,
       dialogVicoView,
       dialogVicoEdit,
+      dialogVicoArchive,
+      dialogVicoDelete,
       openDialogVicoView,
       closeDialogVicoView,
       openDialogVicoAdd,
@@ -1012,12 +852,18 @@ export default defineComponent({
       openDialogVicoEdit,
       saveDialogVicoEdit,
       closeDialogVicoEdit,
+      openDialogVicoArchive,
+      saveDialogVicoArchive,
+      closeDialogVicoArchive,
+      openDialogVicoDelete,
+      saveDialogVicoDelete,
+      closeDialogVicoDelete,
       vicoView,
       vicoAdd,
       vicoEdit,
-      optionsObject,
-      optionsTypeVico,
-      optionsDepartament,
+      optionObject,
+      optionTypeVico,
+      optionDepartament,
     };
   },
 });
@@ -1085,7 +931,7 @@ export default defineComponent({
   border: solid black 1px
 
 .selected
-  background-color: lightgreen
+  background-color: #DFEFD8
 
 .no-select
   -webkit-touch-callout: none
@@ -1107,4 +953,7 @@ export default defineComponent({
 
 .my-card
   min-width: 1400px
+
+.modal, .modal-content
+  transition: all 0.02s linear
 </style>
