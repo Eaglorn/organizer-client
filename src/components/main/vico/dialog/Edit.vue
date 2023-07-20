@@ -262,9 +262,11 @@ export default defineComponent({
                 vico.value.objectInitiator = storeGlobal.getOptionObjectByName(
                   response.data.vico.objectInitiator,
                 );
-                vico.value.objectInvited = [];
-                Array(response.data.vico.objectInvited).forEach((item) => {
-                  vico.value.objectInvited.push(
+
+                vico.value.objectInvited.forEach((item, index) => {
+                  vico.value.objectInvited.splice(
+                    index,
+                    1,
                     storeGlobal.getOptionObjectByName(item),
                   );
                 });
@@ -273,10 +275,11 @@ export default defineComponent({
                   storeGlobal.getOptionDepartamentByName(
                     response.data.vico.departamentInitiator,
                   );
-                vico.value.departamentInvited = [];
 
-                Array(response.data.vico.departamentInvited).forEach((item) => {
-                  vico.value.departamentInvited.push(
+                vico.value.departamentInvited.forEach((item, index) => {
+                  vico.value.departamentInvited.splice(
+                    index,
+                    1,
                     storeGlobal.getOptionDepartamentByName(item),
                   );
                 });

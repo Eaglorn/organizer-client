@@ -198,6 +198,7 @@ export default defineComponent({
                   icon: 'report_problem',
                 });
               } else {
+                console.log(response.data.vico);
                 vico.value = response.data.vico;
                 storeMain.vicoDialogView = false;
                 dialog.value = true;
