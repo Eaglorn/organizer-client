@@ -20,7 +20,20 @@ export const useGlobalStore = defineStore('global', {
       contactPhone: '',
     },
   }),
-  getters: {},
+  getters: {
+    getOptionObjectByName: (state) => {
+      return (objectName) =>
+        state.optionObject.find((item) => item.label === objectName);
+    },
+    getOptionTypeVicoByName: (state) => {
+      return (typeVicoName) =>
+        state.optionTypeVico.find((item) => item.label === typeVicoName);
+    },
+    getOptionDepartamentByName: (state) => {
+      return (departamentName) =>
+        state.optionDepartament.find((item) => item.label === departamentName);
+    },
+  },
   actions: {
     setServer(server) {
       this.server = server;

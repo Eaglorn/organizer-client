@@ -164,6 +164,8 @@ export default defineComponent({
         contactPhone: vico.value.contactPhone,
       };
 
+      console.log(vico.value);
+
       vico.value.objectInvited.forEach((item) => {
         newVico.objectInvited.push(item.label);
       });

@@ -138,35 +138,48 @@ export default defineComponent({
     watch(vicoDialogEdit, () => {
       if (storeMain.vicoDialogEdit === true) {
         if (storeMain.isSelect) {
+          Loading.show();
           api({
             method: 'post',
             url: storeGlobal.getAjaxUri('vico/one'),
-            data: {
-              id: storeMain.selectId
-            },
+            data: { id: storeMain.selectId },
             timeout: 10000,
             responseType: 'json',
           })
             .then((response) => {
               if (response.data.success === false) {
-                storeMain.vicoDialogEdit = false;
                 Notify.create({
                   progress: true,
                   color: 'negative',
                   position: 'top',
-                  message: 'Ошибка чтения записи ВКС.',
+                  message: 'Ошибка изменения записи ВКС',
                   icon: 'report_problem',
                 });
               } else {
-
                 vico.value = response.data.vico;
+
+                vico.value.typeVico = storeGlobal.getOptionTypeVicoByName(response.data.vico.typeVico);
+
+                vico.value.objectInitiator = storeGlobal.getOptionObjectByName(response.data.vico.objectInitiator);
+                vico.value.objectInvited = [];
+                response.data.vico.objectInvited.map((item) => {
+                  vico.value.objectInvited.push(getOptionObjectByName(item));
+                });
+
+                vico.value.departamentInitiator = storeGlobal.getOptionDepartamentByName(response.data.vico.departamentInitiator);
+                vico.value.departamentInvited = [];
+
+                response.data.vico.departamentInvited.map((item) => {
+                  console.log(item);
+                  vico.value.departamentInvited.push(getOptionDepartamentByName(item));
+                });
+
                 storeMain.vicoDialogEdit = false;
                 dialog.value = true;
               }
               Loading.hide();
             })
             .catch(function () {
-              storeMain.vicoDialogEdit = false;
               Notify.create({
                 color: 'negative',
                 position: 'top',

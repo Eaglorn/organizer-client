@@ -118,11 +118,10 @@ export default defineComponent({
                   progress: true,
                   color: 'negative',
                   position: 'top',
-                  message: 'Ошибка обновления списка',
+                  message: 'Ошибка просмотра записи ВКС',
                   icon: 'report_problem',
                 });
               } else {
-                console.log(vico);
                 vico.value = response.data.vico;
                 storeMain.vicoDialogView = false;
                 dialog.value = true;
