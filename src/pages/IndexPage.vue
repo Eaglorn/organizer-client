@@ -9,12 +9,24 @@
     <q-card>
       <q-card-section class="row items-center">
         <q-avatar icon="archive" color="blue" text-color="white" />
-        <span class="q-ml-sm">Подтвердите действие переноса записи об ВКС в архив.</span>
+        <span class="q-ml-sm"
+          >Подтвердите действие переноса записи об ВКС в архив.</span
+        >
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn label="Отмена" color="primary" @click="closeDialogVicoArchive" text-color="white" />
-        <q-btn label="Перенести" color="warning" @click="saveDialogVicoArchive" text-color="black" />
+        <q-btn
+          label="Отмена"
+          color="primary"
+          @click="closeDialogVicoArchive"
+          text-color="white"
+        />
+        <q-btn
+          label="Перенести"
+          color="warning"
+          @click="saveDialogVicoArchive"
+          text-color="black"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -22,53 +34,135 @@
     <q-card>
       <q-card-section class="row items-center">
         <q-avatar icon="delete" color="red" text-color="white" />
-        <span class="q-ml-sm">Подтвердите действие удаления записи об ВКС.</span>
+        <span class="q-ml-sm"
+          >Подтвердите действие удаления записи об ВКС.</span
+        >
       </q-card-section>
       <q-card-actions align="right">
-        <q-btn label="Отмена" color="primary" @click="closeDialogVicoArchive" text-color="white" />
-        <q-btn label="Удалить" color="negative" @click="saveDialogVicoDelete" text-color="white" />
+        <q-btn
+          label="Отмена"
+          color="primary"
+          @click="closeDialogVicoArchive"
+          text-color="white"
+        />
+        <q-btn
+          label="Удалить"
+          color="negative"
+          @click="saveDialogVicoDelete"
+          text-color="white"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
   <q-page-sticky class="my-button" position="bottom-left" :offset="[18, 18]">
     <q-btn-group push class="my-button">
-      <q-btn push color="brown-5" icon="visibility" padding="8px" size="24px" @click="storeMain.vicoDialogView = true">
-        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
-          self="center middle">
+      <q-btn
+        push
+        color="brown-5"
+        icon="visibility"
+        padding="8px"
+        size="24px"
+        @click="storeMain.vicoDialogView = true"
+      >
+        <q-tooltip
+          transition-show="scale"
+          transition-hide="scale"
+          class="text-body1"
+          anchor="top middle"
+          self="center middle"
+        >
           Посмотреть
         </q-tooltip>
       </q-btn>
-      <q-btn push color="green" icon="add" padding="8px" size="24px" @click="storeMain.vicoDialogAdd = true">
-        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
-          self="center middle">
+      <q-btn
+        push
+        color="green"
+        icon="add"
+        padding="8px"
+        size="24px"
+        @click="storeMain.vicoDialogAdd = true"
+      >
+        <q-tooltip
+          transition-show="scale"
+          transition-hide="scale"
+          class="text-body1"
+          anchor="top middle"
+          self="center middle"
+        >
           Создать
         </q-tooltip>
       </q-btn>
-      <q-btn push color="orange" icon="edit" padding="8px" size="24px" @click="storeMain.vicoDialogEdit = true">
-        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
-          self="center middle">
+      <q-btn
+        push
+        color="orange"
+        icon="edit"
+        padding="8px"
+        size="24px"
+        @click="storeMain.vicoDialogEdit = true"
+      >
+        <q-tooltip
+          transition-show="scale"
+          transition-hide="scale"
+          class="text-body1"
+          anchor="top middle"
+          self="center middle"
+        >
           Редактировать
         </q-tooltip>
       </q-btn>
     </q-btn-group>
   </q-page-sticky>
-  <q-page-sticky class="my-button" position="bottom-right" :offset="[18, 18]" @click="updatePage">
+  <q-page-sticky
+    class="my-button"
+    position="bottom-right"
+    :offset="[18, 18]"
+    @click="updatePage"
+  >
     <q-btn-group push class="my-button">
       <q-btn push color="green" icon="autorenew" padding="8px" size="24px">
-        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
-          self="center middle">
+        <q-tooltip
+          transition-show="scale"
+          transition-hide="scale"
+          class="text-body1"
+          anchor="top middle"
+          self="center middle"
+        >
           Обновить страницу
         </q-tooltip>
       </q-btn>
-      <q-btn push color="blue" icon="archive" padding="8px" size="24px" @click="openDialogVicoArchive">
-        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
-          self="center middle">
+      <q-btn
+        push
+        color="blue"
+        icon="archive"
+        padding="8px"
+        size="24px"
+        @click="openDialogVicoArchive"
+      >
+        <q-tooltip
+          transition-show="scale"
+          transition-hide="scale"
+          class="text-body1"
+          anchor="top middle"
+          self="center middle"
+        >
           Архивировать
         </q-tooltip>
       </q-btn>
-      <q-btn push color="red" icon="delete" padding="8px" size="24px" @click="openDialogVicoDelete">
-        <q-tooltip transition-show="scale" transition-hide="scale" class="text-body1" anchor="top middle"
-          self="center middle">
+      <q-btn
+        push
+        color="red"
+        icon="delete"
+        padding="8px"
+        size="24px"
+        @click="openDialogVicoDelete"
+      >
+        <q-tooltip
+          transition-show="scale"
+          transition-hide="scale"
+          class="text-body1"
+          anchor="top middle"
+          self="center middle"
+        >
           Удалить
         </q-tooltip>
       </q-btn>

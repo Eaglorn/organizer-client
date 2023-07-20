@@ -1,5 +1,12 @@
 <template>
-  <q-dialog v-model="dialog" class="my-dialog" position="top" persistent transition-show="none" transition-hide="none">
+  <q-dialog
+    v-model="dialog"
+    class="my-dialog"
+    position="top"
+    persistent
+    transition-show="none"
+    transition-hide="none"
+  >
     <q-card class="my-card">
       <q-card-section class="row items-center q-pb-none">
         <q-space />
@@ -8,13 +15,28 @@
         <q-form class="q-gutter-md">
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-input outlined v-model="vico.date" mask="##.##.####" label="Дата" style="max-width: 200px">
+              <q-input
+                outlined
+                v-model="vico.date"
+                mask="##.##.####"
+                label="Дата"
+                style="max-width: 200px"
+              >
                 <template v-slot:append>
                   <q-icon name="event" class="cursor-pointer">
-                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
                       <q-date v-model="vico.date" mask="DD.MM.YYYY">
                         <div class="row items-center justify-end">
-                          <q-btn v-close-popup label="Закрыть" color="primary" flat />
+                          <q-btn
+                            v-close-popup
+                            label="Закрыть"
+                            color="primary"
+                            flat
+                          />
                         </div>
                       </q-date>
                     </q-popup-proxy>
@@ -23,13 +45,28 @@
               </q-input>
             </div>
             <div class="col-3">
-              <q-input outlined v-model="vico.timeStart" mask="time" label="Дата начала ВКС" style="max-width: 200px">
+              <q-input
+                outlined
+                v-model="vico.timeStart"
+                mask="time"
+                label="Дата начала ВКС"
+                style="max-width: 200px"
+              >
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
-                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
                       <q-time v-model="vico.timeStart">
                         <div class="row items-center justify-end">
-                          <q-btn v-close-popup label="Закрыть" color="primary" flat />
+                          <q-btn
+                            v-close-popup
+                            label="Закрыть"
+                            color="primary"
+                            flat
+                          />
                         </div>
                       </q-time>
                     </q-popup-proxy>
@@ -38,13 +75,28 @@
               </q-input>
             </div>
             <div class="col-3">
-              <q-input outlined v-model="vico.timeEnd" mask="time" label="Дата окончания ВКС" style="max-width: 200px">
+              <q-input
+                outlined
+                v-model="vico.timeEnd"
+                mask="time"
+                label="Дата окончания ВКС"
+                style="max-width: 200px"
+              >
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
-                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-popup-proxy
+                      cover
+                      transition-show="scale"
+                      transition-hide="scale"
+                    >
                       <q-time v-model="vico.timeEnd">
                         <div class="row items-center justify-end">
-                          <q-btn v-close-popup label="Закрыть" color="primary" flat />
+                          <q-btn
+                            v-close-popup
+                            label="Закрыть"
+                            color="primary"
+                            flat
+                          />
                         </div>
                       </q-time>
                     </q-popup-proxy>
@@ -55,56 +107,101 @@
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select outlined v-model="vico.objectInitiator" :options="optionObject"
-                label="Обособленное подразделение инцииатор ВКС" style="max-width: 500px" />
+              <q-select
+                outlined
+                v-model="vico.objectInitiator"
+                :options="optionObject"
+                label="Обособленное подразделение инцииатор ВКС"
+                style="max-width: 500px"
+              />
             </div>
             <div class="col-5">
-              <q-select outlined v-model="vico.objectInvited" multiple :options="optionObject"
-                label="Вызываемые обособленные подразделения" style="
+              <q-select
+                outlined
+                v-model="vico.objectInvited"
+                multiple
+                :options="optionObject"
+                label="Вызываемые обособленные подразделения"
+                style="
                   max-width: 500px;
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                " />
+                "
+              />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-3">
-              <q-select outlined v-model="vico.typeVico" :options="optionTypeVico" label="Тип совещания"
-                style="max-width: 250px" />
+              <q-select
+                outlined
+                v-model="vico.typeVico"
+                :options="optionTypeVico"
+                label="Тип совещания"
+                style="max-width: 250px"
+              />
             </div>
             <div class="col-5">
-              <q-input outlined v-model="vico.topic" label="Тема совещания" style="max-width: 380px" />
+              <q-input
+                outlined
+                v-model="vico.topic"
+                label="Тема совещания"
+                style="max-width: 380px"
+              />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-5">
-              <q-select outlined v-model="vico.departamentInitiator" :options="optionDepartament"
-                label="Отдел инициатор ВКС" style="max-width: 500px" />
+              <q-select
+                outlined
+                v-model="vico.departamentInitiator"
+                :options="optionDepartament"
+                label="Отдел инициатор ВКС"
+                style="max-width: 500px"
+              />
             </div>
             <div class="col-5">
-              <q-select outlined v-model="vico.departamentInvited" multiple :options="optionDepartament"
-                label="Приглашенные отделы" style="
+              <q-select
+                outlined
+                v-model="vico.departamentInvited"
+                multiple
+                :options="optionDepartament"
+                label="Приглашенные отделы"
+                style="
                   max-width: 500px;
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
-                " />
+                "
+              />
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-4">
-              <q-input outlined v-model="vico.contactName" label="ФИО инициатора ВКС" />
+              <q-input
+                outlined
+                v-model="vico.contactName"
+                label="ФИО инициатора ВКС"
+              />
             </div>
             <div class="col-4">
-              <q-input outlined v-model="vico.contactPhone" label="Контактный номер телефона инициатора ВКС" />
+              <q-input
+                outlined
+                v-model="vico.contactPhone"
+                label="Контактный номер телефона инициатора ВКС"
+              />
             </div>
           </div>
         </q-form>
       </q-card-section>
       <q-card-actions align="right" class="bg-white text-teal">
         <q-btn label="Отмена" @click="dialogClose" text-color="black" />
-        <q-btn label="Создать" color="positive" @click="dialogSave" text-color="black" />
+        <q-btn
+          label="Создать"
+          color="positive"
+          @click="dialogSave"
+          text-color="black"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
