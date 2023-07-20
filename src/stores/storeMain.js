@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia';
 
-export const useVicoStore = defineStore('vico', {
+export const useMainStore = defineStore('main', {
   state: () => ({
     vicos: [],
-    server: '',
+    selectId: 0,
+    isSelect: false,
+    vicoDialogView: false,
+    vicoDialogAdd: false,
+    vicoDialogEdit: false,
   }),
   getters: {
     getVicos: () => {
@@ -14,6 +18,10 @@ export const useVicoStore = defineStore('vico', {
     },
   },
   actions: {
+    setVico(vico) {
+      console.log(vico);
+      console.log(this.getVicoById(vico.id));
+    },
     setVicos(vicos) {
       this.vicos = vicos;
     },
@@ -22,15 +30,6 @@ export const useVicoStore = defineStore('vico', {
     },
     addVico(vico) {
       this.vicos.push(vico);
-    },
-    setServer(server) {
-      this.server = server;
-    },
-    getServer() {
-      return this.server;
-    },
-    getAjaxUri(response) {
-      return this.server + 'api/' + response;
     },
   },
 });
