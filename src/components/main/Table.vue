@@ -1,20 +1,38 @@
 <template>
   <div class="q-pa-md">
-    <q-table selection="single" v-model:selected="selected" class="my-sticky-table no-select my-table-border" flat
-      bordered row-key="id" :rows="rows" :hide-pagination="true" v-model:pagination="pagination" :columns="columns"
-      :separator="separator" table-header-style="height: 0px;">
+    <q-table
+      selection="single"
+      v-model:selected="selected"
+      class="my-sticky-table no-select my-table-border"
+      flat
+      bordered
+      row-key="id"
+      :rows="rows"
+      :hide-pagination="true"
+      v-model:pagination="pagination"
+      :columns="columns"
+      :separator="separator"
+      table-header-style="height: 0px;"
+    >
       <template v-slot:header-cell="props">
         <q-th :props="props" style="font-size: medium">
           {{ props.col.label }}
         </q-th>
       </template>
       <template v-slot:body="props">
-        <q-tr class="my-table-border" :props="props" @click="
-          props.selected = !props.selected;
-        selectAction(props.row.id);
-        ">
+        <q-tr
+          class="my-table-border"
+          :props="props"
+          @click="
+            props.selected = !props.selected;
+            selectAction(props.row.id);
+          "
+        >
           <q-td class="my-table-border">
-            <q-checkbox v-model="props.selected" @click="selectAction(props.row.id)" />
+            <q-checkbox
+              v-model="props.selected"
+              @click="selectAction(props.row.id)"
+            />
           </q-td>
           <q-td key="id" :props="props" class="my-table-border">
             {{ props.row.id }}
@@ -42,7 +60,11 @@
           <q-td key="topic" :props="props" class="my-table-border">
             {{ props.row.topic }}
           </q-td>
-          <q-td key="departamentInitiator" :props="props" class="my-table-border">
+          <q-td
+            key="departamentInitiator"
+            :props="props"
+            class="my-table-border"
+          >
             {{ props.row.departamentInitiator }}
           </q-td>
           <q-td key="departamentInvited" :props="props" class="my-table-border">
@@ -195,40 +217,30 @@ export default defineComponent({
     z-index: 2
     background: #afc7be
 
-  thead tr:last-child th
-    top: 48px
-    z-index: 3
-
-  thead tr:first-child th
-    top: 0
-    z-index: 1
+  thead
+    tr:last-child th
+      top: 48px
+      z-index: 3
+    tr:first-child th
+      top: 0
+      z-index: 1
+    tr:first-child th:first-child
+      background-color: #afc7be
 
   tr:first-child th:first-child
     z-index: 3
 
-  td:first-child
-    z-index: 1
-
   td:first-child, th:first-child
     position: sticky
     left: 0
+    z-index: 1
+    background-color: #afc7be
 
   tbody
     scroll-margin-top: 48px
 
-  thead tr:first-child th:first-child
-    background-color: #afc7be
-
-  td:first-child
-    background-color: #afc7be
-
-  th:first-child, td:first-child
-    position: sticky
-    left: 0
-    z-index: 1
-
   li
-   list-style-type: none
+    list-style-type: none
 
   td, tr, th
     padding: 3px

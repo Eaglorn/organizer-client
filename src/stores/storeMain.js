@@ -10,26 +10,23 @@ export const useMainStore = defineStore('main', {
     vicoDialogEdit: false,
   }),
   getters: {
-    getVicos: () => {
-      return vicos;
+    getVicos: (state) => {
+      return state.vicos;
     },
     getVicoById: (state) => {
       return (vicoId) => state.vicos.find((vico) => vico.id === vicoId);
     },
   },
   actions: {
-    setVico(vico) {
-      console.log(vico);
-      console.log(this.getVicoById(vico.id));
-    },
     setVicos(vicos) {
       this.vicos = vicos;
     },
-    addVicoFirst(vico) {
-      this.vicos.unshift(vico);
-    },
-    addVico(vico) {
-      this.vicos.push(vico);
+    addVico(vico, isToAddToStart = false) {
+      if (isToAddToStart) {
+        this.vicos.unshift(vico);
+      } else {
+        this.vicos.push(vico);
+      }
     },
   },
 });
