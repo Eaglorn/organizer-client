@@ -13,6 +13,7 @@
       :columns="columns"
       :separator="separator"
       table-header-style="height: 0px;"
+      wrap-cells="true"
     >
       <template v-slot:header-cell="props">
         <q-th :props="props" style="font-size: medium">
@@ -46,12 +47,26 @@
           <q-td key="timeEnd" :props="props" class="my-table-border">
             {{ props.row.timeEnd }}
           </q-td>
-          <q-td key="objectInitiator" :props="props" class="my-table-border">
-            {{ props.row.objectInitiator }}
+          <q-td
+            key="objectInitiator"
+            :props="props"
+            class="my-table-border"
+            style="min-width: 250px"
+          >
+            <div>
+              {{ props.row.objectInitiator }}
+            </div>
           </q-td>
-          <q-td key="objectInvited" :props="props" class="my-table-border">
+          <q-td
+            key="objectInvited"
+            :props="props"
+            class="my-table-border"
+            style="min-width: 300px"
+          >
             <li v-for="item in props.row.objectInvited" v-bind:key="item">
-              {{ item }}
+              <div style="border: 1px solid grey; padding: 2px">
+                {{ item }}
+              </div>
             </li>
           </q-td>
           <q-td key="typeVico" :props="props" class="my-table-border">
@@ -64,12 +79,20 @@
             key="departamentInitiator"
             :props="props"
             class="my-table-border"
+            style="min-width: 250px"
           >
             {{ props.row.departamentInitiator }}
           </q-td>
-          <q-td key="departamentInvited" :props="props" class="my-table-border">
+          <q-td
+            key="departamentInvited"
+            :props="props"
+            class="my-table-border"
+            style="min-width: 300px"
+          >
             <li v-for="item in props.row.departamentInvited" v-bind:key="item">
-              {{ item }}
+              <div style="border: 1px solid grey; padding: 2px">
+                {{ item }}
+              </div>
             </li>
           </q-td>
           <q-td key="contactName" :props="props" class="my-table-border">
@@ -260,12 +283,4 @@ export default defineComponent({
 
 .selected
   background-color: #DFEFD8
-
-.no-select
-  -webkit-touch-callout: none
-  -webkit-user-select: none
-  -khtml-user-select: none
-  -moz-user-select: none
-  -ms-user-select: none
-  user-select: none
 </style>

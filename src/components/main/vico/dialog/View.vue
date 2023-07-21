@@ -75,7 +75,6 @@
                 v-model="vico.departamentInitiator"
                 :options="optionDepartament"
                 label="Отдел инициатор ВКС"
-                style="max-width: 500px"
                 readonly
               />
             </div>
@@ -88,7 +87,6 @@
                 stack-label
                 :options="optionDepartament"
                 label="Приглашенные отделы"
-                style="max-width: 750px"
                 readonly
               />
             </div>
