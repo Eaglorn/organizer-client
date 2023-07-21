@@ -162,6 +162,7 @@
           class="text-body1"
           anchor="top middle"
           self="center middle"
+          @click="closeDialogVicoDelete"
         >
           Удалить
         </q-tooltip>
@@ -198,13 +199,17 @@ export default defineComponent({
   setup() {
     storeGlobal.setServer('http://10.27.0.243:3000/');
 
-    const socket = io(storeGlobal.getServer());
+    const socket = io(storeGlobal.getServer);
 
     const dialogVicoArchive = ref(false);
     const dialogVicoDelete = ref(false);
 
     socket.on('vicoAdd', (data) => {
-      storeMain.addVicoFirst(data);
+      storeMain.addVico(data, true);
+    });
+
+    socket.on('vicoEdit', (data) => {
+      storeMain.setVico(data.vico);
     });
 
     socket.on('vicoAll', (data) => {
@@ -243,7 +248,7 @@ export default defineComponent({
               progress: true,
               color: 'negative',
               position: 'top',
-              message: 'Ошибка обновления списка',
+              message: response.data.message,
               icon: 'report_problem',
             });
           } else {
@@ -285,7 +290,7 @@ export default defineComponent({
               progress: true,
               color: 'negative',
               position: 'top',
-              message: 'Ошибка переноcа записи об ВКС.',
+              message: response.data.message,
               icon: 'report_problem',
             });
           } else {
@@ -330,7 +335,7 @@ export default defineComponent({
               progress: true,
               color: 'negative',
               position: 'top',
-              message: 'Ошибка удаления записи об ВКС.',
+              message: response.data.message,
               icon: 'report_problem',
             });
           }

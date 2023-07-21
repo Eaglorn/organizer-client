@@ -24,6 +24,9 @@ export const useGlobalStore = defineStore('global', {
     getServer: (state) => {
       return state.server;
     },
+    getAjaxUri(state) {
+      return (response) => state.server + 'api/' + response;
+    },
     getOptionObjectByName: (state) => {
       return (objectName) =>
         state.optionObject.find((item) => item.label === objectName);
@@ -40,9 +43,6 @@ export const useGlobalStore = defineStore('global', {
   actions: {
     setServer(server) {
       this.server = server;
-    },
-    getAjaxUri(response) {
-      return this.server + 'api/' + response;
     },
     setOptions(optionObject, optionTypeVico, optionDepartament) {
       this.optionObject = optionObject;

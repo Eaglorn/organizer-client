@@ -261,8 +261,6 @@ export default defineComponent({
         contactPhone: vico.value.contactPhone,
       };
 
-      console.log(vico.value);
-
       vico.value.objectInvited.forEach((item) => {
         newVico.objectInvited.push(item.label);
       });
@@ -286,7 +284,7 @@ export default defineComponent({
               progress: true,
               color: 'negative',
               position: 'top',
-              message: 'Ошибка создания ВКС.',
+              message: response.data.message,
               icon: 'report_problem',
             });
           } else {
@@ -329,4 +327,9 @@ export default defineComponent({
   min-width: 1400px
 .modal, .modal-content
   transition: all 0.02s linear
+.q-item--active
+  color: $green-6
+  font-weight: 600
+.q-field__label
+  color: $red-4
 </style>

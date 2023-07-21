@@ -249,7 +249,7 @@ export default defineComponent({
                   progress: true,
                   color: 'negative',
                   position: 'top',
-                  message: 'Ошибка изменения записи ВКС',
+                  message: response.data.message,
                   icon: 'report_problem',
                 });
               } else {
@@ -309,11 +309,11 @@ export default defineComponent({
         timeStart: vico.value.timeStart,
         timeEnd: vico.value.timeEnd,
         objectInitiator: vico.value.objectInitiator.label,
-        objectInvited: null,
+        objectInvited: [],
         typeVico: vico.value.typeVico.label,
         topic: vico.value.topic,
         departamentInitiator: vico.value.departamentInitiator.label,
-        departamentInvited: null,
+        departamentInvited: [],
         contactName: vico.value.contactName,
         contactPhone: vico.value.contactPhone,
       };
@@ -331,7 +331,7 @@ export default defineComponent({
         url: storeGlobal.getAjaxUri('vico/edit'),
         data: {
           id: storeMain.selectId,
-          vico: newVico,
+          vico: vicoEdit,
         },
         timeout: 10000,
         responseType: 'json',
@@ -342,11 +342,10 @@ export default defineComponent({
               progress: true,
               color: 'negative',
               position: 'top',
-              message: 'Ошибка изменения записи ВКС.',
+              message: response.data.message,
               icon: 'report_problem',
             });
           } else {
-            setVico(response.data.vico);
             dialog.value = false;
           }
           Loading.hide();
@@ -387,4 +386,9 @@ export default defineComponent({
   min-width: 1400px
 .modal, .modal-content
   transition: all 0.02s linear
+.q-item--active
+  color: $green-6
+  font-weight: 600
+.q-field__label
+  color: $red-4
 </style>

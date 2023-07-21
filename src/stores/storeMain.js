@@ -18,6 +18,13 @@ export const useMainStore = defineStore('main', {
     },
   },
   actions: {
+    setVico(vico) {
+      this.vicos.forEach((item, index) => {
+        if (vico.id === item.id) {
+          this.vicos.splice(index, 1, vico);
+        }
+      });
+    },
     setVicos(vicos) {
       this.vicos = vicos;
     },
