@@ -1,16 +1,6 @@
 <template>
-  <q-dialog
-    v-model="dialog"
-    class="my-dialog"
-    position="top"
-    persistent
-    transition-show="none"
-    transition-hide="none"
-  >
-    <q-card class="my-card">
-      <q-card-section class="row items-center q-pb-none">
-        <q-space />
-      </q-card-section>
+  <q-dialog v-model="dialog" position="top">
+    <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
         <q-form class="q-gutter-md">
           <div class="row justify-evenly">
@@ -20,7 +10,6 @@
                 v-model="vico.date"
                 mask="##.##.####"
                 label="Дата"
-                style="max-width: 200px"
               >
                 <template v-slot:append>
                   <q-icon name="event" class="cursor-pointer">
@@ -49,8 +38,7 @@
                 outlined
                 v-model="vico.timeStart"
                 mask="time"
-                label="Дата начала ВКС"
-                style="max-width: 200px"
+                label="Время начала ВКС"
               >
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
@@ -79,8 +67,7 @@
                 outlined
                 v-model="vico.timeEnd"
                 mask="time"
-                label="Дата окончания ВКС"
-                style="max-width: 200px"
+                label="Время окончания ВКС"
               >
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
@@ -106,16 +93,15 @@
             </div>
           </div>
           <div class="row justify-evenly">
-            <div class="col-5">
+            <div class="col-6">
               <q-select
                 outlined
                 v-model="vico.objectInitiator"
                 :options="optionObject"
                 label="Обособленное подразделение инцииатор ВКС"
-                style="max-width: 500px"
               />
             </div>
-            <div class="col-5">
+            <div class="col-6">
               <q-select
                 outlined
                 v-model="vico.objectInvited"
@@ -123,7 +109,6 @@
                 :options="optionObject"
                 label="Вызываемые обособленные подразделения"
                 style="
-                  max-width: 500px;
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
@@ -132,35 +117,15 @@
             </div>
           </div>
           <div class="row justify-evenly">
-            <div class="col-3">
-              <q-select
-                outlined
-                v-model="vico.typeVico"
-                :options="optionTypeVico"
-                label="Тип совещания"
-                style="max-width: 250px"
-              />
-            </div>
-            <div class="col-5">
-              <q-input
-                outlined
-                v-model="vico.topic"
-                label="Тема совещания"
-                style="max-width: 380px"
-              />
-            </div>
-          </div>
-          <div class="row justify-evenly">
-            <div class="col-5">
+            <div class="col-6">
               <q-select
                 outlined
                 v-model="vico.departamentInitiator"
                 :options="optionDepartament"
                 label="Отдел инициатор ВКС"
-                style="max-width: 500px"
               />
             </div>
-            <div class="col-5">
+            <div class="col-6">
               <q-select
                 outlined
                 v-model="vico.departamentInvited"
@@ -168,12 +133,24 @@
                 :options="optionDepartament"
                 label="Приглашенные отделы"
                 style="
-                  max-width: 500px;
                   white-space: nowrap;
                   overflow: hidden;
                   text-overflow: ellipsis;
                 "
               />
+            </div>
+          </div>
+          <div class="row justify-evenly">
+            <div class="col-4">
+              <q-select
+                outlined
+                v-model="vico.typeVico"
+                :options="optionTypeVico"
+                label="Тип совещания"
+              />
+            </div>
+            <div class="col-4">
+              <q-input outlined v-model="vico.topic" label="Тема совещания" />
             </div>
           </div>
           <div class="row justify-evenly">
@@ -188,14 +165,19 @@
               <q-input
                 outlined
                 v-model="vico.contactPhone"
-                label="Контактный номер телефона инициатора ВКС"
+                label="Контактный номер"
               />
             </div>
           </div>
         </q-form>
       </q-card-section>
-      <q-card-actions align="right" class="bg-white text-teal">
-        <q-btn label="Отмена" @click="dialogClose" text-color="black" />
+      <q-card-actions align="right">
+        <q-btn
+          label="Отмена"
+          color="red-3"
+          @click="dialogClose"
+          text-color="black"
+        />
         <q-btn
           label="Создать"
           color="positive"
@@ -321,12 +303,6 @@ export default defineComponent({
 </script>
 
 <style lang="sass">
-.my-dialog
-  width: 900px
-.my-card
-  min-width: 1400px
-.modal, .modal-content
-  transition: all 0.02s linear
 .q-item--active
   color: $green-6
   font-weight: 600

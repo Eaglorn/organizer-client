@@ -210,7 +210,7 @@ export default defineComponent({
 
 <style lang="sass">
 .my-sticky-table
-  max-height: 92vh
+  max-height: 90vh
 
   tr th
     position: sticky
