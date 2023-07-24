@@ -2,7 +2,9 @@ import { defineStore } from 'pinia';
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
-    server: '',
+    //server: 'http://10.27.0.243:3000/',
+    //server: 'http://localhost:3000/',
+    server: 'http://192.168.0.10:3000/',
     optionObject: [],
     optionTypeVico: [],
     optionDepartament: [],
@@ -41,6 +43,9 @@ export const useGlobalStore = defineStore('global', {
     },
   },
   actions: {
+    getVicoTemplate() {
+      return Object.assign({}, this.templateVico);
+    },
     setServer(server) {
       this.server = server;
     },

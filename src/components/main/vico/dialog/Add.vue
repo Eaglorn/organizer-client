@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="dialog" position="top">
+  <q-dialog v-model="dialog" position="top" persistent>
     <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
         <q-form class="q-gutter-md">
@@ -211,14 +211,14 @@ export default defineComponent({
     const optionTypeVico = computed(() => storeGlobal.optionTypeVico);
     const optionDepartament = computed(() => storeGlobal.optionDepartament);
 
-    const vico = ref(storeGlobal.templateVico);
+    const vico = ref();
 
     const { vicoDialogAdd } = storeToRefs(storeMain);
 
     watch(vicoDialogAdd, () => {
       if (storeMain.vicoDialogAdd === true) {
         const d = DateTime.now();
-        vico.value = storeGlobal.templateVico;
+        vico.value = storeGlobal.getVicoTemplate();
         vico.value.date = d.toLocaleString();
         vico.value.timeStart = d.toLocaleString(DateTime.TIME_24_SIMPLE);
         vico.value.timeEnd = d.toLocaleString(DateTime.TIME_24_SIMPLE);

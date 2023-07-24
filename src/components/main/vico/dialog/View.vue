@@ -1,5 +1,5 @@
 <template>
-  <q-dialog v-model="dialog">
+  <q-dialog v-model="dialog" persistent>
     <q-card style="min-width: 95vw" flat bordered>
       <q-card-section>
         <q-form class="q-gutter-md">
@@ -23,7 +23,6 @@
                 v-model="vico.timeStart"
                 mask="time"
                 label="Дата начала ВКС"
-                style="max-width: 200px"
                 readonly
               >
                 <template v-slot:append>
@@ -162,7 +161,7 @@ export default defineComponent({
     const optionTypeVico = computed(() => storeGlobal.optionTypeVico);
     const optionDepartament = computed(() => storeGlobal.optionDepartament);
 
-    const vico = ref(storeGlobal.templateVico);
+    const vico = ref();
 
     const { vicoDialogView } = storeToRefs(storeMain);
 

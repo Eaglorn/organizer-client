@@ -197,8 +197,6 @@ export default defineComponent({
     MainVicoDialogEdit,
   },
   setup() {
-    storeGlobal.setServer('http://10.27.0.243:3000/');
-
     const socket = io(storeGlobal.getServer);
 
     const dialogVicoArchive = ref(false);

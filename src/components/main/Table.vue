@@ -13,7 +13,7 @@
       :columns="columns"
       :separator="separator"
       table-header-style="height: 0px;"
-      wrap-cells="true"
+      :wrap-cells="true"
     >
       <template v-slot:header-cell="props">
         <q-th :props="props" style="font-size: medium">

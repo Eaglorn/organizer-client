@@ -1,6 +1,6 @@
 <template>
-  <q-dialog v-model="dialog" position="top">
-    <q-card style="min-width: 95vw; top: 10px"  flat bordered>
+  <q-dialog v-model="dialog" position="top" persistent>
+    <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
         <q-form class="q-gutter-md">
           <div class="row justify-evenly">
@@ -209,7 +209,7 @@ export default defineComponent({
     const optionTypeVico = computed(() => storeGlobal.optionTypeVico);
     const optionDepartament = computed(() => storeGlobal.optionDepartament);
 
-    const vico = ref(storeGlobal.templateVico);
+    const vico = ref();
 
     const { vicoDialogEdit } = storeToRefs(storeMain);
 
@@ -340,8 +340,6 @@ export default defineComponent({
           });
           Loading.hide();
         });
-
-      dialog.value = false;
     };
 
     const dialogClose = () => {
