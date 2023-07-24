@@ -194,12 +194,6 @@ const columns = [
 ];
 export default defineComponent({
   name: 'MainTable',
-  props: {
-    name: {
-      type: String,
-      required: false,
-    },
-  },
   setup() {
     const rows = computed(() => storeMain.vicos);
 
@@ -207,6 +201,7 @@ export default defineComponent({
 
     const selectAction = (rowId) => {
       if (storeMain.selectId === rowId && storeMain.isSelect == true) {
+        storeMain.selectId = -1;
         storeMain.isSelect = false;
       } else {
         storeMain.selectId = rowId;
@@ -224,7 +219,7 @@ export default defineComponent({
         sortBy: 'desc',
         descending: false,
         page: 1,
-        rowsPerPage: 100,
+        rowsPerPage: 999999,
       }),
     };
   },

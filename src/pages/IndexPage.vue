@@ -42,7 +42,7 @@
         <q-btn
           label="Отмена"
           color="primary"
-          @click="closeDialogVicoArchive"
+          @click="closeDialogVicoDelete"
           text-color="white"
         />
         <q-btn
@@ -223,12 +223,22 @@ export default defineComponent({
       dialogVicoArchive.value = false;
       const vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       storeMain.setVicos(vicos);
+      console.log(storeMain.selectId);
+      console.log(data.id);
+      if (storeMain.selectId === data.id) {
+        storeMain.selectId = -1;
+        storeMain.isSelect = false;
+      }
     });
 
     socket.on('vicoDelete', (data) => {
       dialogVicoDelete.value = false;
       const vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       storeMain.setVicos(vicos);
+      if (storeMain.selectId === data.id) {
+        storeMain.selectId = -1;
+        storeMain.isSelect = false;
+      }
     });
 
     const updatePage = () => {
