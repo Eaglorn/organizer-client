@@ -8,6 +8,8 @@ export const useMainStore = defineStore('main', {
     vicoDialogView: false,
     vicoDialogAdd: false,
     vicoDialogEdit: false,
+    vicoDialogArchive: false,
+    vicoDialogDelete: false,
   }),
   getters: {
     getVicos: (state) => {

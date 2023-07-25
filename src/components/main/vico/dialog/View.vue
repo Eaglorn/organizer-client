@@ -166,9 +166,9 @@ export default defineComponent({
     const { vicoDialogView } = storeToRefs(storeMain);
 
     watch(vicoDialogView, () => {
+      Loading.show();
       if (storeMain.vicoDialogView === true) {
         if (storeMain.isSelect) {
-          Loading.show();
           api({
             method: 'post',
             url: storeGlobal.getAjaxUri('vico/one'),
@@ -177,7 +177,12 @@ export default defineComponent({
             responseType: 'json',
           })
             .then((response) => {
-              if (response.data.success === false) {
+              if (response.data.success) {
+                vico.value = response.data.vico;
+                dialog.value = true;
+                storeMain.vicoDialogView = false;
+                Loading.hide();
+              } else {
                 Notify.create({
                   progress: true,
                   color: 'negative',
@@ -185,12 +190,9 @@ export default defineComponent({
                   message: response.data.message,
                   icon: 'report_problem',
                 });
-              } else {
-                vico.value = response.data.vico;
                 storeMain.vicoDialogView = false;
-                dialog.value = true;
+                Loading.hide();
               }
-              Loading.hide();
             })
             .catch(function () {
               Notify.create({
@@ -199,14 +201,27 @@ export default defineComponent({
                 message: 'Нет соединения с сервером.',
                 icon: 'report_problem',
               });
+              storeMain.vicoDialogView = false;
               Loading.hide();
             });
+        } else {
+          Notify.create({
+            color: 'warning',
+            position: 'top',
+            message: 'Отсутствует выделение записи ВКС',
+            icon: 'warning',
+          });
+          storeMain.vicoDialogView = false;
+          Loading.hide();
         }
+      } else {
+        Loading.hide();
       }
     });
 
     const dialogClose = () => {
       dialog.value = false;
+      storeMain.vicoDialogView = false;
     };
 
     return {

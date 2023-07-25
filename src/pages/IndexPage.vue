@@ -5,55 +5,8 @@
   <MainVicoDialogView />
   <MainVicoDialogAdd />
   <MainVicoDialogEdit />
-  <q-dialog v-model="dialogVicoArchive" persistent>
-    <q-card>
-      <q-card-section class="row items-center">
-        <q-avatar icon="archive" color="blue" text-color="white" />
-        <span class="q-ml-sm"
-          >Подтвердите действие переноса записи об ВКС в архив.</span
-        >
-      </q-card-section>
-
-      <q-card-actions align="right">
-        <q-btn
-          label="Отмена"
-          color="primary"
-          @click="closeDialogVicoArchive"
-          text-color="white"
-        />
-        <q-btn
-          label="Перенести"
-          color="warning"
-          @click="saveDialogVicoArchive"
-          text-color="black"
-        />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
-  <q-dialog v-model="dialogVicoDelete" persistent>
-    <q-card>
-      <q-card-section class="row items-center">
-        <q-avatar icon="delete" color="red" text-color="white" />
-        <span class="q-ml-sm"
-          >Подтвердите действие удаления записи об ВКС.</span
-        >
-      </q-card-section>
-      <q-card-actions align="right">
-        <q-btn
-          label="Отмена"
-          color="primary"
-          @click="closeDialogVicoDelete"
-          text-color="white"
-        />
-        <q-btn
-          label="Удалить"
-          color="negative"
-          @click="saveDialogVicoDelete"
-          text-color="white"
-        />
-      </q-card-actions>
-    </q-card>
-  </q-dialog>
+  <MainVicoDialogArchive />
+  <MainVicoDialogDelete />
   <q-page-sticky class="my-button" position="bottom-left" :offset="[18, 18]">
     <q-btn-group push class="my-button">
       <q-btn
@@ -136,7 +89,7 @@
         icon="archive"
         padding="8px"
         size="24px"
-        @click="openDialogVicoArchive"
+        @click="storeMain.vicoDialogArchive = true"
       >
         <q-tooltip
           transition-show="scale"
@@ -154,7 +107,7 @@
         icon="delete"
         padding="8px"
         size="24px"
-        @click="openDialogVicoDelete"
+        @click="storeMain.vicoDialogDelete = true"
       >
         <q-tooltip
           transition-show="scale"
@@ -162,7 +115,6 @@
           class="text-body1"
           anchor="top middle"
           self="center middle"
-          @click="closeDialogVicoDelete"
         >
           Удалить
         </q-tooltip>
@@ -181,6 +133,8 @@ import MainTable from 'components/main/Table.vue';
 import MainVicoDialogView from 'components/main/vico/dialog/View.vue';
 import MainVicoDialogAdd from 'components/main/vico/dialog/Add.vue';
 import MainVicoDialogEdit from 'components/main/vico/dialog/Edit.vue';
+import MainVicoDialogArchive from 'components/main/vico/dialog/Archive.vue';
+import MainVicoDialogDelete from 'components/main/vico/dialog/Delete.vue';
 
 import { useGlobalStore } from '../stores/storeGlobal.js';
 import { useMainStore } from '../stores/storeMain.js';
@@ -195,11 +149,11 @@ export default defineComponent({
     MainVicoDialogView,
     MainVicoDialogAdd,
     MainVicoDialogEdit,
+    MainVicoDialogArchive,
+    MainVicoDialogDelete,
   },
   setup() {
     const socket = io(storeGlobal.getServer);
-
-    const dialogVicoArchive = ref(false);
     const dialogVicoDelete = ref(false);
 
     socket.on('vicoAdd', (data) => {
@@ -220,11 +174,8 @@ export default defineComponent({
     });
 
     socket.on('vicoArchive', (data) => {
-      dialogVicoArchive.value = false;
       const vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       storeMain.setVicos(vicos);
-      console.log(storeMain.selectId);
-      console.log(data.id);
       if (storeMain.selectId === data.id) {
         storeMain.selectId = -1;
         storeMain.isSelect = false;
@@ -232,7 +183,6 @@ export default defineComponent({
     });
 
     socket.on('vicoDelete', (data) => {
-      dialogVicoDelete.value = false;
       const vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       storeMain.setVicos(vicos);
       if (storeMain.selectId === data.id) {
@@ -275,106 +225,9 @@ export default defineComponent({
         });
     };
 
-    const openDialogVicoArchive = () => {
-      if (storeMain.isSelect) {
-        dialogVicoArchive.value = true;
-      }
-    };
-
-    const saveDialogVicoArchive = () => {
-      Loading.show();
-      api({
-        method: 'post',
-        url: storeGlobal.getAjaxUri('vico/archive'),
-        data: {
-          id: storeMain.selectId,
-        },
-        timeout: 10000,
-        responseType: 'json',
-      })
-        .then((response) => {
-          if (response.data.success === false) {
-            Notify.create({
-              progress: true,
-              color: 'negative',
-              position: 'top',
-              message: response.data.message,
-              icon: 'report_problem',
-            });
-          } else {
-            dialogVicoArchive.value = false;
-          }
-          Loading.hide();
-        })
-        .catch(function () {
-          Notify.create({
-            color: 'negative',
-            position: 'top',
-            message: 'Нет соединения с сервером.',
-            icon: 'report_problem',
-          });
-          Loading.hide();
-        });
-    };
-
-    const closeDialogVicoArchive = () => {
-      dialogVicoArchive.value = false;
-    };
-
-    const openDialogVicoDelete = () => {
-      if (storeMain.isSelect) {
-        dialogVicoDelete.value = true;
-      }
-    };
-
-    const saveDialogVicoDelete = () => {
-      api({
-        method: 'post',
-        url: storeGlobal.getAjaxUri('vico/delete'),
-        data: {
-          id: storeMain.selectId,
-        },
-        timeout: 10000,
-        responseType: 'json',
-      })
-        .then((response) => {
-          if (response.data.success === false) {
-            Notify.create({
-              progress: true,
-              color: 'negative',
-              position: 'top',
-              message: response.data.message,
-              icon: 'report_problem',
-            });
-          }
-          Loading.hide();
-        })
-        .catch(function () {
-          Notify.create({
-            color: 'negative',
-            position: 'top',
-            message: 'Нет соединения с сервером.',
-            icon: 'report_problem',
-          });
-          Loading.hide();
-        });
-    };
-
-    const closeDialogVicoDelete = () => {
-      dialogVicoDelete.value = false;
-    };
-
     return {
       storeMain,
       updatePage,
-      dialogVicoArchive,
-      dialogVicoDelete,
-      openDialogVicoArchive,
-      saveDialogVicoArchive,
-      closeDialogVicoArchive,
-      openDialogVicoDelete,
-      saveDialogVicoDelete,
-      closeDialogVicoDelete,
     };
   },
 });

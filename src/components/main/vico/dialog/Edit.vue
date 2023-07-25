@@ -214,9 +214,9 @@ export default defineComponent({
     const { vicoDialogEdit } = storeToRefs(storeMain);
 
     watch(vicoDialogEdit, () => {
+      Loading.show();
       if (storeMain.vicoDialogEdit === true) {
         if (storeMain.isSelect) {
-          Loading.show();
           api({
             method: 'post',
             url: storeGlobal.getAjaxUri('vico/one'),
@@ -225,15 +225,7 @@ export default defineComponent({
             responseType: 'json',
           })
             .then((response) => {
-              if (response.data.success === false) {
-                Notify.create({
-                  progress: true,
-                  color: 'negative',
-                  position: 'top',
-                  message: response.data.message,
-                  icon: 'report_problem',
-                });
-              } else {
+              if (response.data.success) {
                 vico.value = response.data.vico;
 
                 vico.value.typeVico = storeGlobal.getOptionTypeVicoByName(
@@ -265,13 +257,21 @@ export default defineComponent({
                   );
                 });
 
-                storeMain.vicoDialogEdit = false;
                 dialog.value = true;
+                storeMain.vicoDialogEdit = false;
+                Loading.hide();
+              } else {
+                Notify.create({
+                  progress: true,
+                  color: 'negative',
+                  position: 'top',
+                  message: response.data.message,
+                  icon: 'report_problem',
+                });
+                Loading.hide();
               }
-              Loading.hide();
             })
             .catch(function (err) {
-              console.log(err);
               Notify.create({
                 color: 'negative',
                 position: 'top',
@@ -280,20 +280,32 @@ export default defineComponent({
               });
               Loading.hide();
             });
+        } else {
+          Notify.create({
+            color: 'warning',
+            position: 'top',
+            message: 'Отсутствует выделение записи ВКС',
+            icon: 'warning',
+          });
+          storeMain.vicoDialogEdit = false;
+          Loading.hide();
         }
+      } else {
+        Loading.hide();
       }
     });
 
     const dialogSave = () => {
+      Loading.show();
       const vicoEdit = {
         date: vico.value.date,
         timeStart: vico.value.timeStart,
         timeEnd: vico.value.timeEnd,
-        objectInitiator: vico.value.objectInitiator.label,
+        objectInitiator: vico.value.objectInitiator?.label ?? '',
         objectInvited: [],
-        typeVico: vico.value.typeVico.label,
+        typeVico: vico.value.typeVico?.label ?? '',
         topic: vico.value.topic,
-        departamentInitiator: vico.value.departamentInitiator.label,
+        departamentInitiator: vico.value.departamentInitiator?.label ?? '',
         departamentInvited: [],
         contactName: vico.value.contactName,
         contactPhone: vico.value.contactPhone,
@@ -326,10 +338,12 @@ export default defineComponent({
               message: response.data.message,
               icon: 'report_problem',
             });
+            Loading.hide();
           } else {
             dialog.value = false;
+            storeMain.vicoDialogEdit = false;
+            Loading.hide();
           }
-          Loading.hide();
         })
         .catch(function () {
           Notify.create({
@@ -344,6 +358,7 @@ export default defineComponent({
 
     const dialogClose = () => {
       dialog.value = false;
+      storeMain.vicoDialogEdit = false;
     };
 
     return {

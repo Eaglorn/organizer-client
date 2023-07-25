@@ -217,13 +217,14 @@ export default defineComponent({
 
     watch(vicoDialogAdd, () => {
       if (storeMain.vicoDialogAdd === true) {
+        Loading.show();
         const d = DateTime.now();
         vico.value = storeGlobal.getVicoTemplate();
         vico.value.date = d.toLocaleString();
         vico.value.timeStart = d.toLocaleString(DateTime.TIME_24_SIMPLE);
         vico.value.timeEnd = d.toLocaleString(DateTime.TIME_24_SIMPLE);
-        storeMain.vicoDialogAdd = false;
         dialog.value = true;
+        Loading.hide();
       }
     });
 
@@ -233,11 +234,11 @@ export default defineComponent({
         date: vico.value.date,
         timeStart: vico.value.timeStart,
         timeEnd: vico.value.timeEnd,
-        objectInitiator: vico.value.objectInitiator.label || '',
+        objectInitiator: vico.value.objectInitiator?.label ?? '',
         objectInvited: [],
-        typeVico: vico.value.typeVico.label || '',
+        typeVico: vico.value.typeVico?.label ?? '',
         topic: vico.value.topic,
-        departamentInitiator: vico.value.departamentInitiator.label || '',
+        departamentInitiator: vico.value.departamentInitiator?.label ?? '',
         departamentInvited: [],
         contactName: vico.value.contactName,
         contactPhone: vico.value.contactPhone,
@@ -261,7 +262,11 @@ export default defineComponent({
         responseType: 'json',
       })
         .then((response) => {
-          if (response.data.success === false) {
+          if (response.data.success) {
+            dialog.value = false;
+            storeMain.vicoDialogAdd = false;
+            Loading.hide();
+          } else {
             Notify.create({
               progress: true,
               color: 'negative',
@@ -269,10 +274,8 @@ export default defineComponent({
               message: response.data.message,
               icon: 'report_problem',
             });
-          } else {
-            dialog.value = false;
+            Loading.hide();
           }
-          Loading.hide();
         })
         .catch(function () {
           Notify.create({
@@ -286,6 +289,7 @@ export default defineComponent({
     };
 
     const dialogClose = () => {
+      storeMain.vicoDialogAdd = false;
       dialog.value = false;
     };
 

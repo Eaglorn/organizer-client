@@ -2,9 +2,9 @@ import { defineStore } from 'pinia';
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
-    //server: 'http://10.27.0.243:3000/',
+    server: 'http://10.27.0.243:3000/',
     //server: 'http://localhost:3000/',
-    server: 'http://192.168.0.10:3000/',
+    //server: 'http://192.168.0.10:3000/',
     optionObject: [],
     optionTypeVico: [],
     optionDepartament: [],
