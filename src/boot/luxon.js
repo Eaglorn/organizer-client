@@ -1,8 +1,3 @@
-import { boot } from "quasar/wrappers";
-import { DateTime } from "luxon";
-
-export default boot(({ app }) => {
-  app.config.globalProperties.$datetime = DateTime;
-});
+import { DateTime } from 'luxon';
 
 export { DateTime };

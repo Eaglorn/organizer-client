@@ -155,28 +155,27 @@ export default defineComponent({
     MainVicoDialogDelete,
   },
   setup() {
-    const socket = io(storeGlobal.getServer);
+    const socket = io(storeGlobal.server);
 
     socket.on('vicoAdd', (data) => {
-      storeMain.addVico(data, true);
+      storeMain.addVico(data);
     });
 
     socket.on('vicoEdit', (data) => {
       storeMain.setVico(data.vico);
+      storeMain.vicosSort();
     });
 
     socket.on('vicoAll', (data) => {
-      storeGlobal.setOptions(
-        data.optionObject,
-        data.optionTypeVico,
-        data.optionDepartament,
-      );
-      storeMain.setVicos(data.vicos);
+      storeGlobal.optionObject = data.optionObject;
+      storeGlobal.optionTypeVico = data.optionTypeVico;
+      storeGlobal.optionDepartament = data.optionDepartament;
+      storeMain.vicos = data.vicos;
+      storeMain.vicosSort();
     });
 
     socket.on('vicoArchive', (data) => {
-      const vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
-      storeMain.setVicos(vicos);
+      storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       if (storeMain.selectId === data.id) {
         storeMain.selectId = -1;
         storeMain.isSelect = false;
@@ -184,8 +183,7 @@ export default defineComponent({
     });
 
     socket.on('vicoDelete', (data) => {
-      const vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
-      storeMain.setVicos(vicos);
+      storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       if (storeMain.selectId === data.id) {
         storeMain.selectId = -1;
         storeMain.isSelect = false;
@@ -211,7 +209,16 @@ export default defineComponent({
               icon: 'report_problem',
             });
           } else {
-            storeMain.setVicos(response.data.vicos);
+            if (
+              response.data.vicos.find(
+                (item) => item.id === storeMain.selectId,
+              ) === undefined
+            ) {
+              storeMain.selectId = -1;
+              storeMain.isSelect = false;
+            }
+            storeMain.vicos = response.data.vicos;
+            storeMain.vicosSort();
           }
           Loading.hide();
         })

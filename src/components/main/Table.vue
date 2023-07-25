@@ -212,7 +212,6 @@ export default defineComponent({
       separator: 'cell',
       columns,
       pagination: ref({
-        sortBy: 'desc',
         descending: false,
         page: 1,
         rowsPerPage: 999,
@@ -224,7 +223,7 @@ export default defineComponent({
 
 <style lang="sass">
 .my-sticky-table
-  max-height: 90vh
+  max-height: 88vh
 
   tr th
     position: sticky

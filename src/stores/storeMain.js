@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia';
+import { DateTime } from 'boot/luxon';
+import { _sort } from 'boot/radash';
 
 export const useMainStore = defineStore('main', {
   state: () => ({
@@ -12,14 +14,19 @@ export const useMainStore = defineStore('main', {
     vicoDialogDelete: false,
   }),
   getters: {
-    getVicos: (state) => {
-      return state.vicos;
-    },
     getVicoById: (state) => {
       return (vicoId) => state.vicos.find((vico) => vico.id === vicoId);
     },
   },
   actions: {
+    vicosSort() {
+      this.vicos = _sort(this.vicos, (item) =>
+        DateTime.fromFormat(
+          item.date + '-' + item.timeStart,
+          'dd.LL.yyyy-hh:mm',
+        ).toUnixInteger(),
+      );
+    },
     setVico(vico) {
       this.vicos.forEach((item, index) => {
         if (vico.id === item.id) {
@@ -27,15 +34,9 @@ export const useMainStore = defineStore('main', {
         }
       });
     },
-    setVicos(vicos) {
-      this.vicos = vicos;
-    },
-    addVico(vico, isToAddToStart = false) {
-      if (isToAddToStart) {
-        this.vicos.unshift(vico);
-      } else {
-        this.vicos.push(vico);
-      }
+    addVico(vico) {
+      this.vicos.push(vico);
+      this.vicosSort();
     },
   },
 });

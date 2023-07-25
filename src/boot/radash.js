@@ -1,10 +1,3 @@
-import { boot } from 'quasar/wrappers';
-import * as _ from 'radash';
+import { clone as _clone, sort as _sort } from 'radash';
 
-// "async" is optional;
-// more info on params: https://v2.quasar.dev/quasar-cli/boot-files
-export default boot(async ({ app }) => {
-  app.config.globalProperties.$_ = _;
-});
-
-export { _ };
+export { _clone, _sort };

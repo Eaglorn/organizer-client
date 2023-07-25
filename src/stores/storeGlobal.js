@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { _ } from 'boot/radash';
+import { _clone } from 'boot/radash';
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
@@ -24,9 +24,6 @@ export const useGlobalStore = defineStore('global', {
     },
   }),
   getters: {
-    getServer: (state) => {
-      return state.server;
-    },
     getAjaxUri(state) {
       return (response) => state.server + 'api/' + response;
     },
@@ -45,15 +42,7 @@ export const useGlobalStore = defineStore('global', {
   },
   actions: {
     getVicoTemplate() {
-      return _.clone(this.templateVico);
-    },
-    setServer(server) {
-      this.server = server;
-    },
-    setOptions(optionObject, optionTypeVico, optionDepartament) {
-      this.optionObject = optionObject;
-      this.optionTypeVico = optionTypeVico;
-      this.optionDepartament = optionDepartament;
+      return _clone(this.templateVico);
     },
   },
 });
