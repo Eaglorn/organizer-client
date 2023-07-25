@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { _ } from 'boot/radash';
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
@@ -44,7 +45,7 @@ export const useGlobalStore = defineStore('global', {
   },
   actions: {
     getVicoTemplate() {
-      return Object.assign({}, this.templateVico);
+      return _.clone(this.templateVico);
     },
     setServer(server) {
       this.server = server;

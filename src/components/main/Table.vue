@@ -107,10 +107,8 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue';
-import { useGlobalStore } from '../../stores/storeGlobal';
 import { useMainStore } from '../../stores/storeMain';
 
-const storeGlobal = useGlobalStore();
 const storeMain = useMainStore();
 
 const columns = [
@@ -191,7 +189,7 @@ const columns = [
   },
 ];
 export default defineComponent({
-  name: 'MainTable',
+  name: 'MainVicoTable',
   setup() {
     const rows = computed(() => storeMain.vicos);
 
