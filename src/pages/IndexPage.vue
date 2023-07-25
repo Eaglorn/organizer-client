@@ -167,9 +167,37 @@ export default defineComponent({
     });
 
     socket.on('vicoAll', (data) => {
-      storeGlobal.optionObject = data.optionObject;
-      storeGlobal.optionTypeVico = data.optionTypeVico;
-      storeGlobal.optionDepartament = data.optionDepartament;
+      storeGlobal.optionObject = [];
+      storeGlobal.optionTypeVico = [];
+      storeGlobal.optionDepartament = [];
+
+      var i = 0;
+      data.optionObject.forEach((item) => {
+        storeGlobal.optionObject.push({
+          label: item,
+          value: i,
+        });
+        i++;
+      });
+
+      i = 0;
+      data.optionTypeVico.forEach((item) => {
+        storeGlobal.optionTypeVico.push({
+          label: item,
+          value: i,
+        });
+        i++;
+      });
+
+      i = 0;
+      data.optionDepartament.forEach((item) => {
+        storeGlobal.optionDepartament.push({
+          label: item,
+          value: i,
+        });
+        i++;
+      });
+
       storeMain.vicos = data.vicos;
       storeMain.vicosSort();
     });
