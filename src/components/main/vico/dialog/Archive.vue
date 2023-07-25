@@ -34,7 +34,7 @@ import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useMainStore } from '../../../../stores/storeMain.js';
 
 export default defineComponent({
-  name: 'MainDialogArchive',
+  name: 'MainVicoDialogArchive',
   props: {},
   setup() {
     const storeGlobal = useGlobalStore();

@@ -8,11 +8,9 @@
       bordered
       row-key="id"
       :rows="rows"
-      :hide-pagination="true"
       v-model:pagination="pagination"
       :columns="columns"
       :separator="separator"
-      table-header-style="height: 0px;"
       :wrap-cells="true"
     >
       <template v-slot:header-cell="props">
@@ -219,7 +217,7 @@ export default defineComponent({
         sortBy: 'desc',
         descending: false,
         page: 1,
-        rowsPerPage: 999999,
+        rowsPerPage: 999,
       }),
     };
   },

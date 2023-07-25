@@ -33,7 +33,7 @@ import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useMainStore } from '../../../../stores/storeMain.js';
 
 export default defineComponent({
-  name: 'MainDialogDelete',
+  name: 'MainVicoDialogDelete',
   props: {},
   setup() {
     const storeGlobal = useGlobalStore();
