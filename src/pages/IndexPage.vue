@@ -65,14 +65,16 @@
       </q-btn>
     </q-btn-group>
   </q-page-sticky>
-  <q-page-sticky
-    class="my-button"
-    position="bottom-right"
-    :offset="[18, 18]"
-    @click="updatePage"
-  >
+  <q-page-sticky class="my-button" position="bottom-right" :offset="[18, 18]">
     <q-btn-group push class="my-button">
-      <q-btn push color="green" icon="autorenew" padding="8px" size="24px">
+      <q-btn
+        push
+        color="green"
+        icon="autorenew"
+        padding="8px"
+        size="24px"
+        @click="updateTable"
+      >
         <q-tooltip
           transition-show="scale"
           transition-hide="scale"
@@ -154,7 +156,6 @@ export default defineComponent({
   },
   setup() {
     const socket = io(storeGlobal.getServer);
-    const dialogVicoDelete = ref(false);
 
     socket.on('vicoAdd', (data) => {
       storeMain.addVico(data, true);
@@ -191,7 +192,7 @@ export default defineComponent({
       }
     });
 
-    const updatePage = () => {
+    const updateTable = () => {
       Loading.show();
       api({
         method: 'post',
@@ -227,7 +228,7 @@ export default defineComponent({
 
     return {
       storeMain,
-      updatePage,
+      updateTable,
     };
   },
 });
