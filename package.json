@@ -17,7 +17,7 @@
     "@quasar/extras": "^1.16.5",
     "axios": "^1.4.0",
     "luxon": "^3.3.0",
-    "pinia": "^2.1.4",
+    "pinia": "^2.1.6",
     "quasar": "^2.12.3",
     "radash": "^11.0.0",
     "socket.io-client": "^4.7.1",
@@ -28,7 +28,7 @@
     "@quasar/app-vite": "^1.4.3",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.45.0",
-    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-vue": "^9.15.1",
     "postcss": "^8.4.27",
     "prettier": "^3.0.0"
