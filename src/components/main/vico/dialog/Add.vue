@@ -262,14 +262,20 @@ export default defineComponent({
         responseType: 'json',
       })
         .then((response) => {
+          console.log(response);
           if (response.data.success) {
             if (response.data.collision) {
+              var textMessage = '';
+              for (const item of response.data.message) {
+                textMessage += '<br />' + item;
+              }
               Notify.create({
                 progress: true,
                 color: 'warning',
                 position: 'top',
-                message: 'На данное время ВКС уже занято',
+                message: 'На данное время ВКС уже занято.' + textMessage,
                 icon: 'warning',
+                html: true,
               });
               Loading.hide();
             } else {
