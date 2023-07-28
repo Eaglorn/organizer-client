@@ -263,9 +263,20 @@ export default defineComponent({
       })
         .then((response) => {
           if (response.data.success) {
-            dialog.value = false;
-            storeMain.vicoDialogAdd = false;
-            Loading.hide();
+            if (response.data.collision) {
+              Notify.create({
+                progress: true,
+                color: 'warning',
+                position: 'top',
+                message: 'На данное время ВКС уже занято',
+                icon: 'warning',
+              });
+              Loading.hide();
+            } else {
+              dialog.value = false;
+              storeMain.vicoDialogAdd = false;
+              Loading.hide();
+            }
           } else {
             Notify.create({
               progress: true,
