@@ -2,7 +2,7 @@
   <q-dialog v-model="dialog" position="top" persistent>
     <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
-        <q-form class="q-gutter-md">
+        <q-form class="q-gutter-md" @submit="dialogSave">
           <div class="row justify-evenly">
             <div class="col-3">
               <q-input
@@ -10,6 +10,11 @@
                 v-model="vico.date"
                 mask="##.##.####"
                 label="Дата"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 9) || 'Не корректно введена дата',
+                ]"
               >
                 <template v-slot:append>
                   <q-icon name="event" class="cursor-pointer">
@@ -39,6 +44,12 @@
                 v-model="vico.timeStart"
                 mask="time"
                 label="Время начала ВКС"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 4) || 'Не корректно введено время',
+                  'time',
+                ]"
               >
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
@@ -68,6 +79,12 @@
                 v-model="vico.timeEnd"
                 mask="time"
                 label="Время окончания ВКС"
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 4) || 'Не корректно введено время',
+                  'time',
+                ]"
               >
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
@@ -99,6 +116,8 @@
                 v-model="vico.objectInitiator"
                 :options="optionObject"
                 label="Обособленное подразделение инцииатор ВКС"
+                lazy-rules
+                :rules="[(val) => val || 'Не выбрано поздразделение инициатор']"
               />
             </div>
             <div class="col-6">
@@ -113,6 +132,11 @@
                   overflow: hidden;
                   text-overflow: ellipsis;
                 "
+                lazy-rules
+                :rules="[
+                  (val) =>
+                    (val && val.length > 0) || 'Не выбраны поздразделения',
+                ]"
               />
             </div>
           </div>
@@ -123,6 +147,8 @@
                 v-model="vico.departamentInitiator"
                 :options="optionDepartament"
                 label="Отдел инициатор ВКС"
+                lazy-rules
+                :rules="[(val) => val > 0 || 'Не выбран отдел инициатор']"
               />
             </div>
             <div class="col-6">
@@ -137,6 +163,10 @@
                   overflow: hidden;
                   text-overflow: ellipsis;
                 "
+                lazy-rules
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Не выбраны отделы',
+                ]"
               />
             </div>
           </div>
@@ -146,11 +176,21 @@
                 outlined
                 v-model="vico.typeVico"
                 :options="optionTypeVico"
-                label="Тип совещания"
+                label="Тип ВКС"
+                lazy-rules
+                :rules="[(val) => val > 0 || 'Не выбран тип']"
               />
             </div>
             <div class="col-4">
-              <q-input outlined v-model="vico.topic" label="Тема совещания" />
+              <q-input
+                outlined
+                v-model="vico.topic"
+                label="Тема совещания"
+                lazy-rules
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Не заполнено поле',
+                ]"
+              />
             </div>
           </div>
           <div class="row justify-evenly">
@@ -159,6 +199,10 @@
                 outlined
                 v-model="vico.contactName"
                 label="ФИО инициатора ВКС"
+                lazy-rules
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Не заполнено поле',
+                ]"
               />
             </div>
             <div class="col-4">
@@ -166,6 +210,10 @@
                 outlined
                 v-model="vico.contactPhone"
                 label="Контактный номер"
+                lazy-rules
+                :rules="[
+                  (val) => (val && val.length > 0) || 'Не заполнено поле',
+                ]"
               />
             </div>
           </div>
@@ -181,7 +229,7 @@
         <q-btn
           label="Создать"
           color="positive"
-          @click="dialogSave"
+          type="submit"
           text-color="black"
         />
       </q-card-actions>
@@ -212,6 +260,10 @@ export default defineComponent({
     const optionDepartament = computed(() => storeGlobal.optionDepartament);
 
     const vico = ref();
+
+    const vicoDateOptionFn = (date) => {
+      return date <= DateTime.now().toLocaleString();
+    };
 
     const { vicoDialogAdd } = storeToRefs(storeMain);
 
@@ -286,10 +338,10 @@ export default defineComponent({
           } else {
             Notify.create({
               progress: true,
-              color: 'negative',
+              color: 'warning',
               position: 'top',
               message: response.data.message,
-              icon: 'report_problem',
+              icon: 'warning',
             });
             Loading.hide();
           }
@@ -312,6 +364,7 @@ export default defineComponent({
 
     return {
       vico,
+      vicoDateOptionFn,
       dialog,
       dialogSave,
       dialogClose,
