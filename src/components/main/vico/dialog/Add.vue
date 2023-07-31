@@ -2,7 +2,7 @@
   <q-dialog v-model="dialog" position="top" persistent>
     <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
-        <q-form class="q-gutter-md">
+        <q-form class="q-gutter-md" @submit.stop="dialogSave">
           <div class="row justify-evenly">
             <div class="col-3">
               <q-input
@@ -10,10 +10,8 @@
                 v-model="vico.date"
                 mask="##.##.####"
                 label="Дата"
-                lazy-rules
                 :rules="[
-                  (val) =>
-                    (val && val.length > 9) || 'Не корректно введена дата',
+                  (val) => formAdd.date.required || 'Не корректно введена дата',
                 ]"
               >
                 <template v-slot:append>
@@ -44,12 +42,6 @@
                 v-model="vico.timeStart"
                 mask="time"
                 label="Время начала ВКС"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 4) || 'Не корректно введено время',
-                  'time',
-                ]"
               >
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
@@ -79,12 +71,6 @@
                 v-model="vico.timeEnd"
                 mask="time"
                 label="Время окончания ВКС"
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 4) || 'Не корректно введено время',
-                  'time',
-                ]"
               >
                 <template v-slot:append>
                   <q-icon name="access_time" class="cursor-pointer">
@@ -167,15 +153,7 @@
               />
             </div>
             <div class="col-4">
-              <q-input
-                outlined
-                v-model="vico.topic"
-                label="Тема совещания"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Не заполнено поле',
-                ]"
-              />
+              <q-input outlined v-model="vico.topic" label="Тема совещания" />
             </div>
           </div>
           <div class="row justify-evenly">
@@ -184,10 +162,6 @@
                 outlined
                 v-model="vico.contactName"
                 label="ФИО инициатора ВКС"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Не заполнено поле',
-                ]"
               />
             </div>
             <div class="col-4">
@@ -195,39 +169,36 @@
                 outlined
                 v-model="vico.contactPhone"
                 label="Контактный номер"
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Не заполнено поле',
-                ]"
               />
             </div>
           </div>
+          <q-card-actions align="right">
+            <q-btn
+              label="Отмена"
+              color="red-3"
+              @click="dialogClose"
+              text-color="black"
+            />
+            <q-btn
+              label="Создать"
+              color="positive"
+              type="submit"
+              text-color="black"
+            />
+          </q-card-actions>
         </q-form>
       </q-card-section>
-      <q-card-actions align="right">
-        <q-btn
-          label="Отмена"
-          color="red-3"
-          @click="dialogClose"
-          text-color="black"
-        />
-        <q-btn
-          label="Создать"
-          color="positive"
-          type="submit"
-          text-color="black"
-          @click="dialogSave"
-        />
-      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
 import { api } from 'boot/axios';
+import { DateTime } from 'boot/luxon';
+import { useVuelidate, required, minLength } from 'boot/vuelidate';
+
 import { Loading, Notify } from 'quasar';
 import { defineComponent, ref, computed, watch } from 'vue';
-import { DateTime } from 'boot/luxon';
 import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useMainStore } from '../../../../stores/storeMain.js';
@@ -246,6 +217,21 @@ export default defineComponent({
     const optionDepartament = computed(() => storeGlobal.optionDepartament);
 
     const vico = ref();
+
+    const rulesAdd = {
+      date: { required, min: minLength(9) },
+      timeEnd: { required },
+      objectInitiator: { required },
+      objectInvited: { required },
+      typeVico: { required },
+      topic: { required },
+      departamentInitiator: { required },
+      departamentInvited: { required },
+      contactName: { required },
+      contactPhone: { required },
+    };
+
+    const formAdd = useVuelidate(rulesAdd, vico);
 
     const vicoDateOptionFn = (date) => {
       return date <= DateTime.now().toLocaleString();
@@ -267,80 +253,90 @@ export default defineComponent({
     });
 
     const dialogSave = () => {
-      Loading.show();
-      const newVico = {
-        date: vico.value.date,
-        timeStart: vico.value.timeStart,
-        timeEnd: vico.value.timeEnd,
-        objectInitiator: vico.value.objectInitiator?.label ?? '',
-        objectInvited: [],
-        typeVico: vico.value.typeVico?.label ?? '',
-        topic: vico.value.topic,
-        departamentInitiator: vico.value.departamentInitiator?.label ?? '',
-        departamentInvited: [],
-        contactName: vico.value.contactName,
-        contactPhone: vico.value.contactPhone,
-      };
+      console.log(formAdd.value);
+      if (formAdd.value.$anyError) {
+        this.$q.notify({
+          color: 'red-4',
+          textColor: 'white',
+          icon: 'warning',
+          message: 'Form not valid',
+        });
+      } else {
+        Loading.show();
+        const newVico = {
+          date: vico.value.date,
+          timeStart: vico.value.timeStart,
+          timeEnd: vico.value.timeEnd,
+          objectInitiator: vico.value.objectInitiator?.label ?? '',
+          objectInvited: [],
+          typeVico: vico.value.typeVico?.label ?? '',
+          topic: vico.value.topic,
+          departamentInitiator: vico.value.departamentInitiator?.label ?? '',
+          departamentInvited: [],
+          contactName: vico.value.contactName,
+          contactPhone: vico.value.contactPhone,
+        };
 
-      vico.value.objectInvited.forEach((item) => {
-        newVico.objectInvited.push(item.label);
-      });
+        vico.value.objectInvited.forEach((item) => {
+          newVico.objectInvited.push(item.label);
+        });
 
-      vico.value.departamentInvited.forEach((item) => {
-        newVico.departamentInvited.push(item.label);
-      });
+        vico.value.departamentInvited.forEach((item) => {
+          newVico.departamentInvited.push(item.label);
+        });
 
-      api({
-        method: 'post',
-        url: storeGlobal.getAjaxUri('vico/add'),
-        data: {
-          vico: newVico,
-        },
-        timeout: 10000,
-        responseType: 'json',
-      })
-        .then((response) => {
-          console.log(response);
-          if (response.data.success) {
-            if (response.data.collision) {
-              var textMessage = '';
-              for (const item of response.data.message) {
-                textMessage += '<br />' + item;
+        api({
+          method: 'post',
+          url: storeGlobal.getAjaxUri('vico/add'),
+          data: {
+            vico: newVico,
+          },
+          timeout: 10000,
+          responseType: 'json',
+        })
+          .then((response) => {
+            console.log(response);
+            if (response.data.success) {
+              if (response.data.collision) {
+                var textMessage = '';
+                for (const item of response.data.message) {
+                  textMessage += '<br />' + item;
+                }
+                Notify.create({
+                  progress: true,
+                  color: 'warning',
+                  position: 'top',
+                  message: 'На данное время ВКС уже занято.' + textMessage,
+                  icon: 'warning',
+                  html: true,
+                });
+                Loading.hide();
+              } else {
+                dialog.value = false;
+                storeMain.vicoDialogAdd = false;
+                Loading.hide();
               }
+            } else {
               Notify.create({
                 progress: true,
                 color: 'warning',
                 position: 'top',
-                message: 'На данное время ВКС уже занято.' + textMessage,
+                message: response.data.message,
                 icon: 'warning',
-                html: true,
               });
               Loading.hide();
-            } else {
-              dialog.value = false;
-              storeMain.vicoDialogAdd = false;
-              Loading.hide();
             }
-          } else {
+          })
+          .catch(function () {
             Notify.create({
-              progress: true,
-              color: 'warning',
+              color: 'negative',
               position: 'top',
-              message: response.data.message,
-              icon: 'warning',
+              message: 'Нет соединения с сервером.',
+              icon: 'report_problem',
             });
             Loading.hide();
-          }
-        })
-        .catch(function () {
-          Notify.create({
-            color: 'negative',
-            position: 'top',
-            message: 'Нет соединения с сервером.',
-            icon: 'report_problem',
           });
-          Loading.hide();
-        });
+      }
     };
 
     const dialogClose = () => {
@@ -352,6 +348,7 @@ export default defineComponent({
       vico,
       vicoDateOptionFn,
       dialog,
+      formAdd,
       dialogSave,
       dialogClose,
       optionObject,
