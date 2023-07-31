@@ -2,7 +2,7 @@
   <q-dialog v-model="dialog" position="top" persistent>
     <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
-        <q-form class="q-gutter-md" @submit="dialogSave">
+        <q-form class="q-gutter-md">
           <div class="row justify-evenly">
             <div class="col-3">
               <q-input
@@ -116,8 +116,6 @@
                 v-model="vico.objectInitiator"
                 :options="optionObject"
                 label="Обособленное подразделение инцииатор ВКС"
-                lazy-rules
-                :rules="[(val) => val || 'Не выбрано поздразделение инициатор']"
               />
             </div>
             <div class="col-6">
@@ -132,11 +130,6 @@
                   overflow: hidden;
                   text-overflow: ellipsis;
                 "
-                lazy-rules
-                :rules="[
-                  (val) =>
-                    (val && val.length > 0) || 'Не выбраны поздразделения',
-                ]"
               />
             </div>
           </div>
@@ -147,8 +140,6 @@
                 v-model="vico.departamentInitiator"
                 :options="optionDepartament"
                 label="Отдел инициатор ВКС"
-                lazy-rules
-                :rules="[(val) => val > 0 || 'Не выбран отдел инициатор']"
               />
             </div>
             <div class="col-6">
@@ -163,10 +154,6 @@
                   overflow: hidden;
                   text-overflow: ellipsis;
                 "
-                lazy-rules
-                :rules="[
-                  (val) => (val && val.length > 0) || 'Не выбраны отделы',
-                ]"
               />
             </div>
           </div>
@@ -177,8 +164,6 @@
                 v-model="vico.typeVico"
                 :options="optionTypeVico"
                 label="Тип ВКС"
-                lazy-rules
-                :rules="[(val) => val > 0 || 'Не выбран тип']"
               />
             </div>
             <div class="col-4">
@@ -231,6 +216,7 @@
           color="positive"
           type="submit"
           text-color="black"
+          @click="dialogSave"
         />
       </q-card-actions>
     </q-card>
