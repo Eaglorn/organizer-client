@@ -12,7 +12,7 @@
                 label="Дата"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.date.$invalid || 'Не корректно введена дата',
                 ]"
               >
@@ -46,7 +46,7 @@
                 label="Время начала ВКС"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.timeStart.$invalid ||
                     'Не корректно введено время',
                 ]"
@@ -81,7 +81,7 @@
                 label="Время окончания ВКС"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.timeEnd.$invalid ||
                     'Не корректно введено время',
                 ]"
@@ -118,7 +118,7 @@
                 label="Обособленное подразделение инцииатор ВКС"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.objectInitiator.$invalid ||
                     'Не выбрано подразделение инициатор',
                 ]"
@@ -138,7 +138,7 @@
                 "
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.objectInvited.$invalid ||
                     'Не выбраны вызываемые обособленные подразделения',
                 ]"
@@ -154,7 +154,7 @@
                 label="Отдел инициатор ВКС"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.departamentInitiator.$invalid ||
                     'Не выбран отдел инициатор',
                 ]"
@@ -174,7 +174,7 @@
                 "
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.departamentInvited.$invalid ||
                     'Не выбраны приглашённые отделы',
                 ]"
@@ -190,8 +190,7 @@
                 label="Тип ВКС"
                 lazy-rules
                 :rules="[
-                  (val) =>
-                    !formValidate.typeVico.$invalid || 'Не выбран тип ВКС',
+                  () => !formValidate.typeVico.$invalid || 'Не выбран тип ВКС',
                 ]"
               />
             </div>
@@ -202,7 +201,7 @@
                 label="Тема совещания"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.topic.$invalid ||
                     'Не заполнена тема совещания',
                 ]"
@@ -217,7 +216,7 @@
                 label="ФИО инициатора ВКС"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.contactName.$invalid ||
                     'Не заполнено ФИО инициатора',
                 ]"
@@ -230,7 +229,7 @@
                 label="Контактный номер"
                 lazy-rules
                 :rules="[
-                  (val) =>
+                  () =>
                     !formValidate.contactPhone.$invalid ||
                     'Не заполнен контактный номер',
                 ]"
@@ -261,7 +260,6 @@
 import { api } from 'boot/axios';
 import { DateTime } from 'boot/luxon';
 import { useVuelidate, required, minLength } from 'boot/vuelidate';
-
 import { Loading, Notify } from 'quasar';
 import { defineComponent, ref, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia';
@@ -320,10 +318,6 @@ export default defineComponent({
     const form = ref();
 
     const formValidate = useVuelidate(rules, vico);
-
-    const vicoDateOptionFn = (date) => {
-      return date <= DateTime.now().toLocaleString();
-    };
 
     const { vicoDialogAdd } = storeToRefs(storeMain);
 
@@ -386,7 +380,6 @@ export default defineComponent({
           responseType: 'json',
         })
           .then((response) => {
-            console.log(response);
             if (response.data.success) {
               if (response.data.collision) {
                 var textMessage = '';
@@ -438,15 +431,14 @@ export default defineComponent({
 
     return {
       vico,
-      vicoDateOptionFn,
       dialog,
+      form,
       formValidate,
       dialogSave,
       dialogClose,
       optionObject,
       optionTypeVico,
       optionDepartament,
-      form,
     };
   },
 });
