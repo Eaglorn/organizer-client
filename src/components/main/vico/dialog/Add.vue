@@ -2,7 +2,7 @@
   <q-dialog v-model="dialog" position="top" persistent>
     <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
-        <q-form class="q-gutter-md">
+        <q-form class="q-gutter-md" ref="form">
           <div class="row justify-evenly">
             <div class="col-3">
               <q-input
@@ -13,9 +13,7 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.date.required ||
-                    formAdd.date.min ||
-                    'Не корректно введена дата',
+                    !formValidate.date.$invalid || 'Не корректно введена дата',
                 ]"
               >
                 <template v-slot:append>
@@ -49,8 +47,7 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.timeStart.required ||
-                    formAdd.timeStart.min ||
+                    !formValidate.timeStart.$invalid ||
                     'Не корректно введено время',
                 ]"
               >
@@ -85,8 +82,7 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.timeEnd.required ||
-                    formAdd.timeEnd.min ||
+                    !formValidate.timeEnd.$invalid ||
                     'Не корректно введено время',
                 ]"
               >
@@ -123,7 +119,7 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.optionObject.required ||
+                    !formValidate.objectInitiator.$invalid ||
                     'Не выбрано подразделение инициатор',
                 ]"
               />
@@ -143,7 +139,7 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.objectInvited.required ||
+                    !formValidate.objectInvited.$invalid ||
                     'Не выбраны вызываемые обособленные подразделения',
                 ]"
               />
@@ -159,7 +155,7 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.departamentInitiator.required ||
+                    !formValidate.departamentInitiator.$invalid ||
                     'Не выбран отдел инициатор',
                 ]"
               />
@@ -179,7 +175,7 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.departamentInvited.required ||
+                    !formValidate.departamentInvited.$invalid ||
                     'Не выбраны приглашённые отделы',
                 ]"
               />
@@ -194,7 +190,8 @@
                 label="Тип ВКС"
                 lazy-rules
                 :rules="[
-                  (val) => formAdd.typeVico.required || 'Не выбран тип ВКС',
+                  (val) =>
+                    !formValidate.typeVico.$invalid || 'Не выбран тип ВКС',
                 ]"
               />
             </div>
@@ -206,7 +203,8 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.topic.required || 'Не заполнена тема совещания',
+                    !formValidate.topic.$invalid ||
+                    'Не заполнена тема совещания',
                 ]"
               />
             </div>
@@ -220,7 +218,7 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.contactName.required ||
+                    !formValidate.contactName.$invalid ||
                     'Не заполнено ФИО инициатора',
                 ]"
               />
@@ -233,7 +231,7 @@
                 lazy-rules
                 :rules="[
                   (val) =>
-                    formAdd.contactPhone.required ||
+                    !formValidate.contactPhone.$invalid ||
                     'Не заполнен контактный номер',
                 ]"
               />
@@ -285,10 +283,30 @@ export default defineComponent({
 
     const vico = ref();
 
-    const rulesAdd = {
-      date: { required, min: minLength(9) },
-      timeStart: { required, min: minLength(5) },
-      timeEnd: { required, min: minLength(5) },
+    const dateValidate = (value) => {
+      const date = DateTime.fromFormat(value, 'dd.LL.yyyy');
+      if (date.invalid != null) {
+        return false;
+      }
+      return true;
+    };
+
+    const timeValidate = (value) => {
+      const date = DateTime.fromFormat(value, 'hh:mm');
+      if (date.invalid != null) {
+        return false;
+      }
+      return true;
+    };
+
+    const rules = computed(() => ({
+      date: {
+        required,
+        min: minLength(ref(10)),
+        dateValidate,
+      },
+      timeStart: { required, min: minLength(ref(5)), timeValidate },
+      timeEnd: { required, min: minLength(ref(5)), timeValidate },
       objectInitiator: { required },
       objectInvited: { required },
       typeVico: { required },
@@ -297,9 +315,11 @@ export default defineComponent({
       departamentInvited: { required },
       contactName: { required },
       contactPhone: { required },
-    };
+    }));
 
-    const formAdd = useVuelidate(rulesAdd, vico);
+    const form = ref();
+
+    const formValidate = useVuelidate(rules, vico);
 
     const vicoDateOptionFn = (date) => {
       return date <= DateTime.now().toLocaleString();
@@ -322,79 +342,93 @@ export default defineComponent({
 
     const dialogSave = () => {
       Loading.show();
-      const newVico = {
-        date: vico.value.date,
-        timeStart: vico.value.timeStart,
-        timeEnd: vico.value.timeEnd,
-        objectInitiator: vico.value.objectInitiator?.label ?? '',
-        objectInvited: [],
-        typeVico: vico.value.typeVico?.label ?? '',
-        topic: vico.value.topic,
-        departamentInitiator: vico.value.departamentInitiator?.label ?? '',
-        departamentInvited: [],
-        contactName: vico.value.contactName,
-        contactPhone: vico.value.contactPhone,
-      };
+      if (formValidate.value.$invalid) {
+        form.value.submit();
+        Notify.create({
+          progress: true,
+          color: 'warning',
+          position: 'top',
+          message: 'Неправильно заполнены поля в форме',
+          icon: 'warning',
+          timeout: 5,
+        });
+        Loading.hide();
+      } else {
+        const newVico = {
+          date: vico.value.date,
+          timeStart: vico.value.timeStart,
+          timeEnd: vico.value.timeEnd,
+          objectInitiator: vico.value.objectInitiator?.label ?? '',
+          objectInvited: [],
+          typeVico: vico.value.typeVico?.label ?? '',
+          topic: vico.value.topic,
+          departamentInitiator: vico.value.departamentInitiator?.label ?? '',
+          departamentInvited: [],
+          contactName: vico.value.contactName,
+          contactPhone: vico.value.contactPhone,
+        };
 
-      vico.value.objectInvited.forEach((item) => {
-        newVico.objectInvited.push(item.label);
-      });
+        vico.value.objectInvited.forEach((item) => {
+          newVico.objectInvited.push(item.label);
+        });
 
-      vico.value.departamentInvited.forEach((item) => {
-        newVico.departamentInvited.push(item.label);
-      });
+        vico.value.departamentInvited.forEach((item) => {
+          newVico.departamentInvited.push(item.label);
+        });
 
-      api({
-        method: 'post',
-        url: storeGlobal.getAjaxUri('vico/add'),
-        data: {
-          vico: newVico,
-        },
-        timeout: 10000,
-        responseType: 'json',
-      })
-        .then((response) => {
-          console.log(response);
-          if (response.data.success) {
-            if (response.data.collision) {
-              var textMessage = '';
-              for (const item of response.data.message) {
-                textMessage += '<br />' + item;
+        api({
+          method: 'post',
+          url: storeGlobal.getAjaxUri('vico/add'),
+          data: {
+            vico: newVico,
+          },
+          timeout: 10000,
+          responseType: 'json',
+        })
+          .then((response) => {
+            console.log(response);
+            if (response.data.success) {
+              if (response.data.collision) {
+                var textMessage = '';
+                for (const item of response.data.message) {
+                  textMessage += '<br />' + item;
+                }
+                Notify.create({
+                  progress: true,
+                  color: 'warning',
+                  position: 'top',
+                  message: 'На данное время ВКС уже занято.' + textMessage,
+                  icon: 'warning',
+                  html: true,
+                });
+                Loading.hide();
+              } else {
+                dialog.value = false;
+                storeMain.vicoDialogAdd = false;
+                Loading.hide();
               }
+            } else {
               Notify.create({
                 progress: true,
                 color: 'warning',
                 position: 'top',
-                message: 'На данное время ВКС уже занято.' + textMessage,
+                message: response.data.message,
                 icon: 'warning',
-                html: true,
               });
               Loading.hide();
-            } else {
-              dialog.value = false;
-              storeMain.vicoDialogAdd = false;
-              Loading.hide();
             }
-          } else {
+          })
+          .catch(function () {
             Notify.create({
-              progress: true,
-              color: 'warning',
+              color: 'negative',
               position: 'top',
-              message: response.data.message,
-              icon: 'warning',
+              message: 'Нет соединения с сервером.',
+              icon: 'report_problem',
+              timeout: 5,
             });
             Loading.hide();
-          }
-        })
-        .catch(function () {
-          Notify.create({
-            color: 'negative',
-            position: 'top',
-            message: 'Нет соединения с сервером.',
-            icon: 'report_problem',
           });
-          Loading.hide();
-        });
+      }
     };
 
     const dialogClose = () => {
@@ -406,12 +440,13 @@ export default defineComponent({
       vico,
       vicoDateOptionFn,
       dialog,
-      formAdd,
+      formValidate,
       dialogSave,
       dialogClose,
       optionObject,
       optionTypeVico,
       optionDepartament,
+      form,
     };
   },
 });
