@@ -55,6 +55,7 @@ export default defineComponent({
             position: 'top',
             message: 'Отсутствует выделение записи ВКС',
             icon: 'warning',
+            timeout: 5,
           });
           storeMain.vicoDialogDelete = false;
           Loading.hide();
