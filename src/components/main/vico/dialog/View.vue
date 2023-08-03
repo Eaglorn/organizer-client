@@ -187,8 +187,11 @@ export default defineComponent({
                   progress: true,
                   color: 'negative',
                   position: 'top',
-                  message: response.data.message,
+                  message: '<b>' + response.data.message + '</b>',
                   icon: 'report_problem',
+                  timeout: 7500,
+                  textColor: 'black',
+                  html: true,
                 });
                 storeMain.vicoDialogView = false;
                 Loading.hide();
@@ -198,8 +201,11 @@ export default defineComponent({
               Notify.create({
                 color: 'negative',
                 position: 'top',
-                message: 'Нет соединения с сервером.',
+                message: '<b>Нет соединения с сервером.</b>',
                 icon: 'report_problem',
+                timeout: 7500,
+                textColor: 'black',
+                html: true,
               });
               storeMain.vicoDialogView = false;
               Loading.hide();
@@ -208,9 +214,11 @@ export default defineComponent({
           Notify.create({
             color: 'warning',
             position: 'top',
-            message: 'Отсутствует выделение записи ВКС',
+            message: '<b>Отсутствует выделение записи ВКС</b>',
             icon: 'warning',
-            timeout: 5,
+            timeout: 2500,
+            textColor: 'black',
+            html: true,
           });
           storeMain.vicoDialogView = false;
           Loading.hide();

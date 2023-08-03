@@ -344,7 +344,8 @@ export default defineComponent({
           position: 'top',
           message: 'Неправильно заполнены поля в форме',
           icon: 'warning',
-          timeout: 5,
+          timeout: 2500,
+          textColor: 'black',
         });
         Loading.hide();
       } else {
@@ -384,15 +385,21 @@ export default defineComponent({
               if (response.data.collision) {
                 var textMessage = '';
                 for (const item of response.data.message) {
-                  textMessage += '<br />' + item;
+                  textMessage += '<br />' + '<li>' + item + '</li>';
                 }
                 Notify.create({
                   progress: true,
                   color: 'warning',
                   position: 'top',
-                  message: 'На данное время ВКС уже занято.' + textMessage,
+                  message:
+                    '<b>На данное время ВКС уже занято.</b>' +
+                    '<ul>' +
+                    textMessage +
+                    '</ul>',
                   icon: 'warning',
                   html: true,
+                  timeout: 7500,
+                  textColor: 'black',
                 });
                 Loading.hide();
               } else {
@@ -405,8 +412,10 @@ export default defineComponent({
                 progress: true,
                 color: 'warning',
                 position: 'top',
-                message: response.data.message,
+                message: '<b>' + response.data.message + '</b>',
                 icon: 'warning',
+                textColor: 'black',
+                html: true,
               });
               Loading.hide();
             }
@@ -415,9 +424,11 @@ export default defineComponent({
             Notify.create({
               color: 'negative',
               position: 'top',
-              message: 'Нет соединения с сервером.',
+              html: true,
+              message: '<b>Нет соединения с сервером.</b>',
               icon: 'report_problem',
-              timeout: 5,
+              timeout: 2500,
+              textColor: 'black',
             });
             Loading.hide();
           });
