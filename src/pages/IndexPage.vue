@@ -202,7 +202,7 @@ export default defineComponent({
       storeMain.vicosSort();
     });
 
-    socket.on('vicoArchive', (data) => {
+    socket.on('vicoMoved', (data) => {
       storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       if (storeMain.selectId === data.id) {
         storeMain.selectId = -1;

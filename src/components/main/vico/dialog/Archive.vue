@@ -72,7 +72,7 @@ export default defineComponent({
       Loading.show();
       api({
         method: 'post',
-        url: storeGlobal.getAjaxUri('vico/archive'),
+        url: storeGlobal.getAjaxUri('vico/moved'),
         data: {
           id: storeMain.selectId,
         },
