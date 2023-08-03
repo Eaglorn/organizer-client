@@ -4,8 +4,8 @@ import { _clone } from 'boot/radash';
 export const useGlobalStore = defineStore('global', {
   state: () => ({
     //server: 'http://26.136.207.192:3000/',
-    server: 'http://10.27.0.243:3000/',
-    //server: 'http://localhost:3000/',
+    //server: 'http://10.27.0.243:3000/',
+    server: 'http://localhost:3000/',
     //server: 'http://192.168.0.10:3000/',
     optionObject: [],
     optionTypeVico: [],

@@ -22,7 +22,7 @@
     "pinia": "^2.1.6",
     "quasar": "^2.12.3",
     "radash": "^11.0.0",
-    "socket.io-client": "^4.7.1",
+    "socket.io-client": "^4.7.2",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
@@ -30,10 +30,10 @@
     "@quasar/app-vite": "^1.4.3",
     "autoprefixer": "^10.4.14",
     "eslint": "^8.46.0",
-    "eslint-config-prettier": "^8.9.0",
+    "eslint-config-prettier": "^8.10.0",
     "eslint-plugin-vue": "^9.16.1",
     "postcss": "^8.4.27",
-    "prettier": "^3.0.0"
+    "prettier": "^3.0.1"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19",
