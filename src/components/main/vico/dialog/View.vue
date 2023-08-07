@@ -245,9 +245,6 @@ export default defineComponent({
 });
 </script>
 <style lang="sass">
-.q-item--active
-  color: $green-6
-  font-weight: 600
 .q-field__label
   color: $red-4
 </style>

@@ -224,12 +224,10 @@ export default defineComponent({
 <style lang="sass">
 .my-sticky-table
   max-height: 88vh
-
   tr th
     position: sticky
     z-index: 2
     background: #afc7be
-
   thead
     tr:last-child th
       top: 48px
@@ -239,27 +237,21 @@ export default defineComponent({
       z-index: 1
     tr:first-child th:first-child
       background-color: #afc7be
-
   tr:first-child th:first-child
     z-index: 3
-
   td:first-child, th:first-child
     position: sticky
     left: 0
     z-index: 1
     background-color: #afc7be
-
   tbody
     scroll-margin-top: 48px
-
   li
     list-style-type: none
-
   td, tr, th
     padding: 3px
     margin: 3px
     border: solid black 1px
-
   .q-item--active
     color: #21BA45
   .text-left
