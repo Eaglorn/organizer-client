@@ -153,7 +153,7 @@ export default defineComponent({
   props: {},
   setup() {
     const storeGlobal = useGlobalStore();
-    const storeArchive = useMainStore();
+    const storeArchive = useArchiveStore();
 
     const dialog = ref(false);
 
@@ -163,7 +163,7 @@ export default defineComponent({
 
     const vico = ref();
 
-    const { vicoDialogView } = storeToRefs(storeMain);
+    const { vicoDialogView } = storeToRefs(storeArchive);
 
     watch(vicoDialogView, () => {
       Loading.show();

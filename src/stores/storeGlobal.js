@@ -23,6 +23,8 @@ export const useGlobalStore = defineStore('global', {
       contactName: '',
       contactPhone: '',
     },
+    socket: null,
+    page: 'main',
   }),
   getters: {
     getAjaxUri(state) {

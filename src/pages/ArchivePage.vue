@@ -53,16 +53,15 @@
 import { api } from 'boot/axios';
 import { Loading, Notify } from 'quasar';
 import { defineComponent, ref } from 'vue';
-import { io } from 'boot/socket';
 
 import ArchiveTable from 'components/archive/Table.vue';
 import ArchiveVicoDialogView from 'components/archive/vico/dialog/View.vue';
 
 import { useGlobalStore } from '../stores/storeGlobal.js';
-import { useMainStore } from '../stores/storeMain.js';
+import { useArchiveStore } from '../stores/storeArchive.js';
 
 const storeGlobal = useGlobalStore();
-const storeMain = useMainStore();
+const storeArchive = useArchiveStore();
 
 export default defineComponent({
   name: 'IndexPage',
@@ -71,53 +70,21 @@ export default defineComponent({
     ArchiveVicoDialogView,
   },
   setup() {
-    const socket = io(storeGlobal.server);
-
-    socket.on('vicoAdd', (data) => {
-      storeMain.addVico(data);
+    Loading.show();
+    storeGlobal.socket.on('archiveAdd', (data) => {
+      storeArchive.addVico(data);
     });
 
-    socket.on('vicoAll', (data) => {
-      storeGlobal.optionObject = [];
-      storeGlobal.optionTypeVico = [];
-      storeGlobal.optionDepartament = [];
-
-      var i = 0;
-      data.optionObject.forEach((item) => {
-        storeGlobal.optionObject.push({
-          label: item,
-          value: i,
-        });
-        i++;
-      });
-
-      i = 0;
-      data.optionTypeVico.forEach((item) => {
-        storeGlobal.optionTypeVico.push({
-          label: item,
-          value: i,
-        });
-        i++;
-      });
-
-      i = 0;
-      data.optionDepartament.forEach((item) => {
-        storeGlobal.optionDepartament.push({
-          label: item,
-          value: i,
-        });
-        i++;
-      });
-
-      storeMain.vicos = data.vicos;
-      storeMain.vicosSort();
+    storeGlobal.socket.on('archiveAll', (data) => {
+      storeArchive.vicos = data.vicos;
+      storeArchive.vicosSort();
     });
 
     const updateTable = () => {
       Loading.show();
       api({
         method: 'post',
-        url: storeGlobal.getAjaxUri('vico/all'),
+        url: storeGlobal.getAjaxUri('archive/all'),
         data: {},
         timeout: 10000,
         responseType: 'json',
@@ -134,14 +101,14 @@ export default defineComponent({
           } else {
             if (
               response.data.vicos.find(
-                (item) => item.id === storeMain.selectId,
+                (item) => item.id === storeArchive.selectId,
               ) === undefined
             ) {
-              storeMain.selectId = -1;
-              storeMain.isSelect = false;
+              storeArchive.selectId = -1;
+              storeArchive.isSelect = false;
             }
-            storeMain.vicos = response.data.vicos;
-            storeMain.vicosSort();
+            storeArchive.vicos = response.data.vicos;
+            storeArchive.vicosSort();
           }
           Loading.hide();
         })
@@ -155,9 +122,10 @@ export default defineComponent({
           Loading.hide();
         });
     };
+    Loading.hide();
 
     return {
-      storeMain,
+      storeArchive,
       updateTable,
     };
   },

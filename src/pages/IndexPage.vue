@@ -155,54 +155,22 @@ export default defineComponent({
     MainVicoDialogDelete,
   },
   setup() {
-    const socket = io(storeGlobal.server);
-
-    socket.on('vicoAdd', (data) => {
+    Loading.show();
+    storeGlobal.socket.on('vicoAdd', (data) => {
       storeMain.addVico(data);
     });
 
-    socket.on('vicoEdit', (data) => {
+    storeGlobal.socket.on('vicoEdit', (data) => {
       storeMain.setVico(data.vico);
       storeMain.vicosSort();
     });
 
-    socket.on('vicoAll', (data) => {
-      storeGlobal.optionObject = [];
-      storeGlobal.optionTypeVico = [];
-      storeGlobal.optionDepartament = [];
-
-      var i = 0;
-      data.optionObject.forEach((item) => {
-        storeGlobal.optionObject.push({
-          label: item,
-          value: i,
-        });
-        i++;
-      });
-
-      i = 0;
-      data.optionTypeVico.forEach((item) => {
-        storeGlobal.optionTypeVico.push({
-          label: item,
-          value: i,
-        });
-        i++;
-      });
-
-      i = 0;
-      data.optionDepartament.forEach((item) => {
-        storeGlobal.optionDepartament.push({
-          label: item,
-          value: i,
-        });
-        i++;
-      });
-
+    storeGlobal.socket.on('vicoAll', (data) => {
       storeMain.vicos = data.vicos;
       storeMain.vicosSort();
     });
 
-    socket.on('vicoMoved', (data) => {
+    storeGlobal.socket.on('vicoMoved', (data) => {
       storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       if (storeMain.selectId === data.id) {
         storeMain.selectId = -1;
@@ -210,7 +178,7 @@ export default defineComponent({
       }
     });
 
-    socket.on('vicoDelete', (data) => {
+    storeGlobal.socket.on('vicoDelete', (data) => {
       storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       if (storeMain.selectId === data.id) {
         storeMain.selectId = -1;
@@ -260,6 +228,7 @@ export default defineComponent({
           Loading.hide();
         });
     };
+    Loading.hide();
 
     return {
       storeMain,
