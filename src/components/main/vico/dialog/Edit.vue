@@ -488,7 +488,15 @@ export default defineComponent({
               if (response.data.collision) {
                 var textMessage = '';
                 for (const item of response.data.message) {
-                  textMessage += '<br />' + '<li>' + item + '</li>';
+                  textMessage +=
+                    '<br />' +
+                    '<li>' +
+                    item.object +
+                    '&nbsp&nbsp&nbsp(<b>' +
+                    storeGlobal.getTime(item.timeStart) +
+                    '</b>--<b>' +
+                    storeGlobal.getTime(item.timeEnd) +
+                    '</b>)</li>';
                 }
                 Notify.create({
                   progress: true,
