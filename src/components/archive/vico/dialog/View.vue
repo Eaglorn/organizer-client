@@ -178,6 +178,8 @@ export default defineComponent({
           })
             .then((response) => {
               if (response.data.success) {
+                vico.value = storeGlobal.getVicoTemplate();
+
                 vico.value.date = storeGlobal.getDate(
                   response.data.vico.dateTimeStart,
                 );
@@ -199,7 +201,7 @@ export default defineComponent({
                 vico.value.departamentInvited =
                   response.data.vico.departamentInvited;
                 vico.value.contactName = response.data.vico.contactName;
-                vico.value.contactName = response.data.vico.contactName;
+                vico.value.contactPhone = response.data.vico.ContactPhone;
 
                 dialog.value = true;
                 storeArchive.vicoDialogView = false;
