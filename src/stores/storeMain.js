@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { DateTime } from 'boot/luxon';
 import { _sort } from 'boot/radash';
 
 export const useMainStore = defineStore('main', {
@@ -20,7 +19,7 @@ export const useMainStore = defineStore('main', {
   },
   actions: {
     vicosSort() {
-      this.vicos = _sort(this.vicos, (item) => item.fullTime);
+      this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, true);
     },
     setVico(vico) {
       this.vicos.forEach((item, index) => {

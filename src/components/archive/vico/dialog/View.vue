@@ -178,7 +178,29 @@ export default defineComponent({
           })
             .then((response) => {
               if (response.data.success) {
-                vico.value = response.data.vico;
+                vico.value.date = storeGlobal.getDate(
+                  response.data.vico.dateTimeStart,
+                );
+                vico.value.timeStart = storeGlobal.getTime(
+                  response.data.vico.dateTimeStart,
+                );
+                vico.value.timeEnd = storeGlobal.getTime(
+                  response.data.vico.dateTimeEnd,
+                );
+
+                vico.value.objectInitiator = response.data.vico.objectInitiator;
+                vico.value.objectInvited = response.data.vico.objectInvited;
+                vico.value.typeVico = response.data.vico.typeVico;
+                vico.value.objectInvited = response.data.vico.objectInvited;
+                vico.value.typeVico = response.data.vico.typeVico;
+                vico.value.topic = response.data.vico.topic;
+                vico.value.departamentInitiator =
+                  response.data.vico.departamentInitiator;
+                vico.value.departamentInvited =
+                  response.data.vico.departamentInvited;
+                vico.value.contactName = response.data.vico.contactName;
+                vico.value.contactName = response.data.vico.contactName;
+
                 dialog.value = true;
                 storeArchive.vicoDialogView = false;
                 Loading.hide();

@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia';
-import { DateTime } from 'boot/luxon';
 import { _sort } from 'boot/radash';
 
 export const useArchiveStore = defineStore('archive', {
@@ -16,7 +15,7 @@ export const useArchiveStore = defineStore('archive', {
   },
   actions: {
     vicosSort() {
-      this.vicos = _sort(this.vicos, (item) => item.fullTime);
+      this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, true);
     },
     addVico(vico) {
       this.vicos.push(vico);

@@ -38,13 +38,13 @@
             {{ props.row.id }}
           </q-td>
           <q-td key="date" :props="props" class="my-table-border">
-            {{ props.row.date }}
+            {{ getDate(props.row.dateTimeStart) }}
           </q-td>
           <q-td key="timeStart" :props="props" class="my-table-border">
-            {{ props.row.timeStart }}
+            {{ getTime(props.row.dateTimeStart) }}
           </q-td>
           <q-td key="timeEnd" :props="props" class="my-table-border">
-            {{ props.row.timeEnd }}
+            {{ getTime(props.row.dateTimeEnd) }}
           </q-td>
           <q-td
             key="objectInitiator"
@@ -109,8 +109,10 @@
 <script>
 import { defineComponent, ref, computed } from 'vue';
 import { useMainStore } from '../../stores/storeMain';
+import { useGlobalStore } from '../../stores/storeGlobal';
 
 const storeMain = useMainStore();
+const storeGlobal = useGlobalStore();
 
 const columns = [
   {
@@ -205,6 +207,8 @@ export default defineComponent({
         storeMain.isSelect = true;
       }
     };
+    const getDate = storeGlobal.getDate;
+    const getTime = storeGlobal.getTime;
 
     return {
       rows,
@@ -217,6 +221,8 @@ export default defineComponent({
         page: 1,
         rowsPerPage: 999,
       }),
+      getDate,
+      getTime,
     };
   },
 });

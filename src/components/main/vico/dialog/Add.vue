@@ -350,9 +350,14 @@ export default defineComponent({
         Loading.hide();
       } else {
         const newVico = {
-          date: vico.value.date,
-          timeStart: vico.value.timeStart,
-          timeEnd: vico.value.timeEnd,
+          dateTimeStart: storeGlobal.getSeconds(
+            vico.value.date,
+            vico.value.timeStart,
+          ),
+          dateTimeEnd: storeGlobal.getSeconds(
+            vico.value.date,
+            vico.value.timeEnd,
+          ),
           objectInitiator: vico.value.objectInitiator?.label ?? '',
           objectInvited: [],
           typeVico: vico.value.typeVico?.label ?? '',

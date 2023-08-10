@@ -333,7 +333,21 @@ export default defineComponent({
           })
             .then((response) => {
               if (response.data.success) {
-                vico.value = response.data.vico;
+                vico.value = storeGlobal.getVicoTemplate();
+
+                vico.value.date = storeGlobal.getDate(
+                  response.data.vico.dateTimeStart,
+                );
+                vico.value.timeStart = storeGlobal.getTime(
+                  response.data.vico.dateTimeStart,
+                );
+                vico.value.timeEnd = storeGlobal.getTime(
+                  response.data.vico.dateTimeEnd,
+                );
+
+                vico.value.topic = response.data.vico.topic;
+                vico.value.contactName = response.data.vico.contactName;
+                vico.value.contactPhone = response.data.vico.contactPhone;
 
                 vico.value.typeVico = storeGlobal.getOptionTypeVicoByName(
                   response.data.vico.typeVico,
@@ -342,6 +356,8 @@ export default defineComponent({
                 vico.value.objectInitiator = storeGlobal.getOptionObjectByName(
                   response.data.vico.objectInitiator,
                 );
+
+                vico.value.objectInvited = response.data.vico.objectInvited;
 
                 vico.value.objectInvited.forEach((item, index) => {
                   vico.value.objectInvited.splice(
@@ -355,6 +371,9 @@ export default defineComponent({
                   storeGlobal.getOptionDepartamentByName(
                     response.data.vico.departamentInitiator,
                   );
+
+                vico.value.departamentInvited =
+                  response.data.vico.departamentInvited;
 
                 vico.value.departamentInvited.forEach((item, index) => {
                   vico.value.departamentInvited.splice(
@@ -428,9 +447,14 @@ export default defineComponent({
         Loading.hide();
       } else {
         const vicoEdit = {
-          date: vico.value.date,
-          timeStart: vico.value.timeStart,
-          timeEnd: vico.value.timeEnd,
+          dateTimeStart: storeGlobal.getSeconds(
+            vico.value.date,
+            vico.value.timeStart,
+          ),
+          dateTimeEnd: storeGlobal.getSeconds(
+            vico.value.date,
+            vico.value.timeEnd,
+          ),
           objectInitiator: vico.value.objectInitiator?.label ?? '',
           objectInvited: [],
           typeVico: vico.value.typeVico?.label ?? '',

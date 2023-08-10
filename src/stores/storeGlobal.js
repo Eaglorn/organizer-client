@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
 import { _clone } from 'boot/radash';
+import { DateTime } from 'boot/luxon';
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
     //server: 'http://26.136.207.192:3000/',
-    server: 'http://10.27.0.243:3000/',
-    //server: 'http://localhost:3000/',
+    //server: 'http://10.27.0.243:3000/',
+    server: 'http://localhost:3000/',
     //server: 'http://192.168.0.10:3000/',
     optionObject: [],
     optionTypeVico: [],
@@ -46,6 +47,17 @@ export const useGlobalStore = defineStore('global', {
   actions: {
     getVicoTemplate() {
       return _clone(this.templateVico);
+    },
+    getDate(seconds) {
+      return DateTime.fromSeconds(seconds).toFormat('dd.LL.yyyy');
+    },
+    getTime(seconds) {
+      return DateTime.fromSeconds(seconds).toFormat('HH:mm');
+    },
+    getSeconds(date, time) {
+      return DateTime.fromFormat(date + '-' + time, 'dd.LL.yyyy-HH:mm', {
+        numberingSystem: '',
+      }).toSeconds();
     },
   },
 });
