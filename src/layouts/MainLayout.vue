@@ -10,7 +10,7 @@
           text-color="black"
           icon="archive"
           @click="onClickButtonArchive"
-          >Архив</q-btn
+          >&nbsp; Перейти в архив</q-btn
         >
         <q-btn
           v-if="page === 'archive'"
@@ -18,7 +18,7 @@
           text-color="black"
           icon="web"
           @click="onClickButtonMain"
-          >Главная страница</q-btn
+          >&nbsp; Перейти на главную страницу</q-btn
         >
       </q-toolbar>
     </q-header>

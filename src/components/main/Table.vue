@@ -3,7 +3,7 @@
     <q-table
       selection="single"
       v-model:selected="selected"
-      class="my-sticky-table no-select my-table-border"
+      class="my-sticky-table my-table-border"
       flat
       bordered
       row-key="id"
@@ -254,8 +254,6 @@ export default defineComponent({
     border: solid black 1px
   .q-item--active
     color: #21BA45
-  .text-left
-    display: none
 
 .q-table__bottom
   display: none
