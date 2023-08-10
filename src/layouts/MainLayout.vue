@@ -35,8 +35,12 @@ import { defineComponent, computed, ref } from 'vue';
 import { Loading } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useGlobalStore } from '../stores/storeGlobal.js';
+import { useMainStore } from '../stores/storeMain.js';
+import { useArchiveStore } from '../stores/storeArchive.js';
 
 const storeGlobal = useGlobalStore();
+const storeMain = useMainStore();
+const storeArchive = useArchiveStore();
 
 export default defineComponent({
   name: 'MainLayout',
@@ -82,15 +86,27 @@ export default defineComponent({
       });
     });
 
+    storeGlobal.socket.on('vicoAll', (data) => {
+      storeMain.vicos = data.vicos;
+      storeMain.vicosSort();
+    });
+
+    storeGlobal.socket.on('archiveAll', (data) => {
+      storeArchive.vicos = data.vicos;
+      storeArchive.vicosSort();
+    });
+
     const router = useRouter();
     const onClickButtonArchive = () => {
       Loading.show();
+      storeGlobal.socket.emit('pageArchive');
       router.push('archive');
       storeGlobal.page = 'archive';
       Loading.hide();
     };
     const onClickButtonMain = () => {
       Loading.show();
+      storeGlobal.socket.emit('pageMain');
       router.push('main');
       storeGlobal.page = 'main';
       Loading.hide();

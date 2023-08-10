@@ -75,11 +75,6 @@ export default defineComponent({
       storeArchive.addVico(data);
     });
 
-    storeGlobal.socket.on('archiveAll', (data) => {
-      storeArchive.vicos = data.vicos;
-      storeArchive.vicosSort();
-    });
-
     const updateTable = () => {
       Loading.show();
       api({

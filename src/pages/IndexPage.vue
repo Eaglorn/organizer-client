@@ -165,11 +165,6 @@ export default defineComponent({
       storeMain.vicosSort();
     });
 
-    storeGlobal.socket.on('vicoAll', (data) => {
-      storeMain.vicos = data.vicos;
-      storeMain.vicosSort();
-    });
-
     storeGlobal.socket.on('vicoMoved', (data) => {
       storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
       if (storeMain.selectId === data.id) {
