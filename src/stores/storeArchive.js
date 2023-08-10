@@ -16,12 +16,7 @@ export const useArchiveStore = defineStore('archive', {
   },
   actions: {
     vicosSort() {
-      this.vicos = _sort(this.vicos, (item) =>
-        DateTime.fromFormat(
-          item.date + '-' + item.timeStart,
-          'dd.LL.yyyy-hh:mm',
-        ).toUnixInteger(),
-      );
+      this.vicos = _sort(this.vicos, (item) => item.fullTime);
     },
     addVico(vico) {
       this.vicos.push(vico);

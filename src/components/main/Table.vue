@@ -254,6 +254,8 @@ export default defineComponent({
     border: solid black 1px
   .q-item--active
     color: #21BA45
+  .text-left
+    display: none
 
 .q-table__bottom
   display: none
