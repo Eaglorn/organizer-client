@@ -89,6 +89,7 @@ export default defineComponent({
               position: 'top',
               message: response.data.message,
               icon: 'report_problem',
+              timeout: storeGlobal.messagesErrorTime.low,
             });
           } else {
             if (
@@ -110,6 +111,7 @@ export default defineComponent({
             position: 'top',
             message: 'Нет соединения с сервером.',
             icon: 'report_problem',
+            timeout: storeGlobal.messagesErrorTime.medium,
           });
           Loading.hide();
         });

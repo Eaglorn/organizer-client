@@ -344,7 +344,7 @@ export default defineComponent({
           position: 'top',
           message: 'Неправильно заполнены поля в форме',
           icon: 'warning',
-          timeout: 2500,
+          timeout: storeGlobal.messagesErrorTime.low,
           textColor: 'black',
         });
         Loading.hide();
@@ -411,7 +411,7 @@ export default defineComponent({
                     '</ul>',
                   icon: 'warning',
                   html: true,
-                  timeout: 7500,
+                  timeout: storeGlobal.messagesErrorTime.high,
                   textColor: 'black',
                 });
                 Loading.hide();
@@ -429,6 +429,7 @@ export default defineComponent({
                 icon: 'warning',
                 textColor: 'black',
                 html: true,
+                timeout: storeGlobal.messagesErrorTime.medium,
               });
               Loading.hide();
             }
@@ -440,7 +441,7 @@ export default defineComponent({
               html: true,
               message: '<b>Нет соединения с сервером.</b>',
               icon: 'report_problem',
-              timeout: 2500,
+              timeout: storeGlobal.messagesErrorTime.low,
               textColor: 'black',
             });
             Loading.hide();

@@ -26,6 +26,11 @@ export const useGlobalStore = defineStore('global', {
     },
     socket: null,
     page: 'main',
+    messagesErrorTime: {
+      low: 2000,
+      medium: 4000,
+      high: 7500,
+    },
   }),
   getters: {
     getAjaxUri(state) {

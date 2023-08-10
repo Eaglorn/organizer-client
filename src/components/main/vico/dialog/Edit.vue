@@ -393,10 +393,11 @@ export default defineComponent({
                   position: 'top',
                   message: '<b>' + response.data.message + '</b>',
                   icon: 'report_problem',
-                  timeout: 7500,
+                  timeout: storeGlobal.messagesErrorTime.low,
                   textColor: 'black',
                   html: true,
                 });
+                storeMain.vicoDialogEdit = false;
                 Loading.hide();
               }
             })
@@ -406,10 +407,11 @@ export default defineComponent({
                 position: 'top',
                 message: '<b>Нет соединения с сервером.</b>',
                 icon: 'report_problem',
-                timeout: 7500,
+                timeout: storeGlobal.messagesErrorTime.medium,
                 textColor: 'black',
                 html: true,
               });
+              storeMain.vicoDialogEdit = false;
               Loading.hide();
             });
         } else {
@@ -418,7 +420,7 @@ export default defineComponent({
             position: 'top',
             message: '<b>Отсутствует выделение записи ВКС</b>',
             icon: 'warning',
-            timeout: 2500,
+            timeout: storeGlobal.messagesErrorTime.low,
             textColor: 'black',
             html: true,
           });
@@ -440,7 +442,7 @@ export default defineComponent({
           position: 'top',
           message: '<b>Неправильно заполнены поля в форме</b>',
           icon: 'warning',
-          timeout: 2500,
+          timeout: storeGlobal.messagesErrorTime.low,
           textColor: 'black',
           html: true,
         });
@@ -509,7 +511,7 @@ export default defineComponent({
                     '</ul>',
                   icon: 'warning',
                   html: true,
-                  timeout: 7500,
+                  timeout: storeGlobal.messagesErrorTime.high,
                   textColor: 'black',
                 });
                 Loading.hide();
@@ -525,7 +527,7 @@ export default defineComponent({
                 position: 'top',
                 message: '<b>' + response.data.message + '</b>',
                 icon: 'warning',
-                timeout: 7500,
+                timeout: storeGlobal.messagesErrorTime.low,
                 textColor: 'black',
                 html: true,
               });
@@ -538,7 +540,7 @@ export default defineComponent({
               position: 'top',
               message: '<b>Нет соединения с сервером.</b>',
               icon: 'report_problem',
-              timeout: 7500,
+              timeout: storeGlobal.messagesErrorTime.medium,
               textColor: 'black',
               html: true,
             });

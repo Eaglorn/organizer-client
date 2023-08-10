@@ -213,7 +213,7 @@ export default defineComponent({
                   position: 'top',
                   message: '<b>' + response.data.message + '</b>',
                   icon: 'report_problem',
-                  timeout: 7500,
+                  timeout: storeGlobal.messagesErrorTime.low,
                   textColor: 'black',
                   html: true,
                 });
@@ -227,7 +227,7 @@ export default defineComponent({
                 position: 'top',
                 message: '<b>Нет соединения с сервером.</b>',
                 icon: 'report_problem',
-                timeout: 7500,
+                timeout: storeGlobal.messagesErrorTime.medium,
                 textColor: 'black',
                 html: true,
               });
@@ -240,7 +240,7 @@ export default defineComponent({
             position: 'top',
             message: '<b>Отсутствует выделение записи ВКС</b>',
             icon: 'warning',
-            timeout: 2500,
+            timeout: storeGlobal.messagesErrorTime.low,
             textColor: 'black',
             html: true,
           });
