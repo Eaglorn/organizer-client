@@ -71,9 +71,6 @@ export default defineComponent({
   },
   setup() {
     Loading.show();
-    storeGlobal.socket.on('archiveAdd', (data) => {
-      storeArchive.addVico(data);
-    });
 
     const updateTable = () => {
       Loading.show();

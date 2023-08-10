@@ -156,30 +156,6 @@ export default defineComponent({
   },
   setup() {
     Loading.show();
-    storeGlobal.socket.on('vicoAdd', (data) => {
-      storeMain.addVico(data);
-    });
-
-    storeGlobal.socket.on('vicoEdit', (data) => {
-      storeMain.setVico(data.vico);
-      storeMain.vicosSort();
-    });
-
-    storeGlobal.socket.on('vicoMoved', (data) => {
-      storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
-      if (storeMain.selectId === data.id) {
-        storeMain.selectId = -1;
-        storeMain.isSelect = false;
-      }
-    });
-
-    storeGlobal.socket.on('vicoDelete', (data) => {
-      storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
-      if (storeMain.selectId === data.id) {
-        storeMain.selectId = -1;
-        storeMain.isSelect = false;
-      }
-    });
 
     const updateTable = () => {
       Loading.show();
