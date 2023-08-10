@@ -12,6 +12,7 @@
       :columns="columns"
       :separator="separator"
       :wrap-cells="true"
+      :hide-bottom="true"
     >
       <template v-slot:header-cell="props">
         <q-th :props="props" style="font-size: medium">
@@ -256,9 +257,6 @@ export default defineComponent({
     color: #21BA45
   .text-left
     display: none
-
-.q-table__bottom
-  display: none
 
 .my-table-border
   border: solid black 1px

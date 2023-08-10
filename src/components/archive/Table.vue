@@ -12,6 +12,8 @@
       :columns="columns"
       :separator="separator"
       :wrap-cells="true"
+      :hide-selected-banner="true"
+      :hide-no-data="true"
     >
       <template v-slot:header-cell="props">
         <q-th :props="props" style="font-size: medium">
@@ -101,6 +103,51 @@
           </q-td>
         </q-tr>
       </template>
+      <template v-slot:pagination="scope">
+        <q-btn
+          v-if="scope.pagesNumber > 2"
+          icon="first_page"
+          color="grey-8"
+          round
+          dense
+          flat
+          :disable="scope.isFirstPage"
+          @click="scope.firstPage"
+        />
+
+        <q-btn
+          icon="chevron_left"
+          color="grey-8"
+          round
+          dense
+          flat
+          :disable="scope.isFirstPage"
+          @click="scope.prevPage"
+        />
+
+        <q-btn
+          icon="chevron_right"
+          color="grey-8"
+          round
+          dense
+          flat
+          :disable="scope.isLastPage"
+          @click="scope.nextPage"
+        />
+
+        <q-btn
+          v-if="scope.pagesNumber > 2"
+          icon="last_page"
+          color="grey-8"
+          round
+          dense
+          flat
+          :disable="scope.isLastPage"
+          @click="scope.lastPage"
+        />
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </template>
+      <template v-slot:no-data=""> </template>
     </q-table>
   </div>
 </template>
@@ -212,9 +259,10 @@ export default defineComponent({
       separator: 'cell',
       columns,
       pagination: ref({
+        sortBy: 'desc',
+        descending: false,
         page: 1,
-        rowsPerPage: 2,
-        rowsNumber: 2,
+        rowsPerPage: 10,
       }),
     };
   },
