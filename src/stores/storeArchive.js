@@ -17,9 +17,11 @@ export const useArchiveStore = defineStore('archive', {
     vicosSort() {
       this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, true);
     },
-    addVico(vico) {
-      this.vicos.push(vico);
-      this.vicosSort();
+    clear() {
+      this.vicos = [];
+      this.selectId = 0;
+      this.isSelect = false;
+      this.vicoDialogView = false;
     },
   },
 });

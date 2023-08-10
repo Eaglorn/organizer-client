@@ -32,5 +32,15 @@ export const useMainStore = defineStore('main', {
       this.vicos.push(vico);
       this.vicosSort();
     },
+    clear() {
+      this.vicos = [];
+      this.selectId = 0;
+      this.isSelect = false;
+      this.vicoDialogView = false;
+      this.vicoDialogAdd = false;
+      this.vicoDialogEdit = false;
+      this.vicoDialogArchive = false;
+      this.vicoDialogDelete = false;
+    },
   },
 });

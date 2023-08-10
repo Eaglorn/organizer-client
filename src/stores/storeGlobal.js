@@ -28,8 +28,8 @@ export const useGlobalStore = defineStore('global', {
     page: 'main',
     messagesErrorTime: {
       low: 2000,
-      medium: 4000,
-      high: 7500,
+      medium: 3000,
+      high: 3500,
     },
   }),
   getters: {

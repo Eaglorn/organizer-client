@@ -155,8 +155,6 @@ export default defineComponent({
     MainVicoDialogDelete,
   },
   setup() {
-    Loading.show();
-
     const updateTable = () => {
       Loading.show();
       api({
@@ -201,7 +199,6 @@ export default defineComponent({
           Loading.hide();
         });
     };
-    Loading.hide();
 
     return {
       storeMain,

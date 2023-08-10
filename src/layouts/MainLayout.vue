@@ -113,15 +113,12 @@ export default defineComponent({
       storeArchive.vicosSort();
     });
 
-    storeGlobal.socket.on('archiveAdd', (data) => {
-      storeArchive.addVico(data);
-    });
-
     const router = useRouter();
     const onClickButtonArchive = () => {
       Loading.show();
       storeGlobal.socket.emit('pageArchive');
       router.push('archive');
+      if (storeGlobal.page === 'main') storeMain.clear();
       storeGlobal.page = 'archive';
       Loading.hide();
     };
@@ -129,6 +126,7 @@ export default defineComponent({
       Loading.show();
       storeGlobal.socket.emit('pageMain');
       router.push('main');
+      if (storeGlobal.page === 'archive') storeArchive.clear();
       storeGlobal.page = 'main';
       Loading.hide();
     };

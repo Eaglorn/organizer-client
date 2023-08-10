@@ -70,8 +70,6 @@ export default defineComponent({
     ArchiveVicoDialogView,
   },
   setup() {
-    Loading.show();
-
     const updateTable = () => {
       Loading.show();
       api({
@@ -116,7 +114,6 @@ export default defineComponent({
           Loading.hide();
         });
     };
-    Loading.hide();
 
     return {
       storeArchive,
