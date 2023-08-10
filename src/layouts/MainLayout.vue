@@ -6,19 +6,19 @@
         <q-space />
         <q-btn
           v-if="page === 'main'"
-          color="green-2"
+          color="green-3"
           text-color="black"
           icon="archive"
           @click="onClickButtonArchive"
-          >&nbsp; Перейти в архив</q-btn
+          >&nbsp; <b>Перейти в архив</b></q-btn
         >
         <q-btn
           v-if="page === 'archive'"
-          color="green-2"
+          color="green-3"
           text-color="black"
           icon="web"
           @click="onClickButtonMain"
-          >&nbsp; Перейти на главную страницу</q-btn
+          >&nbsp; <b>Перейти на главную страницу</b></q-btn
         >
       </q-toolbar>
     </q-header>
