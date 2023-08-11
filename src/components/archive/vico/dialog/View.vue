@@ -201,7 +201,7 @@ export default defineComponent({
                 vico.value.departamentInvited =
                   response.data.vico.departamentInvited;
                 vico.value.contactName = response.data.vico.contactName;
-                vico.value.contactPhone = response.data.vico.ContactPhone;
+                vico.value.contactPhone = response.data.vico.contactPhone;
 
                 dialog.value = true;
                 storeArchive.vicoDialogView = false;

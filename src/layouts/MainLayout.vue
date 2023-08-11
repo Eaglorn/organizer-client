@@ -1,8 +1,17 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh lpr lFf" class="shadow-2 rounded-borders">
     <q-header elevated>
-      <q-toolbar>
-        <q-toolbar-title> Органайзер ВКС </q-toolbar-title>
+      <q-bar class="q-electron-drag">
+        <q-icon name="laptop_chromebook" />
+        <div>Органайзер ВКС</div>
+
+        <q-space />
+
+        <q-btn dense flat icon="minimize" @click="minimize" />
+        <q-btn dense flat icon="crop_square" @click="toggleMaximize" />
+        <q-btn dense flat icon="close" @click="closeApp" />
+      </q-bar>
+      <q-toolbar class="bg-primary shadow-1 shadow-up-1">
         <q-space />
         <q-btn
           v-if="page === 'main'"
@@ -24,7 +33,9 @@
     </q-header>
 
     <q-page-container>
-      <router-view />
+      <q-page class="q-pa-md">
+        <router-view />
+      </q-page>
     </q-page-container>
   </q-layout>
 </template>
@@ -131,7 +142,32 @@ export default defineComponent({
       Loading.hide();
     };
 
-    return { onClickButtonArchive, onClickButtonMain, page };
+    function minimize() {
+      if (process.env.MODE === 'electron') {
+        window.myWindowAPI.minimize();
+      }
+    }
+
+    function toggleMaximize() {
+      if (process.env.MODE === 'electron') {
+        window.myWindowAPI.toggleMaximize();
+      }
+    }
+
+    function closeApp() {
+      if (process.env.MODE === 'electron') {
+        window.myWindowAPI.close();
+      }
+    }
+
+    return {
+      onClickButtonArchive,
+      onClickButtonMain,
+      page,
+      minimize,
+      toggleMaximize,
+      closeApp,
+    };
   },
 });
 </script>
