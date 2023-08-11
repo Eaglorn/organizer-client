@@ -178,7 +178,7 @@ module.exports = configure(function (/* ctx */) {
       // specify the debugging port to use for the Electron app when running in development mode
       inspectPort: 5858,
 
-      bundler: 'packager', // 'packager' or 'builder'
+      bundler: 'builder', // 'packager' or 'builder'
 
       packager: {
         // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
@@ -194,7 +194,22 @@ module.exports = configure(function (/* ctx */) {
       builder: {
         // https://www.electron.build/configuration/configuration
 
-        appId: 'oorganizer',
+        appId: 'ru.fns.organizer',
+        productName: 'Органайзер',
+        win: {
+          target: 'nsis',
+        },
+        nsis: {
+          oneClick: true,
+          perMachine: false,
+          allowToChangeInstallationDirectory: false,
+        },
+        publish: [
+          {
+            provider: 'generic',
+            url: 'http://127.0.0.1:3000/',
+          },
+        ],
       },
     },
 

@@ -1,4 +1,5 @@
-import { app, BrowserWindow, nativeTheme, Menu, Tray } from 'electron';
+import { app, BrowserWindow, nativeTheme, Menu, Tray, dialog } from 'electron';
+const { autoUpdater } = require('electron-updater');
 import { initialize, enable } from '@electron/remote/main';
 import path from 'path';
 import os from 'os';
@@ -108,3 +109,29 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+if (app.isPackaged) {
+  setInterval(() => {
+    autoUpdater.checkForUpdates();
+  }, 60000);
+
+  autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
+    const dialogOpts = {
+      type: 'info',
+      buttons: ['Перезагрузить', 'Позднее'],
+      title: 'Обновление приложения Органайзер ВКС',
+      message: process.platform === 'win32' ? releaseNotes : releaseName,
+      detail:
+        'Загружена новая версия приложения. Необходима перезагрузка приложения для установки обновления.',
+    };
+
+    dialog.showMessageBox(dialogOpts).then((returnValue) => {
+      if (returnValue.response === 0) autoUpdater.quitAndInstall();
+    });
+  });
+
+  autoUpdater.on('error', (message) => {
+    console.error('Возникла проблема при обновлении приложения.');
+    console.error(message);
+  });
+}
