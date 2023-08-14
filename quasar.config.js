@@ -207,7 +207,7 @@ module.exports = configure(function (/* ctx */) {
         publish: [
           {
             provider: 'generic',
-            url: 'http://127.0.0.1:3000/update',
+            url: 'http://10.27.0.243:3000/update',
           },
         ],
       },
