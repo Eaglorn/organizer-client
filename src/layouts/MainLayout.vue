@@ -76,7 +76,6 @@ export default defineComponent({
     const page = computed(() => storeGlobal.page);
 
     storeGlobal.socket.on('load', (data) => {
-      console.log(data);
       storeUser.role = data.role;
       storeGlobal.optionObject = [];
       storeGlobal.optionTypeVico = [];
@@ -173,7 +172,7 @@ export default defineComponent({
       }
     }
 
-    const version = storeGlobal.version;
+    const version = computed(() => storeGlobal.version);
 
     return {
       version,
