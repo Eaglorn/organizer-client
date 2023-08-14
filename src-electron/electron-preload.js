@@ -28,10 +28,14 @@
  * }
  */
 
-import { contextBridge } from 'electron';
+import os from 'os';
+
+import { contextBridge, ipcRenderer } from 'electron';
 import { BrowserWindow } from '@electron/remote';
 
-contextBridge.exposeInMainWorld('myWindowAPI', {
+var computerName = os.hostname();
+
+contextBridge.exposeInMainWorld('windowAPI', {
   minimize() {
     BrowserWindow.getFocusedWindow().minimize();
   },
@@ -48,5 +52,11 @@ contextBridge.exposeInMainWorld('myWindowAPI', {
 
   close() {
     BrowserWindow.getFocusedWindow().hide();
+  },
+});
+
+contextBridge.exposeInMainWorld('userAPI', {
+  getData: {
+    computerName: computerName,
   },
 });

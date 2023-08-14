@@ -1,8 +1,8 @@
 {
-  "name": "organizer-site",
-  "version": "0.0.4",
-  "description": "organizer-site",
-  "productName": "organizer-site",
+  "name": "organizer-client",
+  "version": "0.0.2",
+  "description": "organizer-client",
+  "productName": "organizer-client",
   "author": "fns",
   "private": true,
   "scripts": {
@@ -30,10 +30,10 @@
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.4.3",
-    "autoprefixer": "^10.4.14",
+    "autoprefixer": "^10.4.15",
     "electron": "^25.5.0",
     "electron-builder": "^24.6.3",
-    "eslint": "^8.46.0",
+    "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-vue": "^9.17.0",
     "postcss": "^8.4.27",

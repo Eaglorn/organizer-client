@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-bar class="q-electron-drag">
         <q-icon name="laptop_chromebook" />
-        <div>Органайзер ВКС</div>
+        <div>Органайзер (v{{ version }})</div>
 
         <q-space />
 
@@ -144,23 +144,29 @@ export default defineComponent({
 
     function minimize() {
       if (process.env.MODE === 'electron') {
-        window.myWindowAPI.minimize();
+        window.windowAPI.minimize();
       }
     }
 
     function toggleMaximize() {
       if (process.env.MODE === 'electron') {
-        window.myWindowAPI.toggleMaximize();
+        window.windowAPI.toggleMaximize();
       }
     }
 
     function closeApp() {
       if (process.env.MODE === 'electron') {
-        window.myWindowAPI.close();
+        window.windowAPI.close();
       }
     }
 
+    const version = storeGlobal.version;
+
+    const data = window.userAPI.getData();
+    console.log(data);
+
     return {
+      version,
       onClickButtonArchive,
       onClickButtonMain,
       page,
