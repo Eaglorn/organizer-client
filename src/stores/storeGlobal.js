@@ -4,7 +4,7 @@ import { DateTime } from 'boot/luxon';
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
-    version: '0.0.2',
+    version: '0.0.3',
     //server: 'http://26.136.207.192:3000/',
     server: 'http://10.27.0.243:3000/',
     //server: 'http://localhost:3000/',

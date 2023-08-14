@@ -46,10 +46,12 @@ import { defineComponent, computed, ref } from 'vue';
 import { Loading } from 'quasar';
 import { useRouter } from 'vue-router';
 import { useGlobalStore } from '../stores/storeGlobal.js';
+import { useUserStore } from '../stores/storeUser.js';
 import { useMainStore } from '../stores/storeMain.js';
 import { useArchiveStore } from '../stores/storeArchive.js';
 
 const storeGlobal = useGlobalStore();
+const storeUser = useUserStore();
 const storeMain = useMainStore();
 const storeArchive = useArchiveStore();
 
@@ -59,12 +61,23 @@ export default defineComponent({
   components: {},
 
   setup() {
-    const socket = io(storeGlobal.server);
+    const data = window.userAPI.getData;
+    storeUser.login = data.login;
+    storeUser.computerName = data.computerName;
+
+    const socket = io(storeGlobal.server, {
+      query: {
+        login: storeUser.login,
+        computerName: storeUser.computerName,
+      },
+    });
     storeGlobal.socket = socket;
 
     const page = computed(() => storeGlobal.page);
 
     storeGlobal.socket.on('load', (data) => {
+      console.log(data);
+      storeUser.role = data.role;
       storeGlobal.optionObject = [];
       storeGlobal.optionTypeVico = [];
       storeGlobal.optionDepartament = [];
@@ -161,9 +174,6 @@ export default defineComponent({
     }
 
     const version = storeGlobal.version;
-
-    const data = window.userAPI.getData();
-    console.log(data);
 
     return {
       version,

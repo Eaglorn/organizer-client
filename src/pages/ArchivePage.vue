@@ -52,16 +52,14 @@
 <script>
 import { api } from 'boot/axios';
 import { Loading, Notify } from 'quasar';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 
 import ArchiveTable from 'components/archive/Table.vue';
 import ArchiveVicoDialogView from 'components/archive/vico/dialog/View.vue';
 
 import { useGlobalStore } from '../stores/storeGlobal.js';
+import { useUserStore } from '../stores/storeUser.js';
 import { useArchiveStore } from '../stores/storeArchive.js';
-
-const storeGlobal = useGlobalStore();
-const storeArchive = useArchiveStore();
 
 export default defineComponent({
   name: 'IndexPage',
@@ -70,6 +68,12 @@ export default defineComponent({
     ArchiveVicoDialogView,
   },
   setup() {
+    const storeGlobal = useGlobalStore();
+    const storeUser = useUserStore();
+    const storeArchive = useArchiveStore();
+
+    const role = computed(() => storeUser.role);
+
     const updateTable = () => {
       Loading.show();
       api({
@@ -116,6 +120,7 @@ export default defineComponent({
     };
 
     return {
+      role,
       storeArchive,
       updateTable,
     };

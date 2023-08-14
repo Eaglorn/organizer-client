@@ -29,11 +29,8 @@
  */
 
 import os from 'os';
-
 import { contextBridge, ipcRenderer } from 'electron';
 import { BrowserWindow } from '@electron/remote';
-
-var computerName = os.hostname();
 
 contextBridge.exposeInMainWorld('windowAPI', {
   minimize() {
@@ -55,8 +52,11 @@ contextBridge.exposeInMainWorld('windowAPI', {
   },
 });
 
+var computerName = os.hostname();
+
 contextBridge.exposeInMainWorld('userAPI', {
   getData: {
+    login: os.userInfo().username,
     computerName: computerName,
   },
 });

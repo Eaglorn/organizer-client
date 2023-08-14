@@ -264,6 +264,7 @@ import { Loading, Notify } from 'quasar';
 import { defineComponent, ref, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '../../../../stores/storeGlobal.js';
+import { useUserStore } from '../../../../stores/storeUser.js';
 import { useMainStore } from '../../../../stores/storeMain.js';
 
 export default defineComponent({
@@ -271,6 +272,7 @@ export default defineComponent({
   props: {},
   setup() {
     const storeGlobal = useGlobalStore();
+    const storeUser = useUserStore();
     const storeMain = useMainStore();
 
     const dialog = ref(false);
@@ -381,6 +383,7 @@ export default defineComponent({
           url: storeGlobal.getAjaxUri('vico/add'),
           data: {
             vico: newVico,
+            user: storeUser.getData(),
           },
           timeout: 10000,
           responseType: 'json',

@@ -34,6 +34,7 @@
         padding="8px"
         size="24px"
         @click="storeMain.vicoDialogAdd = true"
+        v-show="role != 'guest'"
       >
         <q-tooltip
           transition-show="scale"
@@ -52,6 +53,7 @@
         padding="8px"
         size="24px"
         @click="storeMain.vicoDialogEdit = true"
+        v-show="role != 'guest'"
       >
         <q-tooltip
           transition-show="scale"
@@ -92,6 +94,7 @@
         padding="8px"
         size="24px"
         @click="storeMain.vicoDialogArchive = true"
+        v-show="role != 'guest'"
       >
         <q-tooltip
           transition-show="scale"
@@ -110,6 +113,7 @@
         padding="8px"
         size="24px"
         @click="storeMain.vicoDialogDelete = true"
+        v-show="role != 'guest'"
       >
         <q-tooltip
           transition-show="scale"
@@ -128,8 +132,7 @@
 <script>
 import { api } from 'boot/axios';
 import { Loading, Notify } from 'quasar';
-import { defineComponent, ref } from 'vue';
-import { io } from 'boot/socket';
+import { defineComponent, ref, computed } from 'vue';
 
 import MainTable from 'components/main/Table.vue';
 import MainVicoDialogView from 'components/main/vico/dialog/View.vue';
@@ -139,10 +142,8 @@ import MainVicoDialogArchive from 'components/main/vico/dialog/Archive.vue';
 import MainVicoDialogDelete from 'components/main/vico/dialog/Delete.vue';
 
 import { useGlobalStore } from '../stores/storeGlobal.js';
+import { useUserStore } from '../stores/storeUser.js';
 import { useMainStore } from '../stores/storeMain.js';
-
-const storeGlobal = useGlobalStore();
-const storeMain = useMainStore();
 
 export default defineComponent({
   name: 'IndexPage',
@@ -155,6 +156,12 @@ export default defineComponent({
     MainVicoDialogDelete,
   },
   setup() {
+    const storeGlobal = useGlobalStore();
+    const storeUser = useUserStore();
+    const storeMain = useMainStore();
+
+    const role = computed(() => storeUser.role);
+
     const updateTable = () => {
       Loading.show();
       api({
@@ -201,6 +208,7 @@ export default defineComponent({
     };
 
     return {
+      role,
       storeMain,
       updateTable,
     };
