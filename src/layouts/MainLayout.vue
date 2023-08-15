@@ -61,6 +61,8 @@ export default defineComponent({
   components: {},
 
   setup() {
+    const count = ref(0);
+
     const data = window.userAPI.getData;
     storeUser.login = data.login;
     storeUser.computerName = data.computerName;
@@ -163,6 +165,7 @@ export default defineComponent({
     function toggleMaximize() {
       if (process.env.MODE === 'electron') {
         window.windowAPI.toggleMaximize();
+        count.value = count.value + 1;
       }
     }
 
@@ -175,6 +178,7 @@ export default defineComponent({
     const version = computed(() => storeGlobal.version);
 
     return {
+      count,
       version,
       onClickButtonArchive,
       onClickButtonMain,

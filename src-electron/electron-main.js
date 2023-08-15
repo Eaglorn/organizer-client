@@ -1,4 +1,13 @@
-import { app, BrowserWindow, nativeTheme, Menu, Tray, dialog } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  nativeTheme,
+  Menu,
+  Tray,
+  dialog,
+  ipcMain,
+  Notification,
+} from 'electron';
 const { autoUpdater } = require('electron-updater');
 import { initialize, enable } from '@electron/remote/main';
 import path from 'path';
@@ -16,6 +25,8 @@ try {
     );
   }
 } catch (_) {}
+
+app.setAppUserModelId('Органайзер');
 
 let mainWindow;
 
@@ -135,3 +146,16 @@ if (app.isPackaged) {
     console.error(message);
   });
 }
+
+ipcMain.on('notify', () => {
+  try {
+    const notify = new Notification({
+      title: 'Измение состояния приложения',
+      body: 'Нажата кнопка изменения размера окна приложения',
+      timeoutType: 'never',
+    });
+    notify.show();
+  } catch (err) {
+    console.log(err);
+  }
+});

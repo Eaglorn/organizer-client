@@ -1,6 +1,6 @@
 {
   "name": "organizer-client",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "organizer-client",
   "productName": "organizer-client",
   "author": "fns",
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@quasar/app-vite": "^1.4.3",
     "autoprefixer": "^10.4.15",
-    "electron": "^25.5.0",
+    "electron": "22.3.18",
     "electron-builder": "^24.6.3",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",

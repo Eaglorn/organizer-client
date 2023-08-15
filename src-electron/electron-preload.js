@@ -38,6 +38,8 @@ contextBridge.exposeInMainWorld('windowAPI', {
   },
 
   toggleMaximize() {
+    ipcRenderer.send('notify');
+
     const win = BrowserWindow.getFocusedWindow();
 
     if (win.isMaximized()) {
