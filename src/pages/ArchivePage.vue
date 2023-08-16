@@ -62,7 +62,7 @@ import { useUserStore } from '../stores/storeUser.js';
 import { useArchiveStore } from '../stores/storeArchive.js';
 
 export default defineComponent({
-  name: 'IndexPage',
+  name: 'ArchivePage',
   components: {
     ArchiveTable,
     ArchiveVicoDialogView,

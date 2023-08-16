@@ -4,7 +4,7 @@ export const useUserStore = defineStore('user', {
   state: () => ({
     computerName: '',
     login: '',
-    role: 'guest',
+    role: 0,
   }),
   getters: {},
   actions: {},

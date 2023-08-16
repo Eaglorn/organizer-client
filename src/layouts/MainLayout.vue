@@ -14,14 +14,27 @@
       <q-toolbar class="bg-primary shadow-1 shadow-up-1">
         <q-space />
         <q-btn
-          v-if="page === 'main'"
+          v-if="role > 1 && page != 'admin'"
+          color="green-3"
+          text-color="black"
+          @click="onClickButtonAdmin"
+        >
+          <q-icon size="2rem" name="admin_panel_settings" />
+          &nbsp;
+          <b>Перейти на страницу администрирования</b>
+        </q-btn>
+        <q-btn
+          v-if="page != 'archive'"
           color="green-3"
           text-color="black"
           @click="onClickButtonArchive"
-          ><q-icon size="2rem" name="archive" />&nbsp; <b>Перейти в архив</b>
+        >
+          <q-icon size="2rem" name="archive" />
+          &nbsp;
+          <b>Перейти в архив</b>
         </q-btn>
         <q-btn
-          v-if="page === 'archive'"
+          v-if="page != 'main'"
           color="green-3"
           text-color="black"
           @click="onClickButtonMain"
@@ -155,6 +168,14 @@ export default defineComponent({
       storeGlobal.page = 'main';
       Loading.hide();
     };
+    const onClickButtonAdmin = () => {
+      Loading.show();
+      router.push('admin');
+      if (storeGlobal.page === 'archive') storeArchive.clear();
+      if (storeGlobal.page === 'main') storeMain.clear();
+      storeGlobal.page = 'admin';
+      Loading.hide();
+    };
 
     function minimize() {
       if (process.env.MODE === 'electron') {
@@ -182,6 +203,7 @@ export default defineComponent({
       version,
       onClickButtonArchive,
       onClickButtonMain,
+      onClickButtonAdmin,
       page,
       minimize,
       toggleMaximize,

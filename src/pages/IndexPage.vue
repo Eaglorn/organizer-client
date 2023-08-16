@@ -34,7 +34,7 @@
         padding="8px"
         size="24px"
         @click="storeMain.vicoDialogAdd = true"
-        v-show="role != 'guest'"
+        v-show="role > 0"
       >
         <q-tooltip
           transition-show="scale"
@@ -53,7 +53,7 @@
         padding="8px"
         size="24px"
         @click="storeMain.vicoDialogEdit = true"
-        v-show="role != 'guest'"
+        v-show="role > 0"
       >
         <q-tooltip
           transition-show="scale"
@@ -94,7 +94,7 @@
         padding="8px"
         size="24px"
         @click="storeMain.vicoDialogArchive = true"
-        v-show="role != 'guest'"
+        v-show="role > 0"
       >
         <q-tooltip
           transition-show="scale"
@@ -113,7 +113,7 @@
         padding="8px"
         size="24px"
         @click="storeMain.vicoDialogDelete = true"
-        v-show="role != 'guest'"
+        v-show="role > 0"
       >
         <q-tooltip
           transition-show="scale"
