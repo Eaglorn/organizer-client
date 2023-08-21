@@ -54,11 +54,9 @@ contextBridge.exposeInMainWorld('windowAPI', {
   },
 });
 
-var computerName = os.hostname();
-
 contextBridge.exposeInMainWorld('userAPI', {
   getData: {
     login: os.userInfo().username,
-    computerName: computerName,
+    computer: os.hostname(),
   },
 });

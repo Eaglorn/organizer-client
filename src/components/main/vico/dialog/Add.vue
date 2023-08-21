@@ -384,7 +384,7 @@ export default defineComponent({
           data: {
             vico: newVico,
             user: {
-              computer: storeUser.computerName,
+              computer: storeUser.computer,
               login: storeUser.login,
               role: storeUser.role,
             },

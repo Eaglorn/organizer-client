@@ -13,11 +13,15 @@
       </q-bar>
       <q-toolbar class="bg-primary shadow-1 shadow-up-1">
         <q-space />
+        <div class="text-h4" v-if="page === 'main'">Главная страница</div>
+        <div class="text-h4" v-if="page === 'archive'">Архив</div>
+        <div class="text-h4" v-if="page === 'admin'">
+          Страница Администратора
+        </div>
+        <q-space />
         <q-btn-group push>
-          <div class="my-indent"></div>
           <q-btn
             v-if="page != 'archive'"
-            push
             color="green-3"
             text-color="black"
             @click="onClickButtonArchive"
@@ -28,7 +32,6 @@
           </q-btn>
           <q-btn
             v-if="page != 'main'"
-            push
             color="green-3"
             text-color="black"
             @click="onClickButtonMain"
@@ -38,7 +41,6 @@
           </q-btn>
           <q-btn
             v-if="role > 1 && page != 'admin'"
-            push
             color="green-3"
             text-color="black"
             @click="onClickButtonAdmin"
@@ -84,12 +86,11 @@ export default defineComponent({
 
     const data = window.userAPI.getData;
     storeUser.login = data.login;
-    storeUser.computerName = data.computerName;
+    storeUser.computer = data.computer;
 
     const socket = io(storeGlobal.server, {
       query: {
         login: storeUser.login,
-        computerName: storeUser.computerName,
       },
     });
     storeGlobal.socket = socket;

@@ -31,13 +31,18 @@ app.setAppUserModelId('Органайзер');
 let mainWindow;
 
 function createWindow() {
+  const { screen } = require('electron');
+
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const { width, height } = primaryDisplay.workAreaSize;
+
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
     icon: path.resolve(__dirname, 'icons/icon.png'), // tray icon
-    width: 1000,
-    height: 600,
+    width: width,
+    height: height,
     useContentSize: true,
     frame: false,
     webPreferences: {
@@ -154,7 +159,7 @@ ipcMain.on('notify', () => {
       body: 'Нажата кнопка изменения размера окна приложения',
       timeoutType: 'never',
     });
-    notify.show();
+    //notify.show();
   } catch (err) {
     console.log(err);
   }

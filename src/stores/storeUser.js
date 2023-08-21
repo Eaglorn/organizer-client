@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    computerName: '',
+    computer: '',
     login: '',
     role: 0,
   }),
