@@ -198,7 +198,10 @@ export default defineComponent({
 
     const version = computed(() => storeGlobal.version);
 
+    const role = computed(() => storeUser.role);
+
     return {
+      role,
       count,
       version,
       onClickButtonArchive,

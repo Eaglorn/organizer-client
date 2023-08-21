@@ -383,7 +383,11 @@ export default defineComponent({
           url: storeGlobal.getAjaxUri('vico/add'),
           data: {
             vico: newVico,
-            user: storeUser.getData(),
+            user: {
+              computer: storeUser.computerName,
+              login: storeUser.login,
+              role: storeUser.role,
+            },
           },
           timeout: 10000,
           responseType: 'json',
