@@ -13,35 +13,41 @@
       </q-bar>
       <q-toolbar class="bg-primary shadow-1 shadow-up-1">
         <q-space />
-        <q-btn
-          v-if="role > 1 && page != 'admin'"
-          color="green-3"
-          text-color="black"
-          @click="onClickButtonAdmin"
-        >
-          <q-icon size="2rem" name="admin_panel_settings" />
-          &nbsp;
-          <b>Перейти на страницу администрирования</b>
-        </q-btn>
-        <q-btn
-          v-if="page != 'archive'"
-          color="green-3"
-          text-color="black"
-          @click="onClickButtonArchive"
-        >
-          <q-icon size="2rem" name="archive" />
-          &nbsp;
-          <b>Перейти в архив</b>
-        </q-btn>
-        <q-btn
-          v-if="page != 'main'"
-          color="green-3"
-          text-color="black"
-          @click="onClickButtonMain"
-        >
-          <q-icon size="2rem" name="web" />&nbsp;
-          <b>Перейти на главную страницу</b>
-        </q-btn>
+        <q-btn-group push>
+          <div class="my-indent"></div>
+          <q-btn
+            v-if="page != 'archive'"
+            push
+            color="green-3"
+            text-color="black"
+            @click="onClickButtonArchive"
+          >
+            <q-icon size="2rem" name="archive" />
+            &nbsp;
+            <b>Перейти в архив</b>
+          </q-btn>
+          <q-btn
+            v-if="page != 'main'"
+            push
+            color="green-3"
+            text-color="black"
+            @click="onClickButtonMain"
+          >
+            <q-icon size="2rem" name="web" />&nbsp;
+            <b>Перейти на главную страницу</b>
+          </q-btn>
+          <q-btn
+            v-if="role > 1 && page != 'admin'"
+            push
+            color="green-3"
+            text-color="black"
+            @click="onClickButtonAdmin"
+          >
+            <q-icon size="2rem" name="admin_panel_settings" />
+            &nbsp;
+            <b>Перейти на страницу администрирования</b>
+          </q-btn>
+        </q-btn-group>
       </q-toolbar>
     </q-header>
 
