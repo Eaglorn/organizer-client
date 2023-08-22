@@ -6,18 +6,55 @@
         <div>Органайзер (v{{ version }})</div>
 
         <q-space />
-
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <q-btn dense flat icon="minimize" @click="minimize" />
         <q-btn dense flat icon="crop_square" @click="toggleMaximize" />
         <q-btn dense flat icon="close" @click="closeApp" />
       </q-bar>
       <q-toolbar class="bg-primary shadow-1 shadow-up-1">
+        &nbsp;&nbsp;&nbsp;
+        <q-btn
+          v-if="page != 'profile'"
+          color="green-3"
+          text-color="black"
+          @click="onClickButtonProfile"
+        >
+          <div v-if="role === 0">
+            <i class="fa-solid fa-person-circle-question fa-2x">
+              <q-tooltip> Гость </q-tooltip>
+            </i>
+          </div>
+          <div v-if="role === 1">
+            <i class="fa-solid fa-user fa-2x">
+              <q-tooltip> Пользователь </q-tooltip>
+            </i>
+          </div>
+          <div v-if="role === 2">
+            <i class="fa-solid fa-user-bounty-hunter fa-2x">
+              <q-tooltip> Модератор </q-tooltip>
+            </i>
+          </div>
+          <div v-if="role === 3">
+            <i class="fa-solid fa-user-robot fa-2x">
+              <q-tooltip> Администратор </q-tooltip>
+            </i>
+          </div>
+          <div v-if="role === 4">
+            <i class="fa-sharp fa-solid fa-user-secret fa-2x">
+              <q-tooltip> Суперадминистратор </q-tooltip>
+            </i>
+          </div>
+          &nbsp;&nbsp;&nbsp;
+          <b>Перейти в профиль</b>
+        </q-btn>
         <q-space />
         <div class="text-h4" v-if="page === 'main'">Главная страница</div>
         <div class="text-h4" v-if="page === 'archive'">Архив</div>
         <div class="text-h4" v-if="page === 'admin'">
           Страница Администратора
         </div>
+        <div class="text-h4" v-if="page === 'profile'">Профиль</div>
+        <q-space />
         <q-space />
         <q-btn-group push>
           <q-btn
@@ -45,7 +82,7 @@
             text-color="black"
             @click="onClickButtonAdmin"
           >
-            <q-icon size="2rem" name="admin_panel_settings" />
+            <i class="fa-sharp fa-solid fa-screwdriver-wrench fa-2x"></i>
             &nbsp;
             <b>Перейти на страницу администрирования</b>
           </q-btn>
@@ -183,6 +220,14 @@ export default defineComponent({
       storeGlobal.page = 'admin';
       Loading.hide();
     };
+    const onClickButtonProfile = () => {
+      Loading.show();
+      router.push('profile');
+      if (storeGlobal.page === 'archive') storeArchive.clear();
+      if (storeGlobal.page === 'main') storeMain.clear();
+      storeGlobal.page = 'profile';
+      Loading.hide();
+    };
 
     function minimize() {
       if (process.env.MODE === 'electron') {
@@ -214,6 +259,7 @@ export default defineComponent({
       onClickButtonArchive,
       onClickButtonMain,
       onClickButtonAdmin,
+      onClickButtonProfile,
       page,
       minimize,
       toggleMaximize,

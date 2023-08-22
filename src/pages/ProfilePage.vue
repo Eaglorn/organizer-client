@@ -1,25 +1,72 @@
 <template>
   <div class="q-pa-md">
-    <div class="col-6">
-      <q-select
-        outlined
-        v-model="objectInvited"
-        multiple
-        :options="optionObject"
-        label="Подписка на обособленные подразделения"
-        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
-      />
-    </div>
-    <div class="col-6">
-      <q-select
-        outlined
-        v-model="departamentInvited"
-        multiple
-        :options="optionDepartament"
-        label="Приглашенные отделы"
-        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
-      />
-    </div>
+    <q-card style="min-width: 95vw; top: 10px" flat bordered>
+      <q-card-section>
+        <q-form class="q-gutter-md" ref="form">
+          <div class="row justify-center">
+            <div class="text-h4">
+              Подписка на обособленные подразделения и отделы
+            </div>
+          </div>
+          <div class="row justify-evenly">
+            <div class="col-5">
+              <q-select
+                outlined
+                v-model="objectInvited"
+                multiple
+                :options="optionObject"
+                label="Обособленные подразделения"
+                style="
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                "
+                class="my-select"
+              />
+            </div>
+            <div class="col-5">
+              <q-select
+                outlined
+                v-model="departamentInvited"
+                multiple
+                :options="optionDepartament"
+                label="Отделы"
+                style="
+                  white-space: nowrap;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                "
+                class="my-select"
+              />
+            </div>
+          </div>
+          <div class="row justify-evenly">
+            <div class="col-5">
+              <q-select
+                outlined
+                v-model="objectInvited"
+                multiple
+                use-chips
+                stack-label
+                :options="optionObject"
+                readonly
+              />
+            </div>
+            <div class="col-5">
+              <q-select
+                outlined
+                v-model="departamentInvited"
+                multiple
+                use-chips
+                stack-label
+                :options="optionObject"
+                readonly
+              />
+            </div>
+          </div>
+        </q-form>
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -41,11 +88,23 @@ export default defineComponent({
     const storeUser = useUserStore();
     const storeMain = useMainStore();
 
+    const objectInvited = ref([]);
+    const departamentInvited = ref([]);
+
     const optionObject = computed(() => storeGlobal.optionObject);
     const optionDepartament = computed(() => storeGlobal.optionDepartament);
-    return { optionObject, optionDepartament };
+    return {
+      optionObject,
+      optionDepartament,
+      objectInvited,
+      departamentInvited,
+    };
   },
 });
 </script>
 
-<style lang="sass"></style>
+<style lang="sass">
+.my-select
+  span
+    display: none
+</style>
