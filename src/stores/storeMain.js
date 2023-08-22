@@ -19,7 +19,7 @@ export const useMainStore = defineStore('main', {
   },
   actions: {
     vicosSort() {
-      this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, true);
+      this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, false);
     },
     setVico(vico) {
       this.vicos.forEach((item, index) => {

@@ -15,7 +15,7 @@ export const useArchiveStore = defineStore('archive', {
   },
   actions: {
     vicosSort() {
-      this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, true);
+      this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, false);
     },
     clear() {
       this.vicos = [];

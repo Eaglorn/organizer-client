@@ -30,9 +30,9 @@ import { useVuelidate, required, minLength } from 'boot/vuelidate';
 import { Loading, Notify } from 'quasar';
 import { defineComponent, ref, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia';
-import { useGlobalStore } from '../../../../stores/storeGlobal.js';
-import { useUserStore } from '../../../../stores/storeUser.js';
-import { useMainStore } from '../../../../stores/storeMain.js';
+import { useGlobalStore } from '../stores/storeGlobal.js';
+import { useUserStore } from '../stores/storeUser.js';
+import { useMainStore } from '../stores/storeMain.js';
 
 export default defineComponent({
   name: 'ProfilePage',
