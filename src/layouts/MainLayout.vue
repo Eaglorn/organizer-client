@@ -4,7 +4,6 @@
       <q-bar class="q-electron-drag">
         <i class="fa-duotone fa-laptop" />
         <div>Органайзер (v{{ version }})</div>
-
         <q-space />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <q-btn dense flat @click="minimize">
@@ -18,7 +17,46 @@
         </q-btn>
       </q-bar>
       <q-toolbar class="bg-primary shadow-1 shadow-up-1">
-        &nbsp;&nbsp;&nbsp;
+        <q-btn-group push>
+          <q-btn
+            v-if="page != 'archive'"
+            color="green-3"
+            text-color="black"
+            @click="onClickButtonArchive"
+          >
+            <i class="fa-duotone fa-box-archive fa-2x" />
+            &nbsp;
+            <b>Перейти в архив</b>
+          </q-btn>
+          <q-btn
+            v-if="page != 'main'"
+            color="green-3"
+            text-color="black"
+            @click="onClickButtonMain"
+          >
+            <i class="fa-duotone fa-sidebar-flip fa-2x" />
+            &nbsp;
+            <b>Перейти на главную страницу</b>
+          </q-btn>
+          <q-btn
+            v-if="role > 1 && page != 'admin'"
+            color="green-3"
+            text-color="black"
+            @click="onClickButtonAdmin"
+          >
+            <i class="fa-duotone fa-screwdriver-wrench fa-2x" />
+            &nbsp;
+            <b>Перейти на страницу администрирования</b>
+          </q-btn>
+        </q-btn-group>
+        <q-space />
+        <div class="text-h4" v-if="page === 'main'">Главная страница</div>
+        <div class="text-h4" v-if="page === 'archive'">Архив</div>
+        <div class="text-h4" v-if="page === 'admin'">
+          Страница Администратора
+        </div>
+        <div class="text-h4" v-if="page === 'profile'">Профиль</div>
+        <q-space />
         <q-btn
           v-if="page != 'profile'"
           color="green-3"
@@ -53,47 +91,6 @@
           &nbsp;&nbsp;&nbsp;
           <b>Перейти в профиль</b>
         </q-btn>
-        <q-space />
-        <div class="text-h4" v-if="page === 'main'">Главная страница</div>
-        <div class="text-h4" v-if="page === 'archive'">Архив</div>
-        <div class="text-h4" v-if="page === 'admin'">
-          Страница Администратора
-        </div>
-        <div class="text-h4" v-if="page === 'profile'">Профиль</div>
-        <q-space />
-        <q-space />
-        <q-btn-group push>
-          <q-btn
-            v-if="page != 'archive'"
-            color="green-3"
-            text-color="black"
-            @click="onClickButtonArchive"
-          >
-            <i class="fa-duotone fa-box-archive fa-2x" />
-            &nbsp;
-            <b>Перейти в архив</b>
-          </q-btn>
-          <q-btn
-            v-if="page != 'main'"
-            color="green-3"
-            text-color="black"
-            @click="onClickButtonMain"
-          >
-            <i class="fa-duotone fa-sidebar-flip fa-2x" />
-            &nbsp;
-            <b>Перейти на главную страницу</b>
-          </q-btn>
-          <q-btn
-            v-if="role > 1 && page != 'admin'"
-            color="green-3"
-            text-color="black"
-            @click="onClickButtonAdmin"
-          >
-            <i class="fa-duotone fa-screwdriver-wrench fa-2x" />
-            &nbsp;
-            <b>Перейти на страницу администрирования</b>
-          </q-btn>
-        </q-btn-group>
       </q-toolbar>
     </q-header>
 

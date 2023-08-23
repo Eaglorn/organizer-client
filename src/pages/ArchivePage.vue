@@ -127,7 +127,7 @@ export default defineComponent({
 <style lang="sass">
 .my-button
   z-index: 999
-  opacity: 0.7
+  opacity: 0.85
 
 .my-button:hover
   opacity: 1
