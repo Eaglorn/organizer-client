@@ -2,14 +2,20 @@
   <q-layout view="lHh lpr lFf" class="shadow-2 rounded-borders">
     <q-header elevated>
       <q-bar class="q-electron-drag">
-        <q-icon name="laptop_chromebook" />
+        <i class="fa-duotone fa-laptop" />
         <div>Органайзер (v{{ version }})</div>
 
         <q-space />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <q-btn dense flat icon="minimize" @click="minimize" />
-        <q-btn dense flat icon="crop_square" @click="toggleMaximize" />
-        <q-btn dense flat icon="close" @click="closeApp" />
+        <q-btn dense flat @click="minimize">
+          <i class="fa-solid fa-window-minimize fa-2x" />
+        </q-btn>
+        <q-btn dense flat @click="toggleMaximize">
+          <i class="fa-regular fa-square fa-2x" />
+        </q-btn>
+        <q-btn dense flat @click="closeApp">
+          <i class="fa-solid fa-xmark-large fa-2x" />
+        </q-btn>
       </q-bar>
       <q-toolbar class="bg-primary shadow-1 shadow-up-1">
         &nbsp;&nbsp;&nbsp;
@@ -20,27 +26,27 @@
           @click="onClickButtonProfile"
         >
           <div v-if="role === 0">
-            <i class="fa-solid fa-person-circle-question fa-2x">
+            <i class="fa-duotone fa-person-circle-question fa-2x">
               <q-tooltip> Гость </q-tooltip>
             </i>
           </div>
           <div v-if="role === 1">
-            <i class="fa-solid fa-user fa-2x">
+            <i class="fa-duotone fa-user fa-2x">
               <q-tooltip> Пользователь </q-tooltip>
             </i>
           </div>
           <div v-if="role === 2">
-            <i class="fa-solid fa-user-bounty-hunter fa-2x">
+            <i class="fa-duotone fa-user-bounty-hunter fa-2x">
               <q-tooltip> Модератор </q-tooltip>
             </i>
           </div>
           <div v-if="role === 3">
-            <i class="fa-solid fa-user-robot fa-2x">
+            <i class="fa-duotone fa-user-robot fa-2x">
               <q-tooltip> Администратор </q-tooltip>
             </i>
           </div>
           <div v-if="role === 4">
-            <i class="fa-sharp fa-solid fa-user-secret fa-2x">
+            <i class="fa-duotone fa-user-secret fa-2x">
               <q-tooltip> Суперадминистратор </q-tooltip>
             </i>
           </div>
@@ -63,7 +69,7 @@
             text-color="black"
             @click="onClickButtonArchive"
           >
-            <q-icon size="2rem" name="archive" />
+            <i class="fa-duotone fa-box-archive fa-2x" />
             &nbsp;
             <b>Перейти в архив</b>
           </q-btn>
@@ -73,7 +79,8 @@
             text-color="black"
             @click="onClickButtonMain"
           >
-            <q-icon size="2rem" name="web" />&nbsp;
+            <i class="fa-duotone fa-sidebar-flip fa-2x" />
+            &nbsp;
             <b>Перейти на главную страницу</b>
           </q-btn>
           <q-btn
@@ -82,7 +89,7 @@
             text-color="black"
             @click="onClickButtonAdmin"
           >
-            <i class="fa-sharp fa-solid fa-screwdriver-wrench fa-2x"></i>
+            <i class="fa-duotone fa-screwdriver-wrench fa-2x" />
             &nbsp;
             <b>Перейти на страницу администрирования</b>
           </q-btn>

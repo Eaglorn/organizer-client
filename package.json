@@ -1,6 +1,6 @@
 {
   "name": "organizer-client",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "organizer-client",
   "productName": "organizer-client",
   "author": "fns",
@@ -20,7 +20,7 @@
     "@vuelidate/validators": "^2.0.3",
     "axios": "^1.4.0",
     "electron-updater": "^6.1.1",
-    "luxon": "^3.4.0",
+    "luxon": "^3.4.1",
     "pinia": "^2.1.6",
     "quasar": "^2.12.5",
     "radash": "^11.0.0",

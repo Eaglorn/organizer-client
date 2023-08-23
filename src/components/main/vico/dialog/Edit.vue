@@ -17,7 +17,7 @@
                 ]"
               >
                 <template v-slot:append>
-                  <q-icon name="event" class="cursor-pointer">
+                  <i class="fa-duotone fa-calendar-days cursor-pointer">
                     <q-popup-proxy
                       cover
                       transition-show="scale"
@@ -34,7 +34,7 @@
                         </div>
                       </q-date>
                     </q-popup-proxy>
-                  </q-icon>
+                  </i>
                 </template>
               </q-input>
             </div>
@@ -52,7 +52,7 @@
                 ]"
               >
                 <template v-slot:append>
-                  <q-icon name="access_time" class="cursor-pointer">
+                  <i class="fa-duotone fa-alarm-clock cursor-pointer">
                     <q-popup-proxy
                       cover
                       transition-show="scale"
@@ -69,7 +69,7 @@
                         </div>
                       </q-time>
                     </q-popup-proxy>
-                  </q-icon>
+                  </i>
                 </template>
               </q-input>
             </div>
@@ -87,7 +87,7 @@
                 ]"
               >
                 <template v-slot:append>
-                  <q-icon name="access_time" class="cursor-pointer">
+                  <i class="fa-duotone fa-alarm-clock cursor-pointer">
                     <q-popup-proxy
                       cover
                       transition-show="scale"
@@ -104,7 +104,7 @@
                         </div>
                       </q-time>
                     </q-popup-proxy>
-                  </q-icon>
+                  </i>
                 </template>
               </q-input>
             </div>

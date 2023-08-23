@@ -2,7 +2,9 @@
   <q-dialog v-model="dialog" persistent>
     <q-card>
       <q-card-section class="row items-center">
-        <q-avatar icon="delete" color="red" text-color="white" />
+        <q-avatar color="red" text-color="white">
+          <i class="fa-duotone fa-trash" />
+        </q-avatar>
         <span class="q-ml-sm"
           >Подтвердите действие удаления записи об ВКС.</span
         >

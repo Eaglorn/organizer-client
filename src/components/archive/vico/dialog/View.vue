@@ -13,7 +13,7 @@
                 readonly
               >
                 <template v-slot:append>
-                  <q-icon name="event" class="cursor-pointer"> </q-icon>
+                  <i class="fa-duotone fa-calendar-days cursor-pointer" />
                 </template>
               </q-input>
             </div>
@@ -26,7 +26,7 @@
                 readonly
               >
                 <template v-slot:append>
-                  <q-icon name="access_time" class="cursor-pointer"> </q-icon>
+                  <i class="fa-duotone fa-alarm-clock cursor-pointer" />
                 </template>
               </q-input>
             </div>
@@ -39,7 +39,7 @@
                 readonly
               >
                 <template v-slot:append>
-                  <q-icon name="access_time" class="cursor-pointer"> </q-icon>
+                  <i class="fa-duotone fa-alarm-clock cursor-pointer" />
                 </template>
               </q-input>
             </div>

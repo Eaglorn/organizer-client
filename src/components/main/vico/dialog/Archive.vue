@@ -2,7 +2,9 @@
   <q-dialog v-model="dialog" persistent>
     <q-card>
       <q-card-section class="row items-center">
-        <q-avatar icon="archive" color="blue" text-color="white" />
+        <q-avatar color="blue" text-color="white">
+          <i class="fa-duotone fa-box-archive" />
+        </q-avatar>
         <span class="q-ml-sm"
           >Подтвердите действие переноса записи об ВКС в архив.</span
         >

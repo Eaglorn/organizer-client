@@ -8,42 +8,38 @@
       <q-btn
         push
         color="brown-5"
-        icon="visibility"
         padding="8px"
         size="24px"
         @click="storeArchive.vicoDialogView = true"
       >
-        <q-tooltip
-          transition-show="scale"
-          transition-hide="scale"
-          class="text-body1"
-          anchor="top middle"
-          self="center middle"
-        >
-          Посмотреть
-        </q-tooltip>
+        <i class="fa-duotone fa-eye">
+          <q-tooltip
+            transition-show="scale"
+            transition-hide="scale"
+            class="text-body1"
+            anchor="top middle"
+            self="center middle"
+          >
+            Посмотреть
+          </q-tooltip>
+        </i>
       </q-btn>
     </q-btn-group>
   </q-page-sticky>
   <q-page-sticky class="my-button" position="bottom-right" :offset="[18, 18]">
     <q-btn-group push class="my-button">
-      <q-btn
-        push
-        color="green"
-        icon="autorenew"
-        padding="8px"
-        size="24px"
-        @click="updateTable"
-      >
-        <q-tooltip
-          transition-show="scale"
-          transition-hide="scale"
-          class="text-body1"
-          anchor="top middle"
-          self="center middle"
-        >
-          Обновить страницу
-        </q-tooltip>
+      <q-btn push color="green" padding="8px" size="24px" @click="updateTable">
+        <i class="fa-duotone fa-arrows-rotate">
+          <q-tooltip
+            transition-show="scale"
+            transition-hide="scale"
+            class="text-body1"
+            anchor="top middle"
+            self="center middle"
+          >
+            Обновить страницу
+          </q-tooltip>
+        </i>
       </q-btn>
     </q-btn-group>
   </q-page-sticky>
