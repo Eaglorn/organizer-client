@@ -196,7 +196,7 @@ module.exports = configure(function (/* ctx */) {
 
         appId: 'ru.fns.organizer',
         productName: 'Органайзер',
-        buildVersion: '0.0.6',
+        buildVersion: '0.0.7',
         compression: 'maximum',
         asar: true,
         electronLanguages: ['ru'],
@@ -206,8 +206,6 @@ module.exports = configure(function (/* ctx */) {
         nsis: {
           oneClick: true,
           perMachine: false,
-          allowToChangeInstallationDirectory: false,
-          removeDefaultUninstallWelcomePage: false,
           deleteAppDataOnUninstall: true,
           runAfterFinish: false,
         },

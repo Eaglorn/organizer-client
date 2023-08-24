@@ -127,9 +127,12 @@ app.on('activate', () => {
 });
 
 if (app.isPackaged) {
-  setInterval(() => {
-    autoUpdater.checkForUpdates();
-  }, 60000);
+  setInterval(
+    () => {
+      autoUpdater.checkForUpdates();
+    },
+    60 * 1000 * 60 * 24,
+  );
 
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     const dialogOpts = {

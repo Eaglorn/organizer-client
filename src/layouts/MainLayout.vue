@@ -24,7 +24,7 @@
             text-color="black"
             @click="onClickButtonArchive"
           >
-            <i class="fa-duotone fa-box-archive fa-2x" />
+            <i class="fa-solid fa-box-archive fa-2x" />
             &nbsp;
             <b>Перейти в архив</b>
           </q-btn>
@@ -34,7 +34,7 @@
             text-color="black"
             @click="onClickButtonMain"
           >
-            <i class="fa-duotone fa-sidebar-flip fa-2x" />
+            <i class="fa-solid fa-sidebar-flip fa-2x" />
             &nbsp;
             <b>Перейти на главную страницу</b>
           </q-btn>
@@ -44,7 +44,7 @@
             text-color="black"
             @click="onClickButtonAdmin"
           >
-            <i class="fa-duotone fa-screwdriver-wrench fa-2x" />
+            <i class="fa-solid fa-screwdriver-wrench fa-2x" />
             &nbsp;
             <b>Перейти на страницу администрирования</b>
           </q-btn>
@@ -64,27 +64,27 @@
           @click="onClickButtonProfile"
         >
           <div v-if="role === 0">
-            <i class="fa-duotone fa-person-circle-question fa-2x">
+            <i class="fa-solid fa-person-circle-question fa-2x">
               <q-tooltip> Гость </q-tooltip>
             </i>
           </div>
           <div v-if="role === 1">
-            <i class="fa-duotone fa-user fa-2x">
+            <i class="fa-solid fa-user fa-2x">
               <q-tooltip> Пользователь </q-tooltip>
             </i>
           </div>
           <div v-if="role === 2">
-            <i class="fa-duotone fa-user-bounty-hunter fa-2x">
+            <i class="fa-solid fa-user-bounty-hunter fa-2x">
               <q-tooltip> Модератор </q-tooltip>
             </i>
           </div>
           <div v-if="role === 3">
-            <i class="fa-duotone fa-user-robot fa-2x">
+            <i class="fa-solid fa-user-robot fa-2x">
               <q-tooltip> Администратор </q-tooltip>
             </i>
           </div>
           <div v-if="role === 4">
-            <i class="fa-duotone fa-user-secret fa-2x">
+            <i class="fa-solid fa-user-secret fa-2x">
               <q-tooltip> Суперадминистратор </q-tooltip>
             </i>
           </div>

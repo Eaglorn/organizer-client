@@ -10,7 +10,7 @@
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev -m electron",
-    "build": "quasar build -m electron",
+    "build": "quasar build -m electron -A x64",
     "up": "yarn install && yarn upgrade"
   },
   "dependencies": {
@@ -31,7 +31,7 @@
   "devDependencies": {
     "@quasar/app-vite": "^1.4.5",
     "autoprefixer": "^10.4.15",
-    "electron": "22.3.18",
+    "electron": "22.3.22",
     "electron-builder": "^24.6.3",
     "eslint": "^8.47.0",
     "eslint-config-prettier": "^9.0.0",

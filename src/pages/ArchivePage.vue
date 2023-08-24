@@ -3,16 +3,17 @@
     <ArchiveTable />
     <ArchiveVicoDialogView />
   </div>
-  <q-page-sticky class="my-button" position="bottom-left" :offset="[18, 18]">
-    <q-btn-group push class="my-button">
+  <q-page-sticky position="bottom-left" :offset="[18, 18]">
+    <q-btn-group push class="my-button-group">
       <q-btn
         push
+        class="my-button"
         color="brown-5"
         padding="8px"
         size="24px"
         @click="storeArchive.vicoDialogView = true"
       >
-        <i class="fa-duotone fa-eye">
+        <i class="fa-solid fa-eye">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
@@ -26,10 +27,17 @@
       </q-btn>
     </q-btn-group>
   </q-page-sticky>
-  <q-page-sticky class="my-button" position="bottom-right" :offset="[18, 18]">
-    <q-btn-group push class="my-button">
-      <q-btn push color="green" padding="8px" size="24px" @click="updateTable">
-        <i class="fa-duotone fa-arrows-rotate">
+  <q-page-sticky position="bottom-right" :offset="[18, 18]">
+    <q-btn-group push class="my-button-group">
+      <q-btn
+        push
+        class="my-button"
+        color="green"
+        padding="8px"
+        size="24px"
+        @click="updateTable"
+      >
+        <i class="fa-solid fa-arrows-rotate">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
@@ -125,10 +133,13 @@ export default defineComponent({
 </script>
 
 <style lang="sass">
-.my-button
+.my-button-group
   z-index: 999
   opacity: 0.85
 
-.my-button:hover
+.my-button-group:hover
   opacity: 1
+
+.my-button
+  color: #F7F7F7 !important
 </style>
