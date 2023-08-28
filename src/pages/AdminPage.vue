@@ -134,7 +134,66 @@ export default defineComponent({
 
     const onClickButtonSelect = () => {};
     const onClickButtonCreate = () => {};
-    const onClickButtonSave = () => {};
+    const onClickButtonSave = () => {
+      Loading.show();
+      if (formValidate.value.$invalid) {
+        form.value.submit();
+        Notify.create({
+          progress: true,
+          color: 'warning',
+          position: 'top',
+          message: 'Неправильно заполнены поля в форме',
+          icon: 'warning',
+          timeout: storeGlobal.messagesErrorTime.low,
+          textColor: 'black',
+        });
+        Loading.hide();
+      } else {
+        api({
+          method: 'post',
+          url: storeGlobal.getAjaxUri('admin/add'),
+          data: {
+            login: login.value.loginFirst + login.value.loginLast,
+            role: role.value.label,
+            user: {
+              computer: storeUser.computer,
+              login: storeUser.login,
+              role: storeUser.role,
+            },
+          },
+          timeout: 10000,
+          responseType: 'json',
+        })
+          .then((response) => {
+            if (response.data.success) {
+            } else {
+              Notify.create({
+                progress: true,
+                color: 'warning',
+                position: 'top',
+                message: '<b>' + response.data.message + '</b>',
+                icon: 'warning',
+                textColor: 'black',
+                html: true,
+                timeout: storeGlobal.messagesErrorTime.medium,
+              });
+              Loading.hide();
+            }
+          })
+          .catch(function () {
+            Notify.create({
+              color: 'negative',
+              position: 'top',
+              html: true,
+              message: '<b>Нет соединения с сервером.</b>',
+              icon: 'report_problem',
+              timeout: storeGlobal.messagesErrorTime.low,
+              textColor: 'black',
+            });
+            Loading.hide();
+          });
+      }
+    };
     const onClickButtonDelete = () => {};
 
     return {
