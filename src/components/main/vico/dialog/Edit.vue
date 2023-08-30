@@ -481,6 +481,11 @@ export default defineComponent({
           data: {
             id: storeMain.selectId,
             vico: vicoEdit,
+            user: {
+              computer: storeUser.computer,
+              login: storeUser.login,
+              role: storeUser.role,
+            },
           },
           timeout: 10000,
           responseType: 'json',

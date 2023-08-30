@@ -36,8 +36,8 @@
     "eslint": "^8.48.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-vue": "^9.17.0",
-    "postcss": "^8.4.28",
-    "prettier": "^3.0.2"
+    "postcss": "^8.4.29",
+    "prettier": "^3.0.3"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19",

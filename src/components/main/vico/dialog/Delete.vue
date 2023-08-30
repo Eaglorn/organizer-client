@@ -76,6 +76,11 @@ export default defineComponent({
         url: storeGlobal.getAjaxUri('vico/delete'),
         data: {
           id: storeMain.selectId,
+          user: {
+            computer: storeUser.computer,
+            login: storeUser.login,
+            role: storeUser.role,
+          },
         },
         timeout: 10000,
         responseType: 'json',

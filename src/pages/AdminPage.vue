@@ -132,7 +132,38 @@ export default defineComponent({
       optionsRole.value.push('Суперадминистратор');
     }
 
-    const onClickButtonSelect = () => {};
+    const onClickButtonSelect = () => {
+      Loading.show();
+      if (formValidate.value.$invalid) {
+        form.value.submit();
+        Notify.create({
+          progress: true,
+          color: 'warning',
+          position: 'top',
+          message: 'Неправильно заполнены поля в форме',
+          icon: 'warning',
+          timeout: storeGlobal.messagesErrorTime.low,
+          textColor: 'black',
+        });
+        Loading.hide();
+      } else {
+        api({
+          method: 'post',
+          url: storeGlobal.getAjaxUri('admin/one'),
+          data: {
+            login: login.value.loginFirst + login.value.loginLast,
+            role: role.value.label,
+            user: {
+              computer: storeUser.computer,
+              login: storeUser.login,
+              role: storeUser.role,
+            },
+          },
+          timeout: 10000,
+          responseType: 'json',
+        });
+      }
+    };
     const onClickButtonCreate = () => {};
     const onClickButtonSave = () => {
       Loading.show();
