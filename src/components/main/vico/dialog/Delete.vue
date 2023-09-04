@@ -28,9 +28,8 @@
 </template>
 <script>
 import { api } from 'boot/axios';
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { Loading, Notify } from 'quasar';
-import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useMainStore } from '../../../../stores/storeMain.js';
 
@@ -43,31 +42,24 @@ export default defineComponent({
 
     const dialog = ref(false);
 
-    const { vicoDialogDelete } = storeToRefs(storeMain);
-
-    watch(vicoDialogDelete, () => {
+    const dialogOpen = () => {
       Loading.show();
-      if (storeMain.vicoDialogDelete === true) {
-        if (storeMain.isSelect) {
-          dialog.value = true;
-          Loading.hide();
-        } else {
-          Notify.create({
-            color: 'warning',
-            position: 'top',
-            message: '<b>Отсутствует выделение записи ВКС</b>',
-            icon: 'warning',
-            timeout: storeGlobal.messagesErrorTime.low,
-            textColor: 'black',
-            html: true,
-          });
-          storeMain.vicoDialogDelete = false;
-          Loading.hide();
-        }
+      if (storeMain.isSelect) {
+        dialog.value = true;
+        Loading.hide();
       } else {
+        Notify.create({
+          color: 'warning',
+          position: 'top',
+          message: '<b>Отсутствует выделение записи ВКС</b>',
+          icon: 'warning',
+          timeout: storeGlobal.messagesErrorTime.low,
+          textColor: 'black',
+          html: true,
+        });
         Loading.hide();
       }
-    });
+    };
 
     const dialogSave = () => {
       Loading.show();
@@ -88,7 +80,6 @@ export default defineComponent({
         .then((response) => {
           if (response.data.success) {
             dialog.value = false;
-            storeMain.vicoDialogDelete = false;
             Loading.hide();
           } else {
             Notify.create({
@@ -119,12 +110,12 @@ export default defineComponent({
     };
 
     const dialogClose = () => {
-      storeMain.vicoDialogDelete = false;
       dialog.value = false;
     };
 
     return {
       dialog,
+      dialogOpen,
       dialogSave,
       dialogClose,
     };

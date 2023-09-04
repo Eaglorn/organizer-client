@@ -261,8 +261,7 @@ import { api } from 'boot/axios';
 import { DateTime } from 'boot/luxon';
 import { useVuelidate, required, minLength } from 'boot/vuelidate';
 import { Loading, Notify } from 'quasar';
-import { defineComponent, ref, computed, watch } from 'vue';
-import { storeToRefs } from 'pinia';
+import { defineComponent, ref, computed } from 'vue';
 import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useUserStore } from '../../../../stores/storeUser.js';
 import { useMainStore } from '../../../../stores/storeMain.js';
@@ -321,20 +320,16 @@ export default defineComponent({
 
     const formValidate = useVuelidate(rules, vico);
 
-    const { vicoDialogAdd } = storeToRefs(storeMain);
-
-    watch(vicoDialogAdd, () => {
-      if (storeMain.vicoDialogAdd === true) {
-        Loading.show();
-        const d = DateTime.now();
-        vico.value = storeGlobal.getVicoTemplate();
-        vico.value.date = d.toLocaleString();
-        vico.value.timeStart = d.toLocaleString(DateTime.TIME_24_SIMPLE);
-        vico.value.timeEnd = d.toLocaleString(DateTime.TIME_24_SIMPLE);
-        dialog.value = true;
-        Loading.hide();
-      }
-    });
+    const dialogOpen = () => {
+      Loading.show();
+      const d = DateTime.now();
+      vico.value = storeGlobal.getVicoTemplate();
+      vico.value.date = d.toLocaleString();
+      vico.value.timeStart = d.toLocaleString(DateTime.TIME_24_SIMPLE);
+      vico.value.timeEnd = d.toLocaleString(DateTime.TIME_24_SIMPLE);
+      dialog.value = true;
+      Loading.hide();
+    };
 
     const dialogSave = () => {
       Loading.show();
@@ -424,7 +419,6 @@ export default defineComponent({
                 Loading.hide();
               } else {
                 dialog.value = false;
-                storeMain.vicoDialogAdd = false;
                 Loading.hide();
               }
             } else {
@@ -457,7 +451,6 @@ export default defineComponent({
     };
 
     const dialogClose = () => {
-      storeMain.vicoDialogAdd = false;
       dialog.value = false;
     };
 
@@ -466,6 +459,7 @@ export default defineComponent({
       dialog,
       form,
       formValidate,
+      dialogOpen,
       dialogSave,
       dialogClose,
       optionObject,

@@ -142,9 +142,8 @@
 </template>
 <script>
 import { api } from 'boot/axios';
-import { defineComponent, ref, computed, watch } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { Loading, Notify } from 'quasar';
-import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useArchiveStore } from '../../../../stores/storeArchive.js';
 
@@ -163,103 +162,93 @@ export default defineComponent({
 
     const vico = ref();
 
-    const { vicoDialogView } = storeToRefs(storeArchive);
-
-    watch(vicoDialogView, () => {
+    const dialogOpen = () => {
       Loading.show();
-      if (storeArchive.vicoDialogView === true) {
-        if (storeArchive.isSelect) {
-          api({
-            method: 'post',
-            url: storeGlobal.getAjaxUri('archive/one'),
-            data: { id: storeArchive.selectId },
-            timeout: 10000,
-            responseType: 'json',
-          })
-            .then((response) => {
-              if (response.data.success) {
-                vico.value = storeGlobal.getVicoTemplate();
+      if (storeArchive.isSelect) {
+        api({
+          method: 'post',
+          url: storeGlobal.getAjaxUri('archive/one'),
+          data: { id: storeArchive.selectId },
+          timeout: 10000,
+          responseType: 'json',
+        })
+          .then((response) => {
+            if (response.data.success) {
+              vico.value = storeGlobal.getVicoTemplate();
 
-                vico.value.date = storeGlobal.getDate(
-                  response.data.vico.dateTimeStart,
-                );
-                vico.value.timeStart = storeGlobal.getTime(
-                  response.data.vico.dateTimeStart,
-                );
-                vico.value.timeEnd = storeGlobal.getTime(
-                  response.data.vico.dateTimeEnd,
-                );
+              vico.value.date = storeGlobal.getDate(
+                response.data.vico.dateTimeStart,
+              );
+              vico.value.timeStart = storeGlobal.getTime(
+                response.data.vico.dateTimeStart,
+              );
+              vico.value.timeEnd = storeGlobal.getTime(
+                response.data.vico.dateTimeEnd,
+              );
 
-                vico.value.objectInitiator = response.data.vico.objectInitiator;
-                vico.value.objectInvited = response.data.vico.objectInvited;
-                vico.value.typeVico = response.data.vico.typeVico;
-                vico.value.objectInvited = response.data.vico.objectInvited;
-                vico.value.typeVico = response.data.vico.typeVico;
-                vico.value.topic = response.data.vico.topic;
-                vico.value.departamentInitiator =
-                  response.data.vico.departamentInitiator;
-                vico.value.departamentInvited =
-                  response.data.vico.departamentInvited;
-                vico.value.contactName = response.data.vico.contactName;
-                vico.value.contactPhone = response.data.vico.contactPhone;
+              vico.value.objectInitiator = response.data.vico.objectInitiator;
+              vico.value.objectInvited = response.data.vico.objectInvited;
+              vico.value.typeVico = response.data.vico.typeVico;
+              vico.value.objectInvited = response.data.vico.objectInvited;
+              vico.value.typeVico = response.data.vico.typeVico;
+              vico.value.topic = response.data.vico.topic;
+              vico.value.departamentInitiator =
+                response.data.vico.departamentInitiator;
+              vico.value.departamentInvited =
+                response.data.vico.departamentInvited;
+              vico.value.contactName = response.data.vico.contactName;
+              vico.value.contactPhone = response.data.vico.contactPhone;
 
-                dialog.value = true;
-                storeArchive.vicoDialogView = false;
-                Loading.hide();
-              } else {
-                Notify.create({
-                  progress: true,
-                  color: 'negative',
-                  position: 'top',
-                  message: '<b>' + response.data.message + '</b>',
-                  icon: 'report_problem',
-                  timeout: storeGlobal.messagesErrorTime.high,
-                  textColor: 'black',
-                  html: true,
-                });
-                storeArchive.vicoDialogView = false;
-                Loading.hide();
-              }
-            })
-            .catch(function () {
+              dialog.value = true;
+              Loading.hide();
+            } else {
               Notify.create({
+                progress: true,
                 color: 'negative',
                 position: 'top',
-                message: '<b>Нет соединения с сервером.</b>',
+                message: '<b>' + response.data.message + '</b>',
                 icon: 'report_problem',
-                timeout: storeGlobal.messagesErrorTime.medium,
+                timeout: storeGlobal.messagesErrorTime.high,
                 textColor: 'black',
                 html: true,
               });
-              storeArchive.vicoDialogView = false;
               Loading.hide();
+            }
+          })
+          .catch(function () {
+            Notify.create({
+              color: 'negative',
+              position: 'top',
+              message: '<b>Нет соединения с сервером.</b>',
+              icon: 'report_problem',
+              timeout: storeGlobal.messagesErrorTime.medium,
+              textColor: 'black',
+              html: true,
             });
-        } else {
-          Notify.create({
-            color: 'warning',
-            position: 'top',
-            message: '<b>Отсутствует выделение записи ВКС</b>',
-            icon: 'warning',
-            timeout: storeGlobal.messagesErrorTime.low,
-            textColor: 'black',
-            html: true,
+            Loading.hide();
           });
-          storeArchive.vicoDialogView = false;
-          Loading.hide();
-        }
       } else {
+        Notify.create({
+          color: 'warning',
+          position: 'top',
+          message: '<b>Отсутствует выделение записи ВКС</b>',
+          icon: 'warning',
+          timeout: storeGlobal.messagesErrorTime.low,
+          textColor: 'black',
+          html: true,
+        });
         Loading.hide();
       }
-    });
+    };
 
     const dialogClose = () => {
       dialog.value = false;
-      storeArchive.vicoDialogView = false;
     };
 
     return {
       vico,
       dialog,
+      dialogOpen,
       dialogClose,
       optionObject,
       optionTypeVico,

@@ -259,9 +259,8 @@
 import { api } from 'boot/axios';
 import { DateTime } from 'boot/luxon';
 import { useVuelidate, required, minLength } from 'boot/vuelidate';
-import { defineComponent, ref, computed, watch } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import { Loading, Notify } from 'quasar';
-import { storeToRefs } from 'pinia';
 import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useMainStore } from '../../../../stores/storeMain.js';
 
@@ -318,11 +317,8 @@ export default defineComponent({
 
     const formValidate = useVuelidate(rules, vico);
 
-    const { vicoDialogEdit } = storeToRefs(storeMain);
-
-    watch(vicoDialogEdit, () => {
+    const dialogOpen = () => {
       Loading.show();
-      if (storeMain.vicoDialogEdit === true) {
         if (storeMain.isSelect) {
           api({
             method: 'post',
@@ -384,7 +380,6 @@ export default defineComponent({
                 });
 
                 dialog.value = true;
-                storeMain.vicoDialogEdit = false;
                 Loading.hide();
               } else {
                 Notify.create({
@@ -397,7 +392,6 @@ export default defineComponent({
                   textColor: 'black',
                   html: true,
                 });
-                storeMain.vicoDialogEdit = false;
                 Loading.hide();
               }
             })
@@ -411,7 +405,6 @@ export default defineComponent({
                 textColor: 'black',
                 html: true,
               });
-              storeMain.vicoDialogEdit = false;
               Loading.hide();
             });
         } else {
@@ -424,13 +417,9 @@ export default defineComponent({
             textColor: 'black',
             html: true,
           });
-          storeMain.vicoDialogEdit = false;
           Loading.hide();
         }
-      } else {
-        Loading.hide();
-      }
-    });
+    };
 
     const dialogSave = () => {
       Loading.show();
@@ -522,7 +511,6 @@ export default defineComponent({
                 Loading.hide();
               } else {
                 dialog.value = false;
-                storeMain.vicoDialogEdit = false;
                 Loading.hide();
               }
             } else {
@@ -556,7 +544,6 @@ export default defineComponent({
 
     const dialogClose = () => {
       dialog.value = false;
-      storeMain.vicoDialogEdit = false;
     };
 
     return {
@@ -564,6 +551,7 @@ export default defineComponent({
       dialog,
       form,
       formValidate,
+      dialogOpen,
       dialogSave,
       dialogClose,
       optionObject,

@@ -6,7 +6,6 @@ export const useArchiveStore = defineStore('archive', {
     vicos: [],
     selectId: 0,
     isSelect: false,
-    vicoDialogView: false,
   }),
   getters: {
     getVicoById: (state) => {
@@ -21,7 +20,6 @@ export const useArchiveStore = defineStore('archive', {
       this.vicos = [];
       this.selectId = 0;
       this.isSelect = false;
-      this.vicoDialogView = false;
     },
   },
 });

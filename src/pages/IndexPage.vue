@@ -2,11 +2,11 @@
   <div class="q-pa-md">
     <MainTable />
   </div>
-  <MainVicoDialogView />
-  <MainVicoDialogAdd />
-  <MainVicoDialogEdit />
-  <MainVicoDialogArchive />
-  <MainVicoDialogDelete />
+  <MainVicoDialogView ref="mainVicoDialogView" />
+  <MainVicoDialogAdd ref="mainVicoDialogAdd" />
+  <MainVicoDialogEdit ref="mainVicoDialogEdit" />
+  <MainVicoDialogArchive ref="mainVicoDialogArchive" />
+  <MainVicoDialogDelete ref="mainVicoDialogDelete" />
   <q-page-sticky position="bottom-left" :offset="[18, 18]">
     <q-btn-group push class="my-button-group">
       <q-btn
@@ -15,7 +15,7 @@
         color="brown-5"
         padding="8px"
         size="24px"
-        @click="storeMain.vicoDialogView = true"
+        @click="mainVicoDialogView.dialogOpen"
       >
         <i class="fa-solid fa-eye">
           <q-tooltip
@@ -35,7 +35,7 @@
         color="green"
         padding="8px"
         size="24px"
-        @click="storeMain.vicoDialogAdd = true"
+        @click="mainVicoDialogAdd.dialogOpen"
         v-show="role > 0"
       >
         <i class="fa-solid fa-plus">
@@ -56,7 +56,7 @@
         color="orange"
         padding="8px"
         size="24px"
-        @click="storeMain.vicoDialogEdit = true"
+        @click="mainVicoDialogEdit.dialogOpen"
         v-show="role > 0"
       >
         <i class="fa-solid fa-pen">
@@ -101,7 +101,7 @@
         color="blue"
         padding="8px"
         size="24px"
-        @click="storeMain.vicoDialogArchive = true"
+        @click="mainVicoDialogArchive.dialogOpen"
         v-show="role > 0"
       >
         <i class="fa-solid fa-box-archive">
@@ -122,7 +122,7 @@
         color="red"
         padding="8px"
         size="24px"
-        @click="storeMain.vicoDialogDelete = true"
+        @click="mainVicoDialogAdd.dialogDelete = true"
         v-show="role > 0"
       >
         <i class="fa-solid fa-trash">
@@ -171,6 +171,13 @@ export default defineComponent({
     const storeGlobal = useGlobalStore();
     const storeUser = useUserStore();
     const storeMain = useMainStore();
+
+    const mainVicoDialogView = ref(null);
+    const mainVicoDialogAdd = ref(null);
+    const mainVicoDialogEdit = ref(null);
+
+    const mainVicoDialogArchive = ref(null);
+    const mainVicoDialogDelete = ref(null);
 
     const role = computed(() => storeUser.role);
 
@@ -223,6 +230,11 @@ export default defineComponent({
       role,
       storeMain,
       updateTable,
+      mainVicoDialogView,
+      mainVicoDialogAdd,
+      mainVicoDialogEdit,
+      mainVicoDialogArchive,
+      mainVicoDialogDelete,
     };
   },
 });

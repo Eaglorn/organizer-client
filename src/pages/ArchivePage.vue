@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <ArchiveTable />
-    <ArchiveVicoDialogView />
+    <ArchiveVicoDialogView ref="archiveVicoDialogView" />
   </div>
   <q-page-sticky position="bottom-left" :offset="[18, 18]">
     <q-btn-group push class="my-button-group">
@@ -11,7 +11,7 @@
         color="brown-5"
         padding="8px"
         size="24px"
-        @click="storeArchive.vicoDialogView = true"
+        @click="archiveVicoDialogView.dialogOpen"
       >
         <i class="fa-solid fa-eye">
           <q-tooltip
@@ -76,6 +76,8 @@ export default defineComponent({
     const storeUser = useUserStore();
     const storeArchive = useArchiveStore();
 
+    const archiveVicoDialogView = ref(null);
+
     const role = computed(() => storeUser.role);
 
     const updateTable = () => {
@@ -127,6 +129,7 @@ export default defineComponent({
       role,
       storeArchive,
       updateTable,
+      archiveVicoDialogView,
     };
   },
 });

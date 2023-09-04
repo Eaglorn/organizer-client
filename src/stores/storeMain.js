@@ -6,11 +6,6 @@ export const useMainStore = defineStore('main', {
     vicos: [],
     selectId: 0,
     isSelect: false,
-    vicoDialogView: false,
-    vicoDialogAdd: false,
-    vicoDialogEdit: false,
-    vicoDialogArchive: false,
-    vicoDialogDelete: false,
   }),
   getters: {
     getVicoById: (state) => {
@@ -36,11 +31,6 @@ export const useMainStore = defineStore('main', {
       this.vicos = [];
       this.selectId = 0;
       this.isSelect = false;
-      this.vicoDialogView = false;
-      this.vicoDialogAdd = false;
-      this.vicoDialogEdit = false;
-      this.vicoDialogArchive = false;
-      this.vicoDialogDelete = false;
     },
   },
 });
