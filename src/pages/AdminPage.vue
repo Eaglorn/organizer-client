@@ -5,8 +5,8 @@
         <div class="row">
           <div class="col-1">
             <q-input
-              filled
               v-model="login.loginFirst"
+              filled
               mask="2700"
               fill-mask="#"
               readonly
@@ -14,8 +14,8 @@
           </div>
           <div class="col-2">
             <q-input
-              filled
               v-model="login.loginLast"
+              filled
               label="Логин"
               mask="##-###"
               fill-mask="#"
@@ -30,8 +30,8 @@
           <div class="col-1"></div>
           <div class="col-2">
             <q-select
-              outlined
               v-model="role"
+              outlined
               :options="optionsRole"
               label="Роль"
             />
@@ -152,11 +152,9 @@ export default defineComponent({
           url: storeGlobal.getAjaxUri('admin/one'),
           data: {
             login: login.value.loginFirst + login.value.loginLast,
-            role: role.value.label,
             user: {
               computer: storeUser.computer,
               login: storeUser.login,
-              role: storeUser.role,
             },
           },
           timeout: 10000,
@@ -185,11 +183,9 @@ export default defineComponent({
           url: storeGlobal.getAjaxUri('admin/add'),
           data: {
             login: login.value.loginFirst + login.value.loginLast,
-            role: role.value.label,
             user: {
               computer: storeUser.computer,
               login: storeUser.login,
-              role: storeUser.role,
             },
           },
           timeout: 10000,

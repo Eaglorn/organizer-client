@@ -14,19 +14,20 @@
         <q-btn
           label="Отмена"
           color="primary"
-          @click="dialogClose"
           text-color="white"
+          @click="dialogClose"
         />
         <q-btn
           label="Перенести"
           color="warning"
-          @click="dialogSave"
           text-color="black"
+          @click="dialogSave"
         />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
+
 <script>
 import { api } from 'boot/axios';
 import { defineComponent, ref } from 'vue';
@@ -123,4 +124,5 @@ export default defineComponent({
   },
 });
 </script>
+
 <style lang="sass"></style>

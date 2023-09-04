@@ -50,12 +50,12 @@
           </q-btn>
         </q-btn-group>
         <q-space />
-        <div class="text-h4" v-if="page === 'main'">Главная страница</div>
-        <div class="text-h4" v-if="page === 'archive'">Архив</div>
-        <div class="text-h4" v-if="page === 'admin'">
+        <div v-if="page === 'main'" class="text-h4">Главная страница</div>
+        <div v-if="page === 'archive'" class="text-h4">Архив</div>
+        <div v-if="page === 'admin'" class="text-h4">
           Страница Администратора
         </div>
-        <div class="text-h4" v-if="page === 'profile'">Профиль</div>
+        <div v-if="page === 'profile'" class="text-h4">Профиль</div>
         <q-space />
         <q-btn
           v-if="page != 'profile'"
@@ -272,3 +272,5 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="sass"></style>

@@ -6,39 +6,39 @@
           <div class="row justify-evenly">
             <div class="col-3">
               <q-input
-                outlined
                 v-model="vico.date"
+                outlined
                 mask="##.##.####"
                 label="Дата"
                 readonly
               >
-                <template v-slot:append>
+                <template #append>
                   <i class="fa-duotone fa-calendar-days cursor-pointer" />
                 </template>
               </q-input>
             </div>
             <div class="col-3">
               <q-input
-                outlined
                 v-model="vico.timeStart"
+                outlined
                 mask="time"
                 label="Дата начала ВКС"
                 readonly
               >
-                <template v-slot:append>
+                <template #append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer" />
                 </template>
               </q-input>
             </div>
             <div class="col-3">
               <q-input
-                outlined
                 v-model="vico.timeEnd"
+                outlined
                 mask="time"
                 label="Дата окончания ВКС"
                 readonly
               >
-                <template v-slot:append>
+                <template #append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer" />
                 </template>
               </q-input>
@@ -47,8 +47,8 @@
           <div class="row justify-evenly">
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.objectInitiator"
+                outlined
                 :options="optionObject"
                 label="Обособленное подразделение инцииатор ВКС"
                 readonly
@@ -56,8 +56,8 @@
             </div>
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.objectInvited"
+                outlined
                 multiple
                 use-chips
                 stack-label
@@ -70,8 +70,8 @@
           <div class="row justify-evenly">
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.departamentInitiator"
+                outlined
                 :options="optionDepartament"
                 label="Отдел инициатор ВКС"
                 readonly
@@ -79,8 +79,8 @@
             </div>
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.departamentInvited"
+                outlined
                 multiple
                 use-chips
                 stack-label
@@ -93,8 +93,8 @@
           <div class="row justify-evenly">
             <div class="col-4">
               <q-select
-                outlined
                 v-model="vico.typeVico"
+                outlined
                 :options="optionTypeVico"
                 label="Тип совещания"
                 readonly
@@ -102,8 +102,8 @@
             </div>
             <div class="col-4">
               <q-input
-                outlined
                 v-model="vico.topic"
+                outlined
                 label="Тема совещания"
                 readonly
               />
@@ -112,16 +112,16 @@
           <div class="row justify-evenly">
             <div class="col-4">
               <q-input
-                outlined
                 v-model="vico.contactName"
+                outlined
                 label="ФИО инициатора ВКС"
                 readonly
               />
             </div>
             <div class="col-4">
               <q-input
-                outlined
                 v-model="vico.contactPhone"
+                outlined
                 label="Контактный номер телефона инициатора ВКС"
                 readonly
               />
@@ -133,13 +133,14 @@
         <q-btn
           label="Закрыть"
           color="blue-2"
-          @click="dialogClose"
           text-color="black"
+          @click="dialogClose"
         />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
+
 <script>
 import { api } from 'boot/axios';
 import { defineComponent, ref, computed } from 'vue';
@@ -257,6 +258,7 @@ export default defineComponent({
   },
 });
 </script>
+
 <style lang="sass">
 .q-field__label
   color: $red-4

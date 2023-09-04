@@ -2,7 +2,7 @@
   <div class="q-pa-md">
     <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
-        <q-form class="q-gutter-md" ref="form">
+        <q-form ref="form" class="q-gutter-md">
           <div class="row justify-center">
             <div class="text-h4">
               Подписка на обособленные подразделения и отделы
@@ -11,8 +11,8 @@
           <div class="row justify-evenly">
             <div class="col-5">
               <q-select
-                outlined
                 v-model="objectInvited"
+                outlined
                 multiple
                 :options="optionObject"
                 label="Обособленные подразделения"
@@ -26,8 +26,8 @@
             </div>
             <div class="col-5">
               <q-select
-                outlined
                 v-model="departamentInvited"
+                outlined
                 multiple
                 :options="optionDepartament"
                 label="Отделы"
@@ -43,8 +43,8 @@
           <div class="row justify-evenly">
             <div class="col-5">
               <q-select
-                outlined
                 v-model="objectInvited"
+                outlined
                 multiple
                 use-chips
                 stack-label
@@ -54,8 +54,8 @@
             </div>
             <div class="col-5">
               <q-select
-                outlined
                 v-model="departamentInvited"
+                outlined
                 multiple
                 use-chips
                 stack-label

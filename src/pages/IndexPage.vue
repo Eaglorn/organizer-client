@@ -30,13 +30,13 @@
         </i>
       </q-btn>
       <q-btn
+        v-show="role > 0"
         push
         class="my-button"
         color="green"
         padding="8px"
         size="24px"
         @click="mainVicoDialogAdd.dialogOpen"
-        v-show="role > 0"
       >
         <i class="fa-solid fa-plus">
           <q-tooltip
@@ -51,13 +51,13 @@
         </i>
       </q-btn>
       <q-btn
+        v-show="role > 0"
         push
         class="my-button"
         color="orange"
         padding="8px"
         size="24px"
         @click="mainVicoDialogEdit.dialogOpen"
-        v-show="role > 0"
       >
         <i class="fa-solid fa-pen">
           <q-tooltip
@@ -96,13 +96,13 @@
         </i>
       </q-btn>
       <q-btn
+        v-show="role > 0"
         push
         class="my-button"
         color="blue"
         padding="8px"
         size="24px"
         @click="mainVicoDialogArchive.dialogOpen"
-        v-show="role > 0"
       >
         <i class="fa-solid fa-box-archive">
           <q-tooltip
@@ -117,13 +117,13 @@
         </i>
       </q-btn>
       <q-btn
+        v-show="role > 0"
         push
         class="my-button"
         color="red"
         padding="8px"
         size="24px"
         @click="mainVicoDialogAdd.dialogDelete = true"
-        v-show="role > 0"
       >
         <i class="fa-solid fa-trash">
           <q-tooltip

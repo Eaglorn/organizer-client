@@ -2,12 +2,12 @@
   <q-dialog v-model="dialog" position="top" persistent>
     <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
-        <q-form class="q-gutter-md" ref="form">
+        <q-form ref="form" class="q-gutter-md">
           <div class="row justify-evenly">
             <div class="col-3">
               <q-input
-                outlined
                 v-model="vico.date"
+                outlined
                 mask="##.##.####"
                 label="Дата"
                 lazy-rules
@@ -16,7 +16,7 @@
                     !formValidate.date.$invalid || 'Не корректно введена дата',
                 ]"
               >
-                <template v-slot:append>
+                <template #append>
                   <i class="fa-duotone fa-calendar-days cursor-pointer">
                     <q-popup-proxy
                       cover
@@ -40,8 +40,8 @@
             </div>
             <div class="col-3">
               <q-input
-                outlined
                 v-model="vico.timeStart"
+                outlined
                 mask="time"
                 label="Дата начала ВКС"
                 lazy-rules
@@ -51,7 +51,7 @@
                     'Не корректно введено время',
                 ]"
               >
-                <template v-slot:append>
+                <template #append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer">
                     <q-popup-proxy
                       cover
@@ -75,8 +75,8 @@
             </div>
             <div class="col-3">
               <q-input
-                outlined
                 v-model="vico.timeEnd"
+                outlined
                 mask="time"
                 label="Дата окончания ВКС"
                 lazy-rules
@@ -86,7 +86,7 @@
                     'Не корректно введено время',
                 ]"
               >
-                <template v-slot:append>
+                <template #append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer">
                     <q-popup-proxy
                       cover
@@ -112,8 +112,8 @@
           <div class="row justify-evenly">
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.objectInitiator"
+                outlined
                 :options="optionObject"
                 label="Обособленное подразделение инцииатор ВКС"
                 lazy-rules
@@ -126,8 +126,8 @@
             </div>
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.objectInvited"
+                outlined
                 multiple
                 :options="optionObject"
                 label="Вызываемые обособленные подразделения"
@@ -148,8 +148,8 @@
           <div class="row justify-evenly">
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.departamentInitiator"
+                outlined
                 :options="optionDepartament"
                 label="Отдел инициатор ВКС"
                 lazy-rules
@@ -162,8 +162,8 @@
             </div>
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.departamentInvited"
+                outlined
                 multiple
                 :options="optionDepartament"
                 label="Приглашенные отделы"
@@ -184,8 +184,8 @@
           <div class="row justify-evenly">
             <div class="col-4">
               <q-select
-                outlined
                 v-model="vico.typeVico"
+                outlined
                 :options="optionTypeVico"
                 label="Тип совещания"
                 lazy-rules
@@ -196,8 +196,8 @@
             </div>
             <div class="col-4">
               <q-input
-                outlined
                 v-model="vico.topic"
+                outlined
                 label="Тема совещания"
                 lazy-rules
                 :rules="[
@@ -211,8 +211,8 @@
           <div class="row justify-evenly">
             <div class="col-4">
               <q-input
-                outlined
                 v-model="vico.contactName"
+                outlined
                 label="ФИО инициатора ВКС"
                 lazy-rules
                 :rules="[
@@ -224,8 +224,8 @@
             </div>
             <div class="col-4">
               <q-input
-                outlined
                 v-model="vico.contactPhone"
+                outlined
                 label="Контактный номер телефона инициатора ВКС"
                 lazy-rules
                 :rules="[
@@ -242,19 +242,20 @@
         <q-btn
           label="Отмена"
           color="red-3"
-          @click="dialogClose"
           text-color="black"
+          @click="dialogClose"
         />
         <q-btn
           label="Сохранить"
           color="positive"
-          @click="dialogSave"
           text-color="black"
+          @click="dialogSave"
         />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
+
 <script>
 import { api } from 'boot/axios';
 import { DateTime } from 'boot/luxon';
@@ -319,106 +320,106 @@ export default defineComponent({
 
     const dialogOpen = () => {
       Loading.show();
-        if (storeMain.isSelect) {
-          api({
-            method: 'post',
-            url: storeGlobal.getAjaxUri('vico/one'),
-            data: { id: storeMain.selectId },
-            timeout: 10000,
-            responseType: 'json',
-          })
-            .then((response) => {
-              if (response.data.success) {
-                vico.value = storeGlobal.getVicoTemplate();
+      if (storeMain.isSelect) {
+        api({
+          method: 'post',
+          url: storeGlobal.getAjaxUri('vico/one'),
+          data: { id: storeMain.selectId },
+          timeout: 10000,
+          responseType: 'json',
+        })
+          .then((response) => {
+            if (response.data.success) {
+              vico.value = storeGlobal.getVicoTemplate();
 
-                vico.value.date = storeGlobal.getDate(
-                  response.data.vico.dateTimeStart,
+              vico.value.date = storeGlobal.getDate(
+                response.data.vico.dateTimeStart,
+              );
+              vico.value.timeStart = storeGlobal.getTime(
+                response.data.vico.dateTimeStart,
+              );
+              vico.value.timeEnd = storeGlobal.getTime(
+                response.data.vico.dateTimeEnd,
+              );
+
+              vico.value.topic = response.data.vico.topic;
+              vico.value.contactName = response.data.vico.contactName;
+              vico.value.contactPhone = response.data.vico.contactPhone;
+
+              vico.value.typeVico = storeGlobal.getOptionTypeVicoByName(
+                response.data.vico.typeVico,
+              );
+
+              vico.value.objectInitiator = storeGlobal.getOptionObjectByName(
+                response.data.vico.objectInitiator,
+              );
+
+              vico.value.objectInvited = response.data.vico.objectInvited;
+
+              vico.value.objectInvited.forEach((item, index) => {
+                vico.value.objectInvited.splice(
+                  index,
+                  1,
+                  storeGlobal.getOptionObjectByName(item),
                 );
-                vico.value.timeStart = storeGlobal.getTime(
-                  response.data.vico.dateTimeStart,
-                );
-                vico.value.timeEnd = storeGlobal.getTime(
-                  response.data.vico.dateTimeEnd,
-                );
+              });
 
-                vico.value.topic = response.data.vico.topic;
-                vico.value.contactName = response.data.vico.contactName;
-                vico.value.contactPhone = response.data.vico.contactPhone;
-
-                vico.value.typeVico = storeGlobal.getOptionTypeVicoByName(
-                  response.data.vico.typeVico,
+              vico.value.departamentInitiator =
+                storeGlobal.getOptionDepartamentByName(
+                  response.data.vico.departamentInitiator,
                 );
 
-                vico.value.objectInitiator = storeGlobal.getOptionObjectByName(
-                  response.data.vico.objectInitiator,
+              vico.value.departamentInvited =
+                response.data.vico.departamentInvited;
+
+              vico.value.departamentInvited.forEach((item, index) => {
+                vico.value.departamentInvited.splice(
+                  index,
+                  1,
+                  storeGlobal.getOptionDepartamentByName(item),
                 );
+              });
 
-                vico.value.objectInvited = response.data.vico.objectInvited;
-
-                vico.value.objectInvited.forEach((item, index) => {
-                  vico.value.objectInvited.splice(
-                    index,
-                    1,
-                    storeGlobal.getOptionObjectByName(item),
-                  );
-                });
-
-                vico.value.departamentInitiator =
-                  storeGlobal.getOptionDepartamentByName(
-                    response.data.vico.departamentInitiator,
-                  );
-
-                vico.value.departamentInvited =
-                  response.data.vico.departamentInvited;
-
-                vico.value.departamentInvited.forEach((item, index) => {
-                  vico.value.departamentInvited.splice(
-                    index,
-                    1,
-                    storeGlobal.getOptionDepartamentByName(item),
-                  );
-                });
-
-                dialog.value = true;
-                Loading.hide();
-              } else {
-                Notify.create({
-                  progress: true,
-                  color: 'negative',
-                  position: 'top',
-                  message: '<b>' + response.data.message + '</b>',
-                  icon: 'report_problem',
-                  timeout: storeGlobal.messagesErrorTime.low,
-                  textColor: 'black',
-                  html: true,
-                });
-                Loading.hide();
-              }
-            })
-            .catch(function (err) {
+              dialog.value = true;
+              Loading.hide();
+            } else {
               Notify.create({
+                progress: true,
                 color: 'negative',
                 position: 'top',
-                message: '<b>Нет соединения с сервером.</b>',
+                message: '<b>' + response.data.message + '</b>',
                 icon: 'report_problem',
-                timeout: storeGlobal.messagesErrorTime.medium,
+                timeout: storeGlobal.messagesErrorTime.low,
                 textColor: 'black',
                 html: true,
               });
               Loading.hide();
+            }
+          })
+          .catch(function (err) {
+            Notify.create({
+              color: 'negative',
+              position: 'top',
+              message: '<b>Нет соединения с сервером.</b>',
+              icon: 'report_problem',
+              timeout: storeGlobal.messagesErrorTime.medium,
+              textColor: 'black',
+              html: true,
             });
-        } else {
-          Notify.create({
-            color: 'warning',
-            position: 'top',
-            message: '<b>Отсутствует выделение записи ВКС</b>',
-            icon: 'warning',
-            timeout: storeGlobal.messagesErrorTime.low,
-            textColor: 'black',
-            html: true,
+            Loading.hide();
           });
-          Loading.hide();
-        }
+      } else {
+        Notify.create({
+          color: 'warning',
+          position: 'top',
+          message: '<b>Отсутствует выделение записи ВКС</b>',
+          icon: 'warning',
+          timeout: storeGlobal.messagesErrorTime.low,
+          textColor: 'black',
+          html: true,
+        });
+        Loading.hide();
+      }
     };
 
     const dialogSave = () => {
@@ -561,6 +562,7 @@ export default defineComponent({
   },
 });
 </script>
+
 <style lang="sass">
 .q-item--active
   color: $green-6

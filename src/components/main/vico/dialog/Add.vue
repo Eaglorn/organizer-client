@@ -2,12 +2,12 @@
   <q-dialog v-model="dialog" position="top" persistent>
     <q-card style="min-width: 95vw; top: 10px" flat bordered>
       <q-card-section>
-        <q-form class="q-gutter-md" ref="form">
+        <q-form ref="form" class="q-gutter-md">
           <div class="row justify-evenly">
             <div class="col-3">
               <q-input
-                outlined
                 v-model="vico.date"
+                outlined
                 mask="##.##.####"
                 label="Дата"
                 lazy-rules
@@ -16,7 +16,7 @@
                     !formValidate.date.$invalid || 'Не корректно введена дата',
                 ]"
               >
-                <template v-slot:append>
+                <template #append>
                   <i class="fa-duotone fa-calendar-days cursor-pointer">
                     <q-popup-proxy
                       cover
@@ -40,8 +40,8 @@
             </div>
             <div class="col-3">
               <q-input
-                outlined
                 v-model="vico.timeStart"
+                outlined
                 mask="time"
                 label="Время начала ВКС"
                 lazy-rules
@@ -51,7 +51,7 @@
                     'Не корректно введено время',
                 ]"
               >
-                <template v-slot:append>
+                <template #append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer">
                     <q-popup-proxy
                       cover
@@ -75,8 +75,8 @@
             </div>
             <div class="col-3">
               <q-input
-                outlined
                 v-model="vico.timeEnd"
+                outlined
                 mask="time"
                 label="Время окончания ВКС"
                 lazy-rules
@@ -86,7 +86,7 @@
                     'Не корректно введено время',
                 ]"
               >
-                <template v-slot:append>
+                <template #append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer">
                     <q-popup-proxy
                       cover
@@ -112,8 +112,8 @@
           <div class="row justify-evenly">
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.objectInitiator"
+                outlined
                 :options="optionObject"
                 label="Обособленное подразделение инцииатор ВКС"
                 lazy-rules
@@ -126,8 +126,8 @@
             </div>
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.objectInvited"
+                outlined
                 multiple
                 :options="optionObject"
                 label="Вызываемые обособленные подразделения"
@@ -148,8 +148,8 @@
           <div class="row justify-evenly">
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.departamentInitiator"
+                outlined
                 :options="optionDepartament"
                 label="Отдел инициатор ВКС"
                 lazy-rules
@@ -162,8 +162,8 @@
             </div>
             <div class="col-6">
               <q-select
-                outlined
                 v-model="vico.departamentInvited"
+                outlined
                 multiple
                 :options="optionDepartament"
                 label="Приглашенные отделы"
@@ -184,8 +184,8 @@
           <div class="row justify-evenly">
             <div class="col-4">
               <q-select
-                outlined
                 v-model="vico.typeVico"
+                outlined
                 :options="optionTypeVico"
                 label="Тип ВКС"
                 lazy-rules
@@ -196,8 +196,8 @@
             </div>
             <div class="col-4">
               <q-input
-                outlined
                 v-model="vico.topic"
+                outlined
                 label="Тема совещания"
                 lazy-rules
                 :rules="[
@@ -211,8 +211,8 @@
           <div class="row justify-evenly">
             <div class="col-4">
               <q-input
-                outlined
                 v-model="vico.contactName"
+                outlined
                 label="ФИО инициатора ВКС"
                 lazy-rules
                 :rules="[
@@ -224,8 +224,8 @@
             </div>
             <div class="col-4">
               <q-input
-                outlined
                 v-model="vico.contactPhone"
+                outlined
                 label="Контактный номер"
                 lazy-rules
                 :rules="[
@@ -242,14 +242,14 @@
         <q-btn
           label="Отмена"
           color="red-3"
-          @click="dialogClose"
           text-color="black"
+          @click="dialogClose"
         />
         <q-btn
           label="Создать"
           color="positive"
-          @click="dialogSave"
           text-color="black"
+          @click="dialogSave"
         />
       </q-card-actions>
     </q-card>
@@ -381,7 +381,6 @@ export default defineComponent({
             user: {
               computer: storeUser.computer,
               login: storeUser.login,
-              role: storeUser.role,
             },
           },
           timeout: 10000,

@@ -1,26 +1,26 @@
 <template>
   <div class="q-pa-md">
     <q-table
-      selection="single"
       v-model:selected="selected"
+      v-model:pagination="pagination"
+      selection="single"
       class="my-sticky-table my-table-border"
       flat
       bordered
       row-key="id"
       :rows="rows"
-      v-model:pagination="pagination"
       :columns="columns"
       :separator="separator"
       :wrap-cells="true"
       :hide-selected-banner="true"
       :hide-no-data="true"
     >
-      <template v-slot:header-cell="props">
+      <template #header-cell="props">
         <q-th :props="props" style="font-size: medium">
           {{ props.col.label }}
         </q-th>
       </template>
-      <template v-slot:body="props">
+      <template #body="props">
         <q-tr
           class="my-table-border"
           :props="props"
@@ -63,7 +63,7 @@
             class="my-table-border"
             style="min-width: 300px"
           >
-            <li v-for="item in props.row.objectInvited" v-bind:key="item">
+            <li v-for="item in props.row.objectInvited" :key="item">
               <div style="border: 1px solid grey; padding: 2px">
                 {{ item }}
               </div>
@@ -89,7 +89,7 @@
             class="my-table-border"
             style="min-width: 300px"
           >
-            <li v-for="item in props.row.departamentInvited" v-bind:key="item">
+            <li v-for="item in props.row.departamentInvited" :key="item">
               <div style="border: 1px solid grey; padding: 2px">
                 {{ item }}
               </div>
@@ -103,7 +103,7 @@
           </q-td>
         </q-tr>
       </template>
-      <template v-slot:pagination="scope">
+      <template #pagination="scope">
         <q-btn
           v-if="scope.pagesNumber > 2"
           icon="first_page"
@@ -147,7 +147,7 @@
         />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </template>
-      <template v-slot:no-data=""> </template>
+      <template #no-data=""> </template>
     </q-table>
   </div>
 </template>
