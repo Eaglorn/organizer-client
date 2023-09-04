@@ -82,7 +82,7 @@
     </q-card>
   </div>
 </template>
-
+// TODO: Сделать админку
 <script>
 import { defineComponent, ref, computed } from 'vue';
 import { useUserStore } from '../stores/storeUser.js';

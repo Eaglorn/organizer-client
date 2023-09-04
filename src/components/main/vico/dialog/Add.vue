@@ -375,7 +375,6 @@ export default defineComponent({
           method: 'post',
           url: storeGlobal.getAjaxUri('vico/add'),
           data: {
-            // TODO: Изменить отправляемые параметры
             vico: newVico,
             user: {
               computer: storeUser.computer,
