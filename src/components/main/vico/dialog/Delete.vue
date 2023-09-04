@@ -68,6 +68,7 @@ export default defineComponent({
         method: 'post',
         url: storeGlobal.getAjaxUri('vico/delete'),
         data: {
+          // TODO: Изменить отправляемые параметры
           id: storeMain.selectId,
           user: {
             computer: storeUser.computer,

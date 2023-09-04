@@ -264,7 +264,6 @@ import { Loading, Notify } from 'quasar';
 import { defineComponent, ref, computed } from 'vue';
 import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useUserStore } from '../../../../stores/storeUser.js';
-import { useMainStore } from '../../../../stores/storeMain.js';
 
 export default defineComponent({
   name: 'MainVicoDialogAdd',
@@ -272,7 +271,6 @@ export default defineComponent({
   setup() {
     const storeGlobal = useGlobalStore();
     const storeUser = useUserStore();
-    const storeMain = useMainStore();
 
     const dialog = ref(false);
 
@@ -377,6 +375,7 @@ export default defineComponent({
           method: 'post',
           url: storeGlobal.getAjaxUri('vico/add'),
           data: {
+            // TODO: Изменить отправляемые параметры
             vico: newVico,
             user: {
               computer: storeUser.computer,

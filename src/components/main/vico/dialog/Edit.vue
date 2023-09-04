@@ -324,7 +324,10 @@ export default defineComponent({
         api({
           method: 'post',
           url: storeGlobal.getAjaxUri('vico/one'),
-          data: { id: storeMain.selectId },
+          data: {
+            // TODO: Изменить отправляемые параметры
+            id: storeMain.selectId,
+          },
           timeout: 10000,
           responseType: 'json',
         })
