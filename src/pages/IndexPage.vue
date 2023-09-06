@@ -15,7 +15,7 @@
         color="brown-5"
         padding="8px"
         size="24px"
-        @click="mainVicoDialogView.dialogOpen"
+        @click="mainVicoDialogView.dialogOpen()"
       >
         <i class="fa-solid fa-eye">
           <q-tooltip
@@ -36,7 +36,7 @@
         color="green"
         padding="8px"
         size="24px"
-        @click="mainVicoDialogAdd.dialogOpen"
+        @click="mainVicoDialogAdd.dialogOpen()"
       >
         <i class="fa-solid fa-plus">
           <q-tooltip
@@ -57,7 +57,7 @@
         color="orange"
         padding="8px"
         size="24px"
-        @click="mainVicoDialogEdit.dialogOpen"
+        @click="mainVicoDialogEdit.dialogOpen()"
       >
         <i class="fa-solid fa-pen">
           <q-tooltip
@@ -102,7 +102,7 @@
         color="blue"
         padding="8px"
         size="24px"
-        @click="mainVicoDialogArchive.dialogOpen"
+        @click="mainVicoDialogArchive.dialogOpen()"
       >
         <i class="fa-solid fa-box-archive">
           <q-tooltip
@@ -123,7 +123,7 @@
         color="red"
         padding="8px"
         size="24px"
-        @click="mainVicoDialogAdd.dialogDelete = true"
+        @click="mainVicoDialogDelete.dialogOpen()"
       >
         <i class="fa-solid fa-trash">
           <q-tooltip
