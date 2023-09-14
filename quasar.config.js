@@ -43,8 +43,10 @@ module.exports = configure(function (/* ctx */) {
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
 
-      'roboto-font', // optional, you are not bound to it
-      'material-icons', // optional, you are not bound to it
+      // optional, you are not bound to it
+      'roboto-font',
+      // optional, you are not bound to it
+      'material-icons',
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
@@ -54,7 +56,8 @@ module.exports = configure(function (/* ctx */) {
         node: 'node16',
       },
 
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      // available values: 'hash', 'history'
+      vueRouterMode: 'hash',
       // vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
@@ -77,6 +80,16 @@ module.exports = configure(function (/* ctx */) {
       //   [ 'package-name', { ..options.. } ]
       // ]
 
+      minify: true,
+
+      htmlMinifyOptions: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+        collapseBooleanAttributes: true,
+        removeScriptTypeAttributes: true,
+      },
+
       extendWebpack(cfg) {
         cfg.module.rules.push({
           test: /\.pug$/,
@@ -88,7 +101,8 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true, // opens browser window automatically
+      // opens browser window automatically
+      open: true,
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
@@ -96,7 +110,8 @@ module.exports = configure(function (/* ctx */) {
       config: {},
 
       // iconSet: 'material-icons', // Quasar icon set
-      lang: 'ru', // Quasar language pack
+      // Quasar language pack
+      lang: 'ru',
 
       // For special cases outside of where the auto-import strategy can have an impact
       // (like functional components as one of the examples),
@@ -138,17 +153,20 @@ module.exports = configure(function (/* ctx */) {
       // manualStoreHydration: true,
       // manualPostHydrationTrigger: true,
 
-      prodPort: 3000, // The default port that the production server should use
+      // The default port that the production server should use
+      prodPort: 3000,
       // (gets superseded if process.env.PORT is specified at runtime)
 
       middlewares: [
-        'render', // keep this as last one
+        // keep this as last one
+        'render',
       ],
     },
 
     // https://v2.quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
-      workboxMode: 'generateSW', // or 'injectManifest'
+      // or 'injectManifest'
+      workboxMode: 'generateSW',
       injectPwaMetaTags: true,
       swFilename: 'sw.js',
       manifestFilename: 'manifest.json',
@@ -178,6 +196,7 @@ module.exports = configure(function (/* ctx */) {
       // specify the debugging port to use for the Electron app when running in development mode
       inspectPort: 5858,
 
+      // 'packager' or 'builder'
       bundler: 'builder', // 'packager' or 'builder'
 
       packager: {
@@ -193,7 +212,6 @@ module.exports = configure(function (/* ctx */) {
 
       builder: {
         // https://www.electron.build/configuration/configuration
-
         appId: 'ru.fns.organizer',
         productName: 'Органайзер',
         buildVersion: '0.0.7',
