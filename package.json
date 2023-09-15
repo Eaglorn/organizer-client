@@ -31,9 +31,9 @@
     "vue-router": "^4.2.4"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^1.6.0",
+    "@quasar/app-vite": "^1.6.1",
     "autoprefixer": "^10.4.15",
-    "electron": "22.3.23",
+    "electron": "22.3.24",
     "electron-builder": "^24.6.4",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
