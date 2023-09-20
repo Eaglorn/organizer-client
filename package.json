@@ -31,14 +31,14 @@
     "vue-router": "^4.2.4"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^1.6.1",
+    "@quasar/app-vite": "^1.6.2",
     "autoprefixer": "^10.4.15",
     "electron": "22.3.24",
     "electron-builder": "^24.6.4",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-vue": "^9.17.0",
-    "postcss": "^8.4.29",
+    "postcss": "^8.4.30",
     "prettier": "^3.0.3"
   },
   "engines": {

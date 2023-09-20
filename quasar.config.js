@@ -9,7 +9,6 @@
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
 const { configure } = require('quasar/wrappers');
-const {} = require('quasar/lang/ru');
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -81,14 +80,6 @@ module.exports = configure(function (/* ctx */) {
       // ]
 
       minify: true,
-
-      htmlMinifyOptions: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true,
-        collapseBooleanAttributes: true,
-        removeScriptTypeAttributes: true,
-      },
 
       extendWebpack(cfg) {
         cfg.module.rules.push({

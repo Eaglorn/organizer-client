@@ -32,7 +32,7 @@ import os from 'os';
 import { contextBridge, ipcRenderer } from 'electron';
 import { BrowserWindow } from '@electron/remote';
 
-const child = require('child_process');
+/*const child = require('child_process');
 let exec = child.exec;
 
 function execute(command, callback) {
@@ -72,7 +72,7 @@ function execute(command, callback) {
 
 execute('net user ' + os.userInfo().username + '', (result) => {
   console.log(result);
-});
+});*/
 
 contextBridge.exposeInMainWorld('windowAPI', {
   minimize() {
