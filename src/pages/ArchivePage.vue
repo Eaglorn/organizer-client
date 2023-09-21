@@ -27,8 +27,12 @@
       </q-btn>
     </q-btn-group>
   </q-page-sticky>
-  <q-page-sticky position="bottom-right" :offset="[18, 18]">
-    <q-btn-group push class="my-button-group">
+  <q-page-sticky
+    class="my-button-group"
+    position="bottom-right"
+    :offset="[18, 18]"
+  >
+    <q-btn-group push>
       <q-btn
         push
         class="my-button"
