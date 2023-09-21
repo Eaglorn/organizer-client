@@ -12,7 +12,7 @@
                 label="Дата"
                 readonly
               >
-                <template #append>
+                <template v-slot:append>
                   <i class="fa-duotone fa-calendar-days cursor-pointer" />
                 </template>
               </q-input>
@@ -25,7 +25,7 @@
                 label="Дата начала ВКС"
                 readonly
               >
-                <template #append>
+                <template v-slot:append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer" />
                 </template>
               </q-input>
@@ -38,7 +38,7 @@
                 label="Дата окончания ВКС"
                 readonly
               >
-                <template #append>
+                <template v-slot:#append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer" />
                 </template>
               </q-input>

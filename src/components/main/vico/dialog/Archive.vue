@@ -34,6 +34,7 @@ import { defineComponent, ref } from 'vue';
 import { Loading, Notify } from 'quasar';
 import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useMainStore } from '../../../../stores/storeMain.js';
+import { useUserStore } from '../../../../stores/storeUser.js';
 
 export default defineComponent({
   name: 'MainVicoDialogArchive',
@@ -41,6 +42,7 @@ export default defineComponent({
   setup() {
     const storeGlobal = useGlobalStore();
     const storeMain = useMainStore();
+    const storeUser = useUserStore();
 
     const dialog = ref(false);
 

@@ -14,12 +14,12 @@
       :wrap-cells="true"
       :hide-bottom="true"
     >
-      <template #header-cell="props">
+      <template v-slot:header-cell="props">
         <q-th :props="props" style="font-size: medium">
           {{ props.col.label }}
         </q-th>
       </template>
-      <template #body="props">
+      <template v-slot:body="props">
         <q-tr
           class="my-table-border"
           :props="props"
@@ -62,7 +62,7 @@
             class="my-table-border"
             style="min-width: 300px"
           >
-            <li v-for="item in props.row.objectInvited" :key="item">
+            <li v-for="item in props.row.objectInvited" v-bind:key="item">
               <div style="border: 1px solid grey; padding: 2px">
                 {{ item }}
               </div>
@@ -88,7 +88,7 @@
             class="my-table-border"
             style="min-width: 300px"
           >
-            <li v-for="item in props.row.departamentInvited" :key="item">
+            <li v-for="item in props.row.departamentInvited" v-bind:key="item">
               <div style="border: 1px solid grey; padding: 2px">
                 {{ item }}
               </div>

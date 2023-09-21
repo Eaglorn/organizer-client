@@ -16,7 +16,7 @@
                     !formValidate.date.$invalid || 'Не корректно введена дата',
                 ]"
               >
-                <template #append>
+                <template v-slot:append>
                   <i class="fa-duotone fa-calendar-days cursor-pointer">
                     <q-popup-proxy
                       cover
@@ -51,7 +51,7 @@
                     'Не корректно введено время',
                 ]"
               >
-                <template #append>
+                <template v-slot:append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer">
                     <q-popup-proxy
                       cover
@@ -264,6 +264,7 @@ import { defineComponent, ref, computed } from 'vue';
 import { Loading, Notify } from 'quasar';
 import { useGlobalStore } from '../../../../stores/storeGlobal.js';
 import { useMainStore } from '../../../../stores/storeMain.js';
+import { useUserStore } from '../../../../stores/storeUser.js';
 
 export default defineComponent({
   name: 'MainVicoDialogEdit',
@@ -271,6 +272,7 @@ export default defineComponent({
   setup() {
     const storeGlobal = useGlobalStore();
     const storeMain = useMainStore();
+    const storeUser = useUserStore();
 
     const dialog = ref(false);
 
@@ -284,8 +286,9 @@ export default defineComponent({
       const date = DateTime.fromFormat(value, 'dd.LL.yyyy');
       if (date.invalid != null) {
         return false;
+      } else {
+        return true;
       }
-      return true;
     };
 
     const timeValidate = (value) => {
