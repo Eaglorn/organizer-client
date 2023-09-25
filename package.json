@@ -28,14 +28,14 @@
     "radash": "^11.0.0",
     "socket.io-client": "^4.7.2",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@quasar/app-vite": "^1.6.2",
     "autoprefixer": "^10.4.16",
     "electron": "22.3.24",
     "electron-builder": "^24.6.4",
-    "eslint": "^8.49.0",
+    "eslint": "^8.50.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-vue": "^9.17.0",
     "postcss": "^8.4.30",
