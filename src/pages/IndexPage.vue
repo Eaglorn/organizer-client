@@ -12,7 +12,7 @@
     position="bottom-left"
     :offset="[18, 18]"
   >
-    <q-btn-group class="my-button-group" push>
+    <q-btn-group push>
       <q-btn
         push
         class="my-button"
@@ -82,7 +82,7 @@
     position="bottom-right"
     :offset="[18, 18]"
   >
-    <q-btn-group push class="my-button-group">
+    <q-btn-group push>
       <q-btn
         push
         class="my-button"

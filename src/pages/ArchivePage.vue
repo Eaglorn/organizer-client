@@ -3,15 +3,19 @@
     <ArchiveTable />
     <ArchiveVicoDialogView ref="archiveVicoDialogView" />
   </div>
-  <q-page-sticky position="bottom-left" :offset="[18, 18]">
-    <q-btn-group push class="my-button-group">
+  <q-page-sticky
+    class="my-button-group"
+    position="bottom-left"
+    :offset="[18, 18]"
+  >
+    <q-btn-group push>
       <q-btn
         push
         class="my-button"
         color="brown-5"
         padding="8px"
         size="24px"
-        @click="archiveVicoDialogView.dialogOpen"
+        @click="archiveVicoDialogView.dialogOpen()"
       >
         <i class="fa-solid fa-eye">
           <q-tooltip

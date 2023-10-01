@@ -9,7 +9,6 @@
           >Подтвердите действие переноса записи об ВКС в архив.</span
         >
       </q-card-section>
-
       <q-card-actions align="right">
         <q-btn
           label="Отмена"
@@ -71,12 +70,10 @@ export default defineComponent({
         method: 'post',
         url: storeGlobal.getAjaxUri('vico/moved'),
         data: {
-          // TODO: Изменить отправляемые параметры
           id: storeMain.selectId,
           user: {
             computer: storeUser.computer,
             login: storeUser.login,
-            role: storeUser.role,
           },
         },
         timeout: 10000,

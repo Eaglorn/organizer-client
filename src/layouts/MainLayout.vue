@@ -144,7 +144,7 @@ export default defineComponent({
       storeGlobal.optionTypeVico = [];
       storeGlobal.optionDepartament = [];
 
-      var i = 0;
+      let i = 0;
       data.optionObject.forEach((item) => {
         storeGlobal.optionObject.push({
           label: item,

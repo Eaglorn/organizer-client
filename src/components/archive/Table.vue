@@ -63,11 +63,13 @@
             class="my-table-border"
             style="min-width: 300px"
           >
-            <li v-for="item in props.row.objectInvited" v-bind:key="item">
-              <div style="border: 1px solid grey; padding: 2px">
-                {{ item }}
-              </div>
-            </li>
+            <ul>
+              <li v-for="item in props.row.objectInvited" v-bind:key="item">
+                <div style="border: 1px solid grey; padding: 2px">
+                  {{ item }}
+                </div>
+              </li>
+            </ul>
           </q-td>
           <q-td key="typeVico" :props="props" class="my-table-border">
             {{ props.row.typeVico }}
@@ -89,11 +91,16 @@
             class="my-table-border"
             style="min-width: 300px"
           >
-            <li v-for="item in props.row.departamentInvited" v-bind:key="item">
-              <div style="border: 1px solid grey; padding: 2px">
-                {{ item }}
-              </div>
-            </li>
+            <ul>
+              <li
+                v-for="item in props.row.departamentInvited"
+                v-bind:key="item"
+              >
+                <div style="border: 1px solid grey; padding: 2px">
+                  {{ item }}
+                </div>
+              </li>
+            </ul>
           </q-td>
           <q-td key="contactName" :props="props" class="my-table-border">
             {{ props.row.contactName }}
