@@ -33,7 +33,7 @@
   "devDependencies": {
     "@quasar/app-vite": "^1.6.2",
     "autoprefixer": "^10.4.16",
-    "electron": "22.3.26",
+    "electron": "22.3.27",
     "electron-builder": "^24.6.4",
     "eslint": "^8.51.0",
     "eslint-config-prettier": "^9.0.0",
