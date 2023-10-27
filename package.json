@@ -10,8 +10,7 @@
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev -m electron",
-    "build": "quasar build -m electron -A x64",
-    "up": "yarn install && yarn upgrade"
+    "build": "quasar build -m electron -A x64"
   },
   "dependencies": {
     "@electron/remote": "^2.0.12",
