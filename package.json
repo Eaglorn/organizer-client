@@ -14,11 +14,11 @@
     "build": "quasar build -m electron -A x64"
   },
   "dependencies": {
-    "@electron/remote": "^2.0.12",
+    "@electron/remote": "^2.1.0",
     "@quasar/extras": "^1.16.7",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
-    "axios": "^1.6.0",
+    "axios": "^1.6.1",
     "electron-updater": "^6.1.4",
     "iconv-lite": "^0.6.3",
     "jschardet": "^3.0.0",
