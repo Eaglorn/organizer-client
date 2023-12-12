@@ -27,19 +27,19 @@
     "quasar": "^2.14.1",
     "radash": "^11.0.0",
     "socket.io-client": "^4.7.2",
-    "vue": "^3.3.9",
+    "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@quasar/app-vite": "^1.7.0",
+    "@quasar/app-vite": "^1.7.1",
     "autoprefixer": "^10.4.16",
     "electron": "22.3.27",
     "electron-builder": "^24.9.1",
-    "eslint": "^8.54.0",
-    "eslint-config-prettier": "^9.0.0",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.19.2",
-    "postcss": "^8.4.31",
-    "prettier": "^3.1.0"
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.1"
   },
   "engines": {
     "node": "^18 || ^16 || ^14.19",
