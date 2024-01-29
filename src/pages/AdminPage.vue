@@ -96,11 +96,7 @@ export default defineComponent({
     const loginValidate = (value) => {
       const regex = /^\d{2}-\d{3}$/;
 
-      if (regex.test(value)) {
-        return true;
-      } else {
-        return false;
-      }
+      return regex.test(value);
     };
 
     const login = ref({
