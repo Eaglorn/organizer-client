@@ -11,7 +11,8 @@
     "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
     "test": "echo \"No test specified\" && exit 0",
     "dev": "quasar dev -m electron",
-    "build": "quasar build -m electron -A x64"
+    "build:dev": "quasar build",
+    "build:prod": "quasar build -m electron -A x64"
   },
   "dependencies": {
     "@electron/remote": "^2.1.2",
@@ -25,7 +26,7 @@
     "jschardet": "^3.0.0",
     "luxon": "^3.4.4",
     "pinia": "^2.1.7",
-    "quasar": "^2.14.3",
+    "quasar": "^2.14.4",
     "radash": "^11.0.0",
     "socket.io-client": "^4.7.4",
     "vue": "^3.4.19",
