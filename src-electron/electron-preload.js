@@ -32,48 +32,6 @@ import os from 'os';
 import { contextBridge, ipcRenderer } from 'electron';
 import { BrowserWindow } from '@electron/remote';
 
-/*const child = require('child_process');
-let exec = child.exec;
-
-function execute(command, callback) {
-  exec('chcp 866 && ' + command, function (error, stdout) {
-    let result = null;
-
-    if (!error) {
-      splitted = stdout.split('\n');
-      console.log(splitted);
-      var username = '';
-      var fullname = '';
-
-      for (var i = 0; i < splitted.length; i++) {
-        if (splitted[i].search('Имя пользователя') != -1) {
-          splitted[i] = splitted[i].replace('Имя пользователя', ' ');
-          splitted[i] = splitted[i].trim();
-          username = splitted[i];
-        } else if (splitted[i].search('Полное имя') != -1) {
-          splitted[i] = splitted[i].replace('Полное имя', ' ');
-          splitted[i] = splitted[i].trim();
-          fullname = splitted[i];
-        }
-      }
-
-      let data = {
-        username: username ? username.toLowerCase() : null,
-        fullname: fullname ? fullname : null,
-      };
-
-      result = data;
-    } else {
-      result = null;
-    }
-    callback(result);
-  });
-}
-
-execute('net user ' + os.userInfo().username + '', (result) => {
-  console.log(result);
-});*/
-
 contextBridge.exposeInMainWorld('windowAPI', {
   minimize() {
     BrowserWindow.getFocusedWindow().minimize();
