@@ -130,6 +130,7 @@ export default defineComponent({
     storeUser.computer = data.computer;
 
     const socket = io(storeGlobal.server, {
+      transports: ['websocket'],
       query: {
         login: storeUser.login,
       },
