@@ -2,6 +2,7 @@
   <div class="q-pa-md">
     <ArchiveTable />
     <ArchiveVicoDialogView ref="archiveVicoDialogView" />
+    <ArchiveVicoDialogFilter ref="archiveVicoDialogFilter" />
   </div>
   <q-page-sticky
     class="my-button-group"
@@ -31,7 +32,11 @@
     position="bottom-right"
     :offset="[18, 18]">
     <q-btn-group push>
-      <q-btn push class="my-button" color="green" @click="updateTable">
+      <q-btn
+        push
+        class="my-button"
+        color="green"
+        @click="archiveVicoDialogFilter.dialogOpen()">
         <i class="fa-solid fa-arrows-rotate">
           <q-tooltip
             transition-show="scale"

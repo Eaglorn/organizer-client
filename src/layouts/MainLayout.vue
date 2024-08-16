@@ -22,8 +22,7 @@
             v-if="page != 'archive'"
             color="green-3"
             text-color="black"
-            @click="onClickButtonArchive"
-          >
+            @click="onClickButtonArchive">
             <i class="fa-solid fa-box-archive fa-2x" />
             &nbsp;
             <b>Перейти в архив</b>
@@ -32,8 +31,7 @@
             v-if="page != 'main'"
             color="green-3"
             text-color="black"
-            @click="onClickButtonMain"
-          >
+            @click="onClickButtonMain">
             <i class="fa-solid fa-sidebar-flip fa-2x" />
             &nbsp;
             <b>Перейти на главную страницу</b>
@@ -42,8 +40,7 @@
             v-if="role > 1 && page != 'admin'"
             color="green-3"
             text-color="black"
-            @click="onClickButtonAdmin"
-          >
+            @click="onClickButtonAdmin">
             <i class="fa-solid fa-screwdriver-wrench fa-2x" />
             &nbsp;
             <b>Перейти на страницу администрирования</b>
@@ -61,8 +58,7 @@
           v-if="page != 'profile'"
           color="green-3"
           text-color="black"
-          @click="onClickButtonProfile"
-        >
+          @click="onClickButtonProfile">
           <div v-if="role === 0">
             <i class="fa-solid fa-person-circle-question fa-2x">
               <q-tooltip> Пользователь </q-tooltip>
@@ -103,19 +99,19 @@
 </template>
 
 <script>
-import { io } from 'boot/socket';
-import { defineComponent, computed, ref } from 'vue';
-import { Loading } from 'quasar';
-import { useRouter } from 'vue-router';
-import { useGlobalStore } from '../stores/storeGlobal.js';
-import { useUserStore } from '../stores/storeUser.js';
-import { useMainStore } from '../stores/storeMain.js';
-import { useArchiveStore } from '../stores/storeArchive.js';
+import { io } from 'boot/socket'
+import { defineComponent, computed, ref } from 'vue'
+import { Loading } from 'quasar'
+import { useRouter } from 'vue-router'
+import { useGlobalStore } from '../stores/storeGlobal.js'
+import { useUserStore } from '../stores/storeUser.js'
+import { useMainStore } from '../stores/storeMain.js'
+import { useArchiveStore } from '../stores/storeArchive.js'
 
-const storeGlobal = useGlobalStore();
-const storeUser = useUserStore();
-const storeMain = useMainStore();
-const storeArchive = useArchiveStore();
+const storeGlobal = useGlobalStore()
+const storeUser = useUserStore()
+const storeMain = useMainStore()
+const storeArchive = useArchiveStore()
 
 export default defineComponent({
   name: 'MainLayout',
@@ -123,139 +119,134 @@ export default defineComponent({
   components: {},
 
   setup() {
-    const count = ref(0);
+    const count = ref(0)
 
-    const data = window.userAPI.getData;
-    storeUser.login = data.login;
-    storeUser.computer = data.computer;
+    const data = window.userAPI.getData
+    storeUser.login = data.login
+    storeUser.computer = data.computer
 
     const socket = io(storeGlobal.server, {
       transports: ['websocket'],
       query: {
         login: storeUser.login,
       },
-    });
-    storeGlobal.socket = socket;
+    })
+    storeGlobal.socket = socket
 
-    const page = computed(() => storeGlobal.page);
+    const page = computed(() => storeGlobal.page)
 
     storeGlobal.socket.on('load', (data) => {
-      storeUser.role = data.role;
-      storeGlobal.optionObject = [];
-      storeGlobal.optionTypeVico = [];
-      storeGlobal.optionDepartament = [];
+      storeUser.role = data.role
+      storeGlobal.optionObject = []
+      storeGlobal.optionTypeVico = []
+      storeGlobal.optionDepartament = []
 
-      let i = 0;
+      let i = 0
       data.optionObject.forEach((item) => {
         storeGlobal.optionObject.push({
           label: item,
           value: i,
-        });
-        i++;
-      });
+        })
+        i++
+      })
 
-      i = 0;
+      i = 0
       data.optionTypeVico.forEach((item) => {
         storeGlobal.optionTypeVico.push({
           label: item,
           value: i,
-        });
-        i++;
-      });
+        })
+        i++
+      })
 
-      i = 0;
+      i = 0
       data.optionDepartament.forEach((item) => {
         storeGlobal.optionDepartament.push({
           label: item,
           value: i,
-        });
-        i++;
-      });
-    });
+        })
+        i++
+      })
+    })
 
     storeGlobal.socket.on('vicoAll', (data) => {
-      storeMain.vicos = data.vicos;
-      storeMain.vicosSort();
-    });
+      storeMain.vicos = data.vicos
+      storeMain.vicosSort()
+    })
 
     storeGlobal.socket.on('vicoAdd', (data) => {
-      storeMain.addVico(data);
-    });
+      storeMain.addVico(data)
+    })
 
     storeGlobal.socket.on('vicoEdit', (data) => {
-      storeMain.setVico(data.vico);
-      storeMain.vicosSort();
-    });
+      storeMain.setVico(data.vico)
+      storeMain.vicosSort()
+    })
 
     storeGlobal.socket.on('vicoDelete', (data) => {
-      storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id);
+      storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id)
       if (storeMain.selectId === data.id) {
-        storeMain.selectId = -1;
-        storeMain.isSelect = false;
+        storeMain.selectId = -1
+        storeMain.isSelect = false
       }
-    });
+    })
 
-    storeGlobal.socket.on('archiveAll', (data) => {
-      storeArchive.vicos = data.vicos;
-      storeArchive.vicosSort();
-    });
-
-    const router = useRouter();
+    const router = useRouter()
     const onClickButtonArchive = () => {
-      Loading.show();
-      storeGlobal.socket.emit('pageArchive');
-      router.push('archive');
-      if (storeGlobal.page === 'main') storeMain.clear();
-      storeGlobal.page = 'archive';
-      Loading.hide();
-    };
+      Loading.show()
+      storeGlobal.socket.emit('pageArchive')
+      router.push('archive')
+      if (storeGlobal.page === 'main') storeMain.clear()
+      storeGlobal.page = 'archive'
+      Loading.hide()
+    }
     const onClickButtonMain = () => {
-      Loading.show();
-      storeGlobal.socket.emit('pageMain');
-      router.push('main');
-      if (storeGlobal.page === 'archive') storeArchive.clear();
-      storeGlobal.page = 'main';
-      Loading.hide();
-    };
+      Loading.show()
+      storeGlobal.socket.emit('pageMain')
+      router.push('main')
+      if (storeGlobal.page === 'archive') storeArchive.clear()
+      storeGlobal.page = 'main'
+      Loading.hide()
+    }
     const onClickButtonAdmin = () => {
-      Loading.show();
-      router.push('admin');
-      if (storeGlobal.page === 'archive') storeArchive.clear();
-      if (storeGlobal.page === 'main') storeMain.clear();
-      storeGlobal.page = 'admin';
-      Loading.hide();
-    };
+      Loading.show()
+      router.push('admin')
+      if (storeGlobal.page === 'archive') storeArchive.clear()
+      if (storeGlobal.page === 'main') storeMain.clear()
+      storeGlobal.page = 'admin'
+      Loading.hide()
+    }
     const onClickButtonProfile = () => {
-      Loading.show();
-      router.push('profile');
-      if (storeGlobal.page === 'archive') storeArchive.clear();
-      if (storeGlobal.page === 'main') storeMain.clear();
-      storeGlobal.page = 'profile';
-      Loading.hide();
-    };
+      Loading.show()
+      router.push('profile')
+      if (storeGlobal.page === 'archive') storeArchive.clear()
+      if (storeGlobal.page === 'main') storeMain.clear()
+      storeGlobal.page = 'profile'
+      Loading.hide()
+    }
 
     function minimize() {
       if (process.env.MODE === 'electron') {
-        window.windowAPI.minimize();
+        window.windowAPI.minimize()
       }
     }
 
     function toggleMaximize() {
       if (process.env.MODE === 'electron') {
-        window.windowAPI.toggleMaximize();
-        count.value = count.value + 1;
+        window.windowAPI.toggleMaximize()
+        count.value = count.value + 1
       }
     }
 
     function closeApp() {
       if (process.env.MODE === 'electron') {
-        window.windowAPI.close();
+        window.windowAPI.close()
       }
     }
 
-    const version = computed(() => storeGlobal.version);
+    const version = computed(() => storeGlobal.version)
 
-    const role = computed(() => storeUser.role);
+    const role = computed(() => storeUser.role)
 
     return {
       role,
@@ -269,9 +260,9 @@ export default defineComponent({
       minimize,
       toggleMaximize,
       closeApp,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="sass"></style>
