@@ -21,8 +21,7 @@
                   overflow: hidden;
                   text-overflow: ellipsis;
                 "
-                class="my-select"
-              />
+                class="my-select" />
             </div>
             <div class="col-5">
               <q-select
@@ -36,8 +35,7 @@
                   overflow: hidden;
                   text-overflow: ellipsis;
                 "
-                class="my-select"
-              />
+                class="my-select" />
             </div>
           </div>
           <div class="row justify-evenly">
@@ -49,8 +47,7 @@
                 use-chips
                 stack-label
                 :options="optionObject"
-                readonly
-              />
+                readonly />
             </div>
             <div class="col-5">
               <q-select
@@ -60,8 +57,7 @@
                 use-chips
                 stack-label
                 :options="optionObject"
-                readonly
-              />
+                readonly />
             </div>
           </div>
         </q-form>
@@ -71,36 +67,27 @@
 </template>
 
 <script>
-import { api } from 'boot/axios';
-import { DateTime } from 'boot/luxon';
-import { useVuelidate, required, minLength } from 'boot/vuelidate';
-import { Loading, Notify } from 'quasar';
-import { defineComponent, ref, computed, watch } from 'vue';
-import { storeToRefs } from 'pinia';
-import { useGlobalStore } from '../stores/storeGlobal.js';
-import { useUserStore } from '../stores/storeUser.js';
-import { useMainStore } from '../stores/storeMain.js';
+import { defineComponent, ref, computed } from 'vue'
+import { useGlobalStore } from '../stores/storeGlobal.js'
 
 export default defineComponent({
   name: 'ProfilePage',
   setup() {
-    const storeGlobal = useGlobalStore();
-    const storeUser = useUserStore();
-    const storeMain = useMainStore();
+    const storeGlobal = useGlobalStore()
 
-    const objectInvited = ref([]);
-    const departamentInvited = ref([]);
+    const objectInvited = ref([])
+    const departamentInvited = ref([])
 
-    const optionObject = computed(() => storeGlobal.optionObject);
-    const optionDepartament = computed(() => storeGlobal.optionDepartament);
+    const optionObject = computed(() => storeGlobal.optionObject)
+    const optionDepartament = computed(() => storeGlobal.optionDepartament)
     return {
       optionObject,
       optionDepartament,
       objectInvited,
       departamentInvited,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="sass">

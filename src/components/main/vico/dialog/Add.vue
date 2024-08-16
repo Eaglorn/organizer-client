@@ -9,28 +9,28 @@
                 v-model="vico.date"
                 outlined
                 mask="##.##.####"
-                label="Дата"
+                label-slot
                 lazy-rules
                 :rules="[
                   () =>
                     !formValidate.date.$invalid || 'Не корректно введена дата',
-                ]"
-              >
+                ]">
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">Дата</span>
+                </template>
                 <template #append>
                   <i class="fa-duotone fa-calendar-days cursor-pointer">
                     <q-popup-proxy
                       cover
                       transition-show="scale"
-                      transition-hide="scale"
-                    >
+                      transition-hide="scale">
                       <q-date v-model="vico.date" mask="DD.MM.YYYY">
                         <div class="row items-center justify-end">
                           <q-btn
                             v-close-popup
                             label="Закрыть"
                             color="primary"
-                            flat
-                          />
+                            flat />
                         </div>
                       </q-date>
                     </q-popup-proxy>
@@ -43,29 +43,31 @@
                 v-model="vico.timeStart"
                 outlined
                 mask="time"
-                label="Время начала ВКС"
+                label-slot
                 lazy-rules
                 :rules="[
                   () =>
                     !formValidate.timeStart.$invalid ||
                     'Не корректно введено время',
-                ]"
-              >
+                ]">
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Дата начала ВКС
+                  </span>
+                </template>
                 <template #append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer">
                     <q-popup-proxy
                       cover
                       transition-show="scale"
-                      transition-hide="scale"
-                    >
+                      transition-hide="scale">
                       <q-time v-model="vico.timeStart">
                         <div class="row items-center justify-end">
                           <q-btn
                             v-close-popup
                             label="Закрыть"
                             color="primary"
-                            flat
-                          />
+                            flat />
                         </div>
                       </q-time>
                     </q-popup-proxy>
@@ -78,29 +80,31 @@
                 v-model="vico.timeEnd"
                 outlined
                 mask="time"
-                label="Время окончания ВКС"
+                label-slot
                 lazy-rules
                 :rules="[
                   () =>
                     !formValidate.timeEnd.$invalid ||
                     'Не корректно введено время',
-                ]"
-              >
+                ]">
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Дата окончания ВКС
+                  </span>
+                </template>
                 <template #append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer">
                     <q-popup-proxy
                       cover
                       transition-show="scale"
-                      transition-hide="scale"
-                    >
+                      transition-hide="scale">
                       <q-time v-model="vico.timeEnd">
                         <div class="row items-center justify-end">
                           <q-btn
                             v-close-popup
                             label="Закрыть"
                             color="primary"
-                            flat
-                          />
+                            flat />
                         </div>
                       </q-time>
                     </q-popup-proxy>
@@ -115,14 +119,33 @@
                 v-model="vico.objectInitiator"
                 outlined
                 :options="optionObject"
-                label="Обособленное подразделение инцииатор ВКС"
+                label-slot
                 lazy-rules
                 :rules="[
                   () =>
                     !formValidate.objectInitiator.$invalid ||
                     'Не выбрано подразделение инициатор',
-                ]"
-              />
+                ]">
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Обособленное подразделение инцииатор ВКС
+                  </span>
+                </template>
+                <template #option="scope">
+                  <q-item v-bind="scope.itemProps">
+                    <q-item-section>
+                      <q-item-label
+                        v-if="scope.selected"
+                        class="text-weight-bold text-indigo-10">
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                      <q-item-label v-else>
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
+              </q-select>
             </div>
             <div class="col-6">
               <q-select
@@ -130,7 +153,7 @@
                 outlined
                 multiple
                 :options="optionObject"
-                label="Вызываемые обособленные подразделения"
+                label-slot
                 style="
                   white-space: nowrap;
                   overflow: hidden;
@@ -141,8 +164,27 @@
                   () =>
                     !formValidate.objectInvited.$invalid ||
                     'Не выбраны вызываемые обособленные подразделения',
-                ]"
-              />
+                ]">
+                <template #option="scope">
+                  <q-item v-bind="scope.itemProps">
+                    <q-item-section>
+                      <q-item-label
+                        v-if="scope.selected"
+                        class="text-weight-bold text-indigo-10">
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                      <q-item-label v-else>
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Вызываемые обособленные подразделения
+                  </span>
+                </template>
+              </q-select>
             </div>
           </div>
           <div class="row justify-evenly">
@@ -151,14 +193,33 @@
                 v-model="vico.departamentInitiator"
                 outlined
                 :options="optionDepartament"
-                label="Отдел инициатор ВКС"
+                label-slot
                 lazy-rules
                 :rules="[
                   () =>
                     !formValidate.departamentInitiator.$invalid ||
                     'Не выбран отдел инициатор',
-                ]"
-              />
+                ]">
+                <template #option="scope">
+                  <q-item v-bind="scope.itemProps">
+                    <q-item-section>
+                      <q-item-label
+                        v-if="scope.selected"
+                        class="text-weight-bold text-indigo-10">
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                      <q-item-label v-else>
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Отдел инициатор ВКС
+                  </span>
+                </template>
+              </q-select>
             </div>
             <div class="col-6">
               <q-select
@@ -166,7 +227,7 @@
                 outlined
                 multiple
                 :options="optionDepartament"
-                label="Приглашенные отделы"
+                label-slot
                 style="
                   white-space: nowrap;
                   overflow: hidden;
@@ -177,8 +238,27 @@
                   () =>
                     !formValidate.departamentInvited.$invalid ||
                     'Не выбраны приглашённые отделы',
-                ]"
-              />
+                ]">
+                <template #option="scope">
+                  <q-item v-bind="scope.itemProps">
+                    <q-item-section>
+                      <q-item-label
+                        v-if="scope.selected"
+                        class="text-weight-bold text-indigo-10">
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                      <q-item-label v-else>
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Приглашенные отделы
+                  </span>
+                </template>
+              </q-select>
             </div>
           </div>
           <div class="row justify-evenly">
@@ -187,25 +267,49 @@
                 v-model="vico.typeVico"
                 outlined
                 :options="optionTypeVico"
-                label="Тип ВКС"
+                label-slot
                 lazy-rules
                 :rules="[
                   () => !formValidate.typeVico.$invalid || 'Не выбран тип ВКС',
-                ]"
-              />
+                ]">
+                <template #option="scope">
+                  <q-item v-bind="scope.itemProps">
+                    <q-item-section>
+                      <q-item-label
+                        v-if="scope.selected"
+                        class="text-weight-bold text-indigo-10">
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                      <q-item-label v-else>
+                        {{ scope.opt.label }}
+                      </q-item-label>
+                    </q-item-section>
+                  </q-item>
+                </template>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Тип совещания
+                  </span>
+                </template>
+              </q-select>
             </div>
             <div class="col-4">
               <q-input
                 v-model="vico.topic"
                 outlined
-                label="Тема совещания"
+                label-slot
                 lazy-rules
                 :rules="[
                   () =>
                     !formValidate.topic.$invalid ||
                     'Не заполнена тема совещания',
-                ]"
-              />
+                ]">
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Тема совещания
+                  </span>
+                </template>
+              </q-input>
             </div>
           </div>
           <div class="row justify-evenly">
@@ -213,27 +317,37 @@
               <q-input
                 v-model="vico.contactName"
                 outlined
-                label="ФИО инициатора ВКС"
+                label-slot
                 lazy-rules
                 :rules="[
                   () =>
                     !formValidate.contactName.$invalid ||
                     'Не заполнено ФИО инициатора',
-                ]"
-              />
+                ]">
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    ФИО инициатора ВКС
+                  </span>
+                </template>
+              </q-input>
             </div>
             <div class="col-4">
               <q-input
                 v-model="vico.contactPhone"
                 outlined
-                label="Контактный номер"
+                label-slot
                 lazy-rules
                 :rules="[
                   () =>
                     !formValidate.contactPhone.$invalid ||
                     'Не заполнен контактный номер',
-                ]"
-              />
+                ]">
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Контактный номер телефона инициатора ВКС
+                  </span>
+                </template>
+              </q-input>
             </div>
           </div>
         </q-form>
@@ -243,58 +357,50 @@
           label="Отмена"
           color="red-3"
           text-color="black"
-          @click="dialogClose"
-        />
+          @click="dialogClose" />
         <q-btn
           label="Создать"
           color="positive"
           text-color="black"
-          @click="dialogSave"
-        />
+          @click="dialogSave" />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import { api } from 'boot/axios';
-import { DateTime } from 'boot/luxon';
-import { useVuelidate, required, minLength } from 'boot/vuelidate';
-import { Loading, Notify } from 'quasar';
-import { defineComponent, ref, computed } from 'vue';
-import { useGlobalStore } from '../../../../stores/storeGlobal.js';
-import { useUserStore } from '../../../../stores/storeUser.js';
+import { api } from 'boot/axios'
+import { DateTime } from 'boot/luxon'
+import { useVuelidate, required, minLength } from 'boot/vuelidate'
+import { Loading, Notify } from 'quasar'
+import { defineComponent, ref, computed } from 'vue'
+import { useGlobalStore } from '../../../../stores/storeGlobal.js'
+import { useUserStore } from '../../../../stores/storeUser.js'
 
 export default defineComponent({
   name: 'MainVicoDialogAdd',
   props: {},
   setup() {
-    const storeGlobal = useGlobalStore();
-    const storeUser = useUserStore();
+    const storeGlobal = useGlobalStore()
+    const storeUser = useUserStore()
 
-    const dialog = ref(false);
+    const dialog = ref(false)
 
-    const optionObject = computed(() => storeGlobal.optionObject);
-    const optionTypeVico = computed(() => storeGlobal.optionTypeVico);
-    const optionDepartament = computed(() => storeGlobal.optionDepartament);
+    const optionObject = computed(() => storeGlobal.optionObject)
+    const optionTypeVico = computed(() => storeGlobal.optionTypeVico)
+    const optionDepartament = computed(() => storeGlobal.optionDepartament)
 
-    const vico = ref();
+    const vico = ref()
 
     const dateValidate = (value) => {
-      const date = DateTime.fromFormat(value, 'dd.LL.yyyy');
-      if (date.invalid != null) {
-        return false;
-      }
-      return true;
-    };
+      const date = DateTime.fromFormat(value, 'dd.LL.yyyy')
+      return date.invalid == null
+    }
 
     const timeValidate = (value) => {
-      const date = DateTime.fromFormat(value, 'hh:mm');
-      if (date.invalid != null) {
-        return false;
-      }
-      return true;
-    };
+      const date = DateTime.fromFormat(value, 'hh:mm')
+      return date.invalid == null
+    }
 
     const rules = computed(() => ({
       date: {
@@ -312,27 +418,27 @@ export default defineComponent({
       departamentInvited: { required },
       contactName: { required },
       contactPhone: { required },
-    }));
+    }))
 
-    const form = ref();
+    const form = ref()
 
-    const formValidate = useVuelidate(rules, vico);
+    const formValidate = useVuelidate(rules, vico)
 
     const dialogOpen = () => {
-      Loading.show();
-      const d = DateTime.now();
-      vico.value = storeGlobal.getVicoTemplate();
-      vico.value.date = d.toLocaleString();
-      vico.value.timeStart = d.toLocaleString(DateTime.TIME_24_SIMPLE);
-      vico.value.timeEnd = d.toLocaleString(DateTime.TIME_24_SIMPLE);
-      dialog.value = true;
-      Loading.hide();
-    };
+      Loading.show()
+      const d = DateTime.now()
+      vico.value = storeGlobal.getVicoTemplate()
+      vico.value.date = d.toLocaleString()
+      vico.value.timeStart = d.toLocaleString(DateTime.TIME_24_SIMPLE)
+      vico.value.timeEnd = d.toLocaleString(DateTime.TIME_24_SIMPLE)
+      dialog.value = true
+      Loading.hide()
+    }
 
     const dialogSave = () => {
-      Loading.show();
+      Loading.show()
       if (formValidate.value.$invalid) {
-        form.value.submit();
+        form.value.submit()
         Notify.create({
           progress: true,
           color: 'warning',
@@ -341,17 +447,17 @@ export default defineComponent({
           icon: 'warning',
           timeout: storeGlobal.messagesErrorTime.low,
           textColor: 'black',
-        });
-        Loading.hide();
+        })
+        Loading.hide()
       } else {
         const newVico = {
           dateTimeStart: storeGlobal.getSeconds(
             vico.value.date,
-            vico.value.timeStart,
+            vico.value.timeStart
           ),
           dateTimeEnd: storeGlobal.getSeconds(
             vico.value.date,
-            vico.value.timeEnd,
+            vico.value.timeEnd
           ),
           objectInitiator: vico.value.objectInitiator?.label ?? '',
           objectInvited: [],
@@ -361,15 +467,15 @@ export default defineComponent({
           departamentInvited: [],
           contactName: vico.value.contactName,
           contactPhone: vico.value.contactPhone,
-        };
+        }
 
         vico.value.objectInvited.forEach((item) => {
-          newVico.objectInvited.push(item.label);
-        });
+          newVico.objectInvited.push(item.label)
+        })
 
         vico.value.departamentInvited.forEach((item) => {
-          newVico.departamentInvited.push(item.label);
-        });
+          newVico.departamentInvited.push(item.label)
+        })
 
         api({
           method: 'post',
@@ -387,7 +493,7 @@ export default defineComponent({
           .then((response) => {
             if (response.data.success) {
               if (response.data.collision) {
-                var textMessage = '';
+                let textMessage = ''
                 for (const item of response.data.message) {
                   textMessage +=
                     '<br />' +
@@ -397,14 +503,14 @@ export default defineComponent({
                     storeGlobal.getTime(item.timeStart) +
                     '</b>--<b>' +
                     storeGlobal.getTime(item.timeEnd) +
-                    '</b>)</li>';
+                    '</b>)</li>'
                 }
                 Notify.create({
                   progress: true,
                   color: 'warning',
                   position: 'top',
                   message:
-                    '<b>На данное время ВКС уже занято.</b>' +
+                    '<b>В введённое время помещения для проведения ВКС заняты.</b>' +
                     '<ul>' +
                     textMessage +
                     '</ul>',
@@ -412,11 +518,11 @@ export default defineComponent({
                   html: true,
                   timeout: storeGlobal.messagesErrorTime.high,
                   textColor: 'black',
-                });
-                Loading.hide();
+                })
+                Loading.hide()
               } else {
-                dialog.value = false;
-                Loading.hide();
+                dialog.value = false
+                Loading.hide()
               }
             } else {
               Notify.create({
@@ -428,8 +534,8 @@ export default defineComponent({
                 textColor: 'black',
                 html: true,
                 timeout: storeGlobal.messagesErrorTime.medium,
-              });
-              Loading.hide();
+              })
+              Loading.hide()
             }
           })
           .catch(function () {
@@ -441,15 +547,15 @@ export default defineComponent({
               icon: 'report_problem',
               timeout: storeGlobal.messagesErrorTime.low,
               textColor: 'black',
-            });
-            Loading.hide();
-          });
+            })
+            Loading.hide()
+          })
       }
-    };
+    }
 
     const dialogClose = () => {
-      dialog.value = false;
-    };
+      dialog.value = false
+    }
 
     return {
       vico,
@@ -462,15 +568,9 @@ export default defineComponent({
       optionObject,
       optionTypeVico,
       optionDepartament,
-    };
+    }
   },
-});
+})
 </script>
 
-<style lang="sass">
-.q-item--active
-  color: $green-6
-  font-weight: 600
-.q-field__label
-  color: $red-4
-</style>
+<style lang="sass"></style>

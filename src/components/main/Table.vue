@@ -12,27 +12,23 @@
       :columns="columns"
       :separator="separator"
       :wrap-cells="true"
-      :hide-bottom="true"
-    >
+      :hide-bottom="true">
       <template v-slot:header-cell="props">
         <q-th :props="props" style="font-size: medium">
-          {{ props.col.label }}
+          <span class="text-weight-bold text-indigo-10">
+            {{ props.col.label }}
+          </span>
         </q-th>
       </template>
       <template v-slot:body="props">
         <q-tr
           class="my-table-border"
           :props="props"
-          @click="
-            props.selected = !props.selected;
-            selectAction(props.row.id);
-          "
-        >
+          @click="preSelectAction(props)">
           <q-td class="my-table-border">
             <q-checkbox
               v-model="props.selected"
-              @click="selectAction(props.row.id)"
-            />
+              @click="selectAction(props.row.id)" />
           </q-td>
           <q-td key="id" :props="props" class="my-table-border">
             {{ props.row.id }}
@@ -50,8 +46,7 @@
             key="objectInitiator"
             :props="props"
             class="my-table-border"
-            style="min-width: 250px"
-          >
+            style="min-width: 250px">
             <div>
               {{ props.row.objectInitiator }}
             </div>
@@ -60,13 +55,14 @@
             key="objectInvited"
             :props="props"
             class="my-table-border"
-            style="min-width: 300px"
-          >
-            <li v-for="item in props.row.objectInvited" v-bind:key="item">
-              <div style="border: 1px solid grey; padding: 2px">
-                {{ item }}
-              </div>
-            </li>
+            style="min-width: 300px">
+            <ul>
+              <li v-for="item in props.row.objectInvited" v-bind:key="item">
+                <div style="border: 1px solid grey; padding: 2px">
+                  {{ item }}
+                </div>
+              </li>
+            </ul>
           </q-td>
           <q-td key="typeVico" :props="props" class="my-table-border">
             {{ props.row.typeVico }}
@@ -78,21 +74,23 @@
             key="departamentInitiator"
             :props="props"
             class="my-table-border"
-            style="min-width: 250px"
-          >
+            style="min-width: 250px">
             {{ props.row.departamentInitiator }}
           </q-td>
           <q-td
             key="departamentInvited"
             :props="props"
             class="my-table-border"
-            style="min-width: 300px"
-          >
-            <li v-for="item in props.row.departamentInvited" v-bind:key="item">
-              <div style="border: 1px solid grey; padding: 2px">
-                {{ item }}
-              </div>
-            </li>
+            style="min-width: 300px">
+            <ul>
+              <li
+                v-for="item in props.row.departamentInvited"
+                v-bind:key="item">
+                <div style="border: 1px solid grey; padding: 2px">
+                  {{ item }}
+                </div>
+              </li>
+            </ul>
           </q-td>
           <q-td key="contactName" :props="props" class="my-table-border">
             {{ props.row.contactName }}
@@ -107,12 +105,12 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue';
-import { useMainStore } from '../../stores/storeMain';
-import { useGlobalStore } from '../../stores/storeGlobal';
+import { defineComponent, ref, computed } from 'vue'
+import { useMainStore } from '../../stores/storeMain'
+import { useGlobalStore } from '../../stores/storeGlobal'
 
-const storeMain = useMainStore();
-const storeGlobal = useGlobalStore();
+const storeMain = useMainStore()
+const storeGlobal = useGlobalStore()
 
 const columns = [
   {
@@ -190,29 +188,35 @@ const columns = [
     label: 'Контактный номер телефона инициатора ВКС',
     field: 'contactPhone',
   },
-];
+]
 export default defineComponent({
   name: 'MainVicoTable',
   setup() {
-    const rows = computed(() => storeMain.vicos);
+    const rows = computed(() => storeMain.vicos)
 
-    const selected = ref([]);
+    const selected = ref([])
+
+    const preSelectAction = (props) => {
+      props.selected = !props.selected
+      selectAction(props.row.id)
+    }
 
     const selectAction = (rowId) => {
-      if (storeMain.selectId === rowId && storeMain.isSelect == true) {
-        storeMain.selectId = -1;
-        storeMain.isSelect = false;
+      if (storeMain.selectId === rowId && storeMain.isSelect === true) {
+        storeMain.selectId = -1
+        storeMain.isSelect = false
       } else {
-        storeMain.selectId = rowId;
-        storeMain.isSelect = true;
+        storeMain.selectId = rowId
+        storeMain.isSelect = true
       }
-    };
-    const getDate = storeGlobal.getDate;
-    const getTime = storeGlobal.getTime;
+    }
+    const getDate = storeGlobal.getDate
+    const getTime = storeGlobal.getTime
 
     return {
       rows,
       selected,
+      preSelectAction,
       selectAction,
       separator: 'cell',
       columns,
@@ -223,9 +227,9 @@ export default defineComponent({
       }),
       getDate,
       getTime,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="sass">

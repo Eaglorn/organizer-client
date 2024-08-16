@@ -14,42 +14,40 @@
           label="Отмена"
           color="primary"
           text-color="white"
-          @click="dialogClose"
-        />
+          @click="dialogClose" />
         <q-btn
           label="Удалить"
           color="negative"
           text-color="white"
-          @click="dialogSave"
-        />
+          @click="dialogSave" />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import { api } from 'boot/axios';
-import { defineComponent, ref } from 'vue';
-import { Loading, Notify } from 'quasar';
-import { useGlobalStore } from '../../../../stores/storeGlobal.js';
-import { useMainStore } from '../../../../stores/storeMain.js';
-import { useUserStore } from '../../../../stores/storeUser.js';
+import { api } from 'boot/axios'
+import { defineComponent, ref } from 'vue'
+import { Loading, Notify } from 'quasar'
+import { useGlobalStore } from '../../../../stores/storeGlobal.js'
+import { useMainStore } from '../../../../stores/storeMain.js'
+import { useUserStore } from '../../../../stores/storeUser.js'
 
 export default defineComponent({
   name: 'MainVicoDialogDelete',
   props: {},
   setup() {
-    const storeGlobal = useGlobalStore();
-    const storeMain = useMainStore();
-    const storeUser = useUserStore();
+    const storeGlobal = useGlobalStore()
+    const storeMain = useMainStore()
+    const storeUser = useUserStore()
 
-    const dialog = ref(false);
+    const dialog = ref(false)
 
     const dialogOpen = () => {
-      Loading.show();
+      Loading.show()
       if (storeMain.isSelect) {
-        dialog.value = true;
-        Loading.hide();
+        dialog.value = true
+        Loading.hide()
       } else {
         Notify.create({
           color: 'warning',
@@ -59,13 +57,13 @@ export default defineComponent({
           timeout: storeGlobal.messagesErrorTime.low,
           textColor: 'black',
           html: true,
-        });
-        Loading.hide();
+        })
+        Loading.hide()
       }
-    };
+    }
 
     const dialogSave = () => {
-      Loading.show();
+      Loading.show()
       api({
         method: 'post',
         url: storeGlobal.getAjaxUri('vico/delete'),
@@ -81,8 +79,8 @@ export default defineComponent({
       })
         .then((response) => {
           if (response.data.success) {
-            dialog.value = false;
-            Loading.hide();
+            dialog.value = false
+            Loading.hide()
           } else {
             Notify.create({
               progress: true,
@@ -93,8 +91,8 @@ export default defineComponent({
               timeout: storeGlobal.messagesErrorTime.low,
               textColor: 'black',
               html: true,
-            });
-            Loading.hide();
+            })
+            Loading.hide()
           }
         })
         .catch(function () {
@@ -106,23 +104,23 @@ export default defineComponent({
             timeout: storeGlobal.messagesErrorTime.medium,
             textColor: 'black',
             html: true,
-          });
-          Loading.hide();
-        });
-    };
+          })
+          Loading.hide()
+        })
+    }
 
     const dialogClose = () => {
-      dialog.value = false;
-    };
+      dialog.value = false
+    }
 
     return {
       dialog,
       dialogOpen,
       dialogSave,
       dialogClose,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="sass"></style>

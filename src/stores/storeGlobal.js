@@ -1,14 +1,14 @@
-import { defineStore } from 'pinia';
-import { _clone } from 'boot/radash';
-import { DateTime } from 'boot/luxon';
+import { defineStore } from 'pinia'
+import { _clone } from 'boot/radash'
+import { DateTime } from 'boot/luxon'
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
     version: '0.0.7',
     //server: 'http://26.136.207.192:3000/',
-    server: 'http://10.27.0.243:3000/',
+    //server: 'http://10.27.0.243:3000/',
     //server: 'http://127.0.0.1:3000/',
-    //server: 'http://192.168.0.10:3000/',
+    server: 'http://192.168.0.10:3000/',
     optionObject: [],
     optionTypeVico: [],
     optionDepartament: [],
@@ -35,35 +35,35 @@ export const useGlobalStore = defineStore('global', {
   }),
   getters: {
     getAjaxUri(state) {
-      return (response) => state.server + 'api/' + response;
+      return (response) => state.server + 'api/' + response
     },
     getOptionObjectByName: (state) => {
       return (objectName) =>
-        state.optionObject.find((item) => item.label === objectName);
+        state.optionObject.find((item) => item.label === objectName)
     },
     getOptionTypeVicoByName: (state) => {
       return (typeVicoName) =>
-        state.optionTypeVico.find((item) => item.label === typeVicoName);
+        state.optionTypeVico.find((item) => item.label === typeVicoName)
     },
     getOptionDepartamentByName: (state) => {
       return (departamentName) =>
-        state.optionDepartament.find((item) => item.label === departamentName);
+        state.optionDepartament.find((item) => item.label === departamentName)
     },
   },
   actions: {
     getVicoTemplate() {
-      return _clone(this.templateVico);
+      return _clone(this.templateVico)
     },
     getDate(seconds) {
-      return DateTime.fromSeconds(seconds).toFormat('dd.LL.yyyy');
+      return DateTime.fromSeconds(seconds).toFormat('dd.LL.yyyy')
     },
     getTime(seconds) {
-      return DateTime.fromSeconds(seconds).toFormat('HH:mm');
+      return DateTime.fromSeconds(seconds).toFormat('HH:mm')
     },
     getSeconds(date, time) {
       return DateTime.fromFormat(date + '-' + time, 'dd.LL.yyyy-HH:mm', {
         numberingSystem: '',
-      }).toSeconds();
+      }).toSeconds()
     },
   },
-});
+})

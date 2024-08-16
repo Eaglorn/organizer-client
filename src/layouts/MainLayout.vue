@@ -65,12 +65,12 @@
         >
           <div v-if="role === 0">
             <i class="fa-solid fa-person-circle-question fa-2x">
-              <q-tooltip> Гость </q-tooltip>
+              <q-tooltip> Пользователь </q-tooltip>
             </i>
           </div>
           <div v-if="role === 1">
             <i class="fa-solid fa-user fa-2x">
-              <q-tooltip> Пользователь </q-tooltip>
+              <q-tooltip> Редактор </q-tooltip>
             </i>
           </div>
           <div v-if="role === 2">

@@ -9,8 +9,7 @@
               filled
               mask="2700"
               fill-mask="#"
-              readonly
-            />
+              readonly />
           </div>
           <div class="col-2">
             <q-input
@@ -24,8 +23,7 @@
                 () =>
                   !formValidate.loginLast.$invalid ||
                   'Не корректно введён логин',
-              ]"
-            />
+              ]" />
           </div>
           <div class="col-1"></div>
           <div class="col-2">
@@ -33,8 +31,7 @@
               v-model="role"
               outlined
               :options="optionsRole"
-              label="Роль"
-            />
+              label="Роль" />
           </div>
           <div class="col-1"></div>
           <div class="col-5">
@@ -43,8 +40,7 @@
                 push
                 color="warning"
                 class="my-button"
-                on-click="onClickButtonSelect"
-              >
+                @click="onClickButtonSelect">
                 <i class="fa-solid fa-check fa-2x" />&nbsp;&nbsp;
                 <b>Выбрать</b>
               </q-btn>
@@ -52,8 +48,7 @@
                 push
                 color="primary"
                 class="my-button"
-                on-click="onClickButtonCreate"
-              >
+                @click="onClickButtonCreate">
                 <i class="fa-solid fa-plus fa-2x" />&nbsp;&nbsp;
                 <b>Создать</b>
               </q-btn>
@@ -61,8 +56,7 @@
                 push
                 color="positive"
                 class="my-button"
-                on-click="onClickButtonSave"
-              >
+                @click="onClickButtonSave">
                 <i class="fa-solid fa-floppy-disk fa-2x" />&nbsp;&nbsp;
                 <b>Сохранить</b>
               </q-btn>
@@ -70,8 +64,7 @@
                 push
                 color="negative"
                 class="my-button"
-                on-click="onClickButtonDelete"
-              >
+                @click="onClickButtonDelete">
                 <i class="fa-solid fa-trash fa-2x" />&nbsp;&nbsp;
                 <b>Удалить</b>
               </q-btn>
@@ -82,27 +75,26 @@
     </q-card>
   </div>
 </template>
-// TODO: Сделать админку
 <script>
-import { defineComponent, ref, computed } from 'vue';
-import { useUserStore } from '../stores/storeUser.js';
-import { useVuelidate, required, minLength } from 'boot/vuelidate';
+import { defineComponent, ref, computed } from 'vue'
+import { useUserStore } from '../stores/storeUser.js'
+import { useVuelidate, required, minLength } from 'boot/vuelidate'
 
 export default defineComponent({
   name: 'AdminPage',
   setup() {
-    const storeUser = useUserStore();
+    const storeUser = useUserStore()
 
     const loginValidate = (value) => {
-      const regex = /^\d{2}-\d{3}$/;
+      const regex = /^\d{2}-\d{3}$/
 
-      return regex.test(value);
-    };
+      return regex.test(value)
+    }
 
     const login = ref({
       loginFirst: '2700-',
       loginLast: '',
-    });
+    })
 
     const rules = computed(() => ({
       loginLast: {
@@ -110,28 +102,29 @@ export default defineComponent({
         min: minLength(ref(6)),
         loginValidate,
       },
-    }));
+    }))
 
-    const form = ref();
+    const form = ref()
 
-    const formValidate = useVuelidate(rules, login);
+    const formValidate = useVuelidate(rules, login)
 
-    const role = ref(null);
-    const optionsRole = ref(['Гость', 'Пользователь']);
+    const role = ref(null)
+    const optionsRole = ref(['Гость', 'Пользователь'])
     if (storeUser.role > 2) {
-      optionsRole.value.push('Модератор');
+      optionsRole.value.push('Модератор')
     }
     if (storeUser.role > 3) {
-      optionsRole.value.push('Администратор');
+      optionsRole.value.push('Администратор')
     }
     if (storeUser.role === 4) {
-      optionsRole.value.push('Суперадминистратор');
+      optionsRole.value.push('Суперадминистратор')
     }
 
     const onClickButtonSelect = () => {
-      Loading.show();
+      console.log('admin')
+      Loading.show()
       if (formValidate.value.$invalid) {
-        form.value.submit();
+        form.value.submit()
         Notify.create({
           progress: true,
           color: 'warning',
@@ -140,8 +133,8 @@ export default defineComponent({
           icon: 'warning',
           timeout: storeGlobal.messagesErrorTime.low,
           textColor: 'black',
-        });
-        Loading.hide();
+        })
+        Loading.hide()
       } else {
         api({
           method: 'post',
@@ -155,14 +148,14 @@ export default defineComponent({
           },
           timeout: 10000,
           responseType: 'json',
-        });
+        })
       }
-    };
-    const onClickButtonCreate = () => {};
+    }
+    const onClickButtonCreate = () => {}
     const onClickButtonSave = () => {
-      Loading.show();
+      Loading.show()
       if (formValidate.value.$invalid) {
-        form.value.submit();
+        form.value.submit()
         Notify.create({
           progress: true,
           color: 'warning',
@@ -171,8 +164,8 @@ export default defineComponent({
           icon: 'warning',
           timeout: storeGlobal.messagesErrorTime.low,
           textColor: 'black',
-        });
-        Loading.hide();
+        })
+        Loading.hide()
       } else {
         api({
           method: 'post',
@@ -189,6 +182,7 @@ export default defineComponent({
         })
           .then((response) => {
             if (response.data.success) {
+              //
             } else {
               Notify.create({
                 progress: true,
@@ -199,8 +193,8 @@ export default defineComponent({
                 textColor: 'black',
                 html: true,
                 timeout: storeGlobal.messagesErrorTime.medium,
-              });
-              Loading.hide();
+              })
+              Loading.hide()
             }
           })
           .catch(function () {
@@ -212,12 +206,12 @@ export default defineComponent({
               icon: 'report_problem',
               timeout: storeGlobal.messagesErrorTime.low,
               textColor: 'black',
-            });
-            Loading.hide();
-          });
+            })
+            Loading.hide()
+          })
       }
-    };
-    const onClickButtonDelete = () => {};
+    }
+    const onClickButtonDelete = () => {}
 
     return {
       form,
@@ -229,9 +223,9 @@ export default defineComponent({
       onClickButtonCreate,
       onClickButtonSave,
       onClickButtonDelete,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="sass">

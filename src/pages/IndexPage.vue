@@ -10,67 +10,69 @@
   <q-page-sticky
     class="my-button-group"
     position="bottom-left"
-    :offset="[18, 18]"
-  >
-    <q-btn-group push>
+    :offset="[18, 18]">
+    <div v-show="role <= 0">
       <q-btn
-        push
         class="my-button"
         color="brown-5"
-        padding="8px"
-        size="24px"
-        @click="mainVicoDialogView.dialogOpen()"
-      >
+        @click="mainVicoDialogView.dialogOpen()">
         <i class="fa-solid fa-eye">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
             class="text-body1"
             anchor="top middle"
-            self="center middle"
-          >
+            self="center middle">
+            Посмотреть
+          </q-tooltip>
+        </i>
+      </q-btn>
+    </div>
+    <q-btn-group v-show="role > 0" push>
+      <q-btn
+        push
+        class="my-button"
+        color="brown-5"
+        @click="mainVicoDialogView.dialogOpen()">
+        <i class="fa-solid fa-eye">
+          <q-tooltip
+            transition-show="scale"
+            transition-hide="scale"
+            class="text-body1"
+            anchor="top middle"
+            self="center middle">
             Посмотреть
           </q-tooltip>
         </i>
       </q-btn>
       <q-btn
-        v-show="role > 0"
         push
         class="my-button"
         color="green"
-        padding="8px"
-        size="24px"
-        @click="mainVicoDialogAdd.dialogOpen()"
-      >
+        @click="mainVicoDialogAdd.dialogOpen()">
         <i class="fa-solid fa-plus">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
             class="text-body1"
             anchor="top middle"
-            self="center middle"
-          >
+            self="center middle">
             Создать
           </q-tooltip>
         </i>
       </q-btn>
       <q-btn
-        v-show="role > 0"
         push
         class="my-button"
         color="orange"
-        padding="8px"
-        size="24px"
-        @click="mainVicoDialogEdit.dialogOpen()"
-      >
+        @click="mainVicoDialogEdit.dialogOpen()">
         <i class="fa-solid fa-pen">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
             class="text-body1"
             anchor="top middle"
-            self="center middle"
-          >
+            self="center middle">
             Редактировать
           </q-tooltip>
         </i>
@@ -80,67 +82,62 @@
   <q-page-sticky
     class="my-button-group"
     position="bottom-right"
-    :offset="[18, 18]"
-  >
-    <q-btn-group push>
-      <q-btn
-        push
-        class="my-button"
-        color="green"
-        padding="8px"
-        size="24px"
-        @click="updateTable"
-      >
+    :offset="[18, 18]">
+    <div v-show="role <= 0">
+      <q-btn push class="my-button" color="green" @click="updateTable">
         <i class="fa-solid fa-arrows-rotate">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
             class="text-body1"
             anchor="top middle"
-            self="center middle"
-          >
+            self="center middle">
+            Обновить страницу
+          </q-tooltip>
+        </i>
+      </q-btn>
+    </div>
+    <q-btn-group v-show="role > 0" push>
+      <q-btn push class="my-button" color="green" @click="updateTable">
+        <i class="fa-solid fa-arrows-rotate">
+          <q-tooltip
+            transition-show="scale"
+            transition-hide="scale"
+            class="text-body1"
+            anchor="top middle"
+            self="center middle">
             Обновить страницу
           </q-tooltip>
         </i>
       </q-btn>
       <q-btn
-        v-show="role > 0"
         push
         class="my-button"
         color="blue"
-        padding="8px"
-        size="24px"
-        @click="mainVicoDialogArchive.dialogOpen()"
-      >
+        @click="mainVicoDialogArchive.dialogOpen()">
         <i class="fa-solid fa-box-archive">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
             class="text-body1"
             anchor="top middle"
-            self="center middle"
-          >
+            self="center middle">
             Архивировать
           </q-tooltip>
         </i>
       </q-btn>
       <q-btn
-        v-show="role > 0"
         push
         class="my-button"
         color="red"
-        padding="8px"
-        size="24px"
-        @click="mainVicoDialogDelete.dialogOpen()"
-      >
+        @click="mainVicoDialogDelete.dialogOpen()">
         <i class="fa-solid fa-trash">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
             class="text-body1"
             anchor="top middle"
-            self="center middle"
-          >
+            self="center middle">
             Удалить
           </q-tooltip>
         </i>
@@ -150,20 +147,20 @@
 </template>
 
 <script>
-import { api } from 'boot/axios';
-import { Loading, Notify } from 'quasar';
-import { defineComponent, ref, computed } from 'vue';
+import { api } from 'boot/axios'
+import { Loading, Notify } from 'quasar'
+import { defineComponent, ref, computed } from 'vue'
 
-import MainTable from 'components/main/Table.vue';
-import MainVicoDialogView from 'components/main/vico/dialog/View.vue';
-import MainVicoDialogAdd from 'components/main/vico/dialog/Add.vue';
-import MainVicoDialogEdit from 'components/main/vico/dialog/Edit.vue';
-import MainVicoDialogArchive from 'components/main/vico/dialog/Archive.vue';
-import MainVicoDialogDelete from 'components/main/vico/dialog/Delete.vue';
+import MainTable from 'components/main/Table.vue'
+import MainVicoDialogView from 'components/main/vico/dialog/View.vue'
+import MainVicoDialogAdd from 'components/main/vico/dialog/Add.vue'
+import MainVicoDialogEdit from 'components/main/vico/dialog/Edit.vue'
+import MainVicoDialogArchive from 'components/main/vico/dialog/Archive.vue'
+import MainVicoDialogDelete from 'components/main/vico/dialog/Delete.vue'
 
-import { useGlobalStore } from '../stores/storeGlobal.js';
-import { useUserStore } from '../stores/storeUser.js';
-import { useMainStore } from '../stores/storeMain.js';
+import { useGlobalStore } from '../stores/storeGlobal.js'
+import { useUserStore } from '../stores/storeUser.js'
+import { useMainStore } from '../stores/storeMain.js'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -176,21 +173,21 @@ export default defineComponent({
     MainVicoDialogDelete,
   },
   setup() {
-    const storeGlobal = useGlobalStore();
-    const storeUser = useUserStore();
-    const storeMain = useMainStore();
+    const storeGlobal = useGlobalStore()
+    const storeUser = useUserStore()
+    const storeMain = useMainStore()
 
-    const mainVicoDialogView = ref(null);
-    const mainVicoDialogAdd = ref(null);
-    const mainVicoDialogEdit = ref(null);
+    const mainVicoDialogView = ref(null)
+    const mainVicoDialogAdd = ref(null)
+    const mainVicoDialogEdit = ref(null)
 
-    const mainVicoDialogArchive = ref(null);
-    const mainVicoDialogDelete = ref(null);
+    const mainVicoDialogArchive = ref(null)
+    const mainVicoDialogDelete = ref(null)
 
-    const role = computed(() => storeUser.role);
+    const role = computed(() => storeUser.role)
 
     const updateTable = () => {
-      Loading.show();
+      Loading.show()
       api({
         method: 'post',
         url: storeGlobal.getAjaxUri('vico/all'),
@@ -207,20 +204,20 @@ export default defineComponent({
               message: response.data.message,
               icon: 'report_problem',
               timeout: storeGlobal.messagesErrorTime.low,
-            });
+            })
           } else {
             if (
               response.data.vicos.find(
-                (item) => item.id === storeMain.selectId,
+                (item) => item.id === storeMain.selectId
               ) === undefined
             ) {
-              storeMain.selectId = -1;
-              storeMain.isSelect = false;
+              storeMain.selectId = -1
+              storeMain.isSelect = false
             }
-            storeMain.vicos = response.data.vicos;
-            storeMain.vicosSort();
+            storeMain.vicos = response.data.vicos
+            storeMain.vicosSort()
           }
-          Loading.hide();
+          Loading.hide()
         })
         .catch(function () {
           Notify.create({
@@ -229,10 +226,10 @@ export default defineComponent({
             message: 'Нет соединения с сервером.',
             icon: 'report_problem',
             timeout: storeGlobal.messagesErrorTime.medium,
-          });
-          Loading.hide();
-        });
-    };
+          })
+          Loading.hide()
+        })
+    }
 
     return {
       role,
@@ -243,9 +240,9 @@ export default defineComponent({
       mainVicoDialogEdit,
       mainVicoDialogArchive,
       mainVicoDialogDelete,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="sass">
@@ -257,5 +254,8 @@ export default defineComponent({
   opacity: 1
 
 .my-button
-  color: #F7F7F7 !important
+  color: black !important
+  padding-left: 14px
+  padding-right: 14px
+  font-size: 22px
 </style>

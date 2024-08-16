@@ -9,9 +9,11 @@
                 v-model="vico.date"
                 outlined
                 mask="##.##.####"
-                label="Дата"
-                readonly
-              >
+                label-slot
+                readonly>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">Дата</span>
+                </template>
                 <template v-slot:append>
                   <i class="fa-duotone fa-calendar-days cursor-pointer" />
                 </template>
@@ -22,9 +24,13 @@
                 v-model="vico.timeStart"
                 outlined
                 mask="time"
-                label="Дата начала ВКС"
-                readonly
-              >
+                label-slot
+                readonly>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Дата окончания ВКС
+                  </span>
+                </template>
                 <template v-slot:append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer" />
                 </template>
@@ -35,9 +41,13 @@
                 v-model="vico.timeEnd"
                 outlined
                 mask="time"
-                label="Дата окончания ВКС"
-                readonly
-              >
+                label-slot
+                readonly>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Дата окончания ВКС
+                  </span>
+                </template>
                 <template v-slot:#append>
                   <i class="fa-duotone fa-alarm-clock cursor-pointer" />
                 </template>
@@ -50,9 +60,14 @@
                 v-model="vico.objectInitiator"
                 outlined
                 :options="optionObject"
-                label="Обособленное подразделение инцииатор ВКС"
                 readonly
-              />
+                label-slot>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Обособленное подразделение инцииатор ВКС
+                  </span>
+                </template>
+              </q-select>
             </div>
             <div class="col-6">
               <q-select
@@ -62,9 +77,14 @@
                 use-chips
                 stack-label
                 :options="optionObject"
-                label="Вызываемые обособленные подразделения"
                 readonly
-              />
+                label-slot>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Вызываемые обособленные подразделения
+                  </span>
+                </template>
+              </q-select>
             </div>
           </div>
           <div class="row justify-evenly">
@@ -73,9 +93,14 @@
                 v-model="vico.departamentInitiator"
                 outlined
                 :options="optionDepartament"
-                label="Отдел инициатор ВКС"
                 readonly
-              />
+                label-slot>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Отдел инициатор ВКС
+                  </span>
+                </template>
+              </q-select>
             </div>
             <div class="col-6">
               <q-select
@@ -85,9 +110,14 @@
                 use-chips
                 stack-label
                 :options="optionDepartament"
-                label="Приглашенные отделы"
                 readonly
-              />
+                label-slot>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Приглашенные отделы
+                  </span>
+                </template>
+              </q-select>
             </div>
           </div>
           <div class="row justify-evenly">
@@ -96,35 +126,43 @@
                 v-model="vico.typeVico"
                 outlined
                 :options="optionTypeVico"
-                label="Тип совещания"
                 readonly
-              />
+                label-slot>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Тип совещания
+                  </span>
+                </template>
+              </q-select>
             </div>
             <div class="col-4">
-              <q-input
-                v-model="vico.topic"
-                outlined
-                label="Тема совещания"
-                readonly
-              />
+              <q-input v-model="vico.topic" outlined readonly label-slot>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Тема совещания
+                  </span>
+                </template>
+              </q-input>
             </div>
           </div>
           <div class="row justify-evenly">
             <div class="col-4">
-              <q-input
-                v-model="vico.contactName"
-                outlined
-                label="ФИО инициатора ВКС"
-                readonly
-              />
+              <q-input v-model="vico.contactName" outlined readonly label-slot>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    ФИО инициатора ВКС
+                  </span>
+                </template>
+              </q-input>
             </div>
             <div class="col-4">
-              <q-input
-                v-model="vico.contactPhone"
-                outlined
-                label="Контактный номер телефона инициатора ВКС"
-                readonly
-              />
+              <q-input v-model="vico.contactPhone" outlined readonly label-slot>
+                <template #label>
+                  <span class="text-weight-bold text-indigo-10">
+                    Контактный номер телефона инициатора ВКС
+                  </span>
+                </template>
+              </q-input>
             </div>
           </div>
         </q-form>
@@ -134,37 +172,36 @@
           label="Закрыть"
           color="blue-2"
           text-color="black"
-          @click="dialogClose"
-        />
+          @click="dialogClose" />
       </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
 
 <script>
-import { api } from 'boot/axios';
-import { defineComponent, ref, computed } from 'vue';
-import { Loading, Notify } from 'quasar';
-import { useGlobalStore } from '../../../../stores/storeGlobal.js';
-import { useMainStore } from '../../../../stores/storeMain.js';
+import { api } from 'boot/axios'
+import { defineComponent, ref, computed } from 'vue'
+import { Loading, Notify } from 'quasar'
+import { useGlobalStore } from '../../../../stores/storeGlobal.js'
+import { useMainStore } from '../../../../stores/storeMain.js'
 
 export default defineComponent({
   name: 'MainVicoDialogView',
   props: {},
   setup() {
-    const storeGlobal = useGlobalStore();
-    const storeMain = useMainStore();
+    const storeGlobal = useGlobalStore()
+    const storeMain = useMainStore()
 
-    const dialog = ref(false);
+    const dialog = ref(false)
 
-    const optionObject = computed(() => storeGlobal.optionObject);
-    const optionTypeVico = computed(() => storeGlobal.optionTypeVico);
-    const optionDepartament = computed(() => storeGlobal.optionDepartament);
+    const optionObject = computed(() => storeGlobal.optionObject)
+    const optionTypeVico = computed(() => storeGlobal.optionTypeVico)
+    const optionDepartament = computed(() => storeGlobal.optionDepartament)
 
-    const vico = ref();
+    const vico = ref()
 
     const dialogOpen = () => {
-      Loading.show();
+      Loading.show()
       if (storeMain.isSelect) {
         api({
           method: 'post',
@@ -175,33 +212,33 @@ export default defineComponent({
         })
           .then((response) => {
             if (response.data.success) {
-              vico.value = storeGlobal.getVicoTemplate();
+              vico.value = storeGlobal.getVicoTemplate()
 
               vico.value.date = storeGlobal.getDate(
-                response.data.vico.dateTimeStart,
-              );
+                response.data.vico.dateTimeStart
+              )
               vico.value.timeStart = storeGlobal.getTime(
-                response.data.vico.dateTimeStart,
-              );
+                response.data.vico.dateTimeStart
+              )
               vico.value.timeEnd = storeGlobal.getTime(
-                response.data.vico.dateTimeEnd,
-              );
+                response.data.vico.dateTimeEnd
+              )
 
-              vico.value.objectInitiator = response.data.vico.objectInitiator;
-              vico.value.objectInvited = response.data.vico.objectInvited;
-              vico.value.typeVico = response.data.vico.typeVico;
-              vico.value.objectInvited = response.data.vico.objectInvited;
-              vico.value.typeVico = response.data.vico.typeVico;
-              vico.value.topic = response.data.vico.topic;
+              vico.value.objectInitiator = response.data.vico.objectInitiator
+              vico.value.objectInvited = response.data.vico.objectInvited
+              vico.value.typeVico = response.data.vico.typeVico
+              vico.value.objectInvited = response.data.vico.objectInvited
+              vico.value.typeVico = response.data.vico.typeVico
+              vico.value.topic = response.data.vico.topic
               vico.value.departamentInitiator =
-                response.data.vico.departamentInitiator;
+                response.data.vico.departamentInitiator
               vico.value.departamentInvited =
-                response.data.vico.departamentInvited;
-              vico.value.contactName = response.data.vico.contactName;
-              vico.value.contactPhone = response.data.vico.contactPhone;
+                response.data.vico.departamentInvited
+              vico.value.contactName = response.data.vico.contactName
+              vico.value.contactPhone = response.data.vico.contactPhone
 
-              dialog.value = true;
-              Loading.hide();
+              dialog.value = true
+              Loading.hide()
             } else {
               Notify.create({
                 progress: true,
@@ -212,8 +249,8 @@ export default defineComponent({
                 timeout: storeGlobal.messagesErrorTime.low,
                 textColor: 'black',
                 html: true,
-              });
-              Loading.hide();
+              })
+              Loading.hide()
             }
           })
           .catch(function () {
@@ -225,9 +262,9 @@ export default defineComponent({
               timeout: storeGlobal.messagesErrorTime.medium,
               textColor: 'black',
               html: true,
-            });
-            Loading.hide();
-          });
+            })
+            Loading.hide()
+          })
       } else {
         Notify.create({
           color: 'warning',
@@ -237,14 +274,14 @@ export default defineComponent({
           timeout: storeGlobal.messagesErrorTime.low,
           textColor: 'black',
           html: true,
-        });
-        Loading.hide();
+        })
+        Loading.hide()
       }
-    };
+    }
 
     const dialogClose = () => {
-      dialog.value = false;
-    };
+      dialog.value = false
+    }
 
     return {
       vico,
@@ -254,12 +291,9 @@ export default defineComponent({
       optionObject,
       optionTypeVico,
       optionDepartament,
-    };
+    }
   },
-});
+})
 </script>
 
-<style lang="sass">
-.q-field__label
-  color: $red-4
-</style>
+<style lang="sass"></style>

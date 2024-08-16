@@ -1,7 +1,6 @@
 <template>
   <div
-    class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center"
-  >
+    class="fullscreen bg-blue text-white text-center q-pa-md flex flex-center">
     <div>
       <div style="font-size: 30vh">404</div>
 
@@ -14,18 +13,17 @@
         unelevated
         to="/"
         label="Go Home"
-        no-caps
-      />
+        no-caps />
     </div>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'ErrorNotFound',
-});
+})
 </script>
 
 <style lang="sass"></style>

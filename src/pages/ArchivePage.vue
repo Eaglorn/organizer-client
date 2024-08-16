@@ -6,25 +6,20 @@
   <q-page-sticky
     class="my-button-group"
     position="bottom-left"
-    :offset="[18, 18]"
-  >
+    :offset="[18, 18]">
     <q-btn-group push>
       <q-btn
         push
         class="my-button"
         color="brown-5"
-        padding="8px"
-        size="24px"
-        @click="archiveVicoDialogView.dialogOpen()"
-      >
+        @click="archiveVicoDialogView.dialogOpen()">
         <i class="fa-solid fa-eye">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
             class="text-body1"
             anchor="top middle"
-            self="center middle"
-          >
+            self="center middle">
             Посмотреть
           </q-tooltip>
         </i>
@@ -34,25 +29,16 @@
   <q-page-sticky
     class="my-button-group"
     position="bottom-right"
-    :offset="[18, 18]"
-  >
+    :offset="[18, 18]">
     <q-btn-group push>
-      <q-btn
-        push
-        class="my-button"
-        color="green"
-        padding="8px"
-        size="24px"
-        @click="updateTable"
-      >
+      <q-btn push class="my-button" color="green" @click="updateTable">
         <i class="fa-solid fa-arrows-rotate">
           <q-tooltip
             transition-show="scale"
             transition-hide="scale"
             class="text-body1"
             anchor="top middle"
-            self="center middle"
-          >
+            self="center middle">
             Обновить страницу
           </q-tooltip>
         </i>
@@ -62,16 +48,16 @@
 </template>
 
 <script>
-import { api } from 'boot/axios';
-import { Loading, Notify } from 'quasar';
-import { defineComponent, ref, computed } from 'vue';
+import { api } from 'boot/axios'
+import { Loading, Notify } from 'quasar'
+import { defineComponent, ref, computed } from 'vue'
 
-import ArchiveTable from 'components/archive/Table.vue';
-import ArchiveVicoDialogView from 'components/archive/vico/dialog/View.vue';
+import ArchiveTable from 'components/archive/Table.vue'
+import ArchiveVicoDialogView from 'components/archive/vico/dialog/View.vue'
 
-import { useGlobalStore } from '../stores/storeGlobal.js';
-import { useUserStore } from '../stores/storeUser.js';
-import { useArchiveStore } from '../stores/storeArchive.js';
+import { useGlobalStore } from '../stores/storeGlobal.js'
+import { useUserStore } from '../stores/storeUser.js'
+import { useArchiveStore } from '../stores/storeArchive.js'
 
 export default defineComponent({
   name: 'ArchivePage',
@@ -80,16 +66,16 @@ export default defineComponent({
     ArchiveVicoDialogView,
   },
   setup() {
-    const storeGlobal = useGlobalStore();
-    const storeUser = useUserStore();
-    const storeArchive = useArchiveStore();
+    const storeGlobal = useGlobalStore()
+    const storeUser = useUserStore()
+    const storeArchive = useArchiveStore()
 
-    const archiveVicoDialogView = ref(null);
+    const archiveVicoDialogView = ref(null)
 
-    const role = computed(() => storeUser.role);
+    const role = computed(() => storeUser.role)
 
     const updateTable = () => {
-      Loading.show();
+      Loading.show()
       api({
         method: 'post',
         url: storeGlobal.getAjaxUri('archive/all'),
@@ -106,20 +92,20 @@ export default defineComponent({
               message: response.data.message,
               icon: 'report_problem',
               timeout: storeGlobal.messagesErrorTime.low,
-            });
+            })
           } else {
             if (
               response.data.vicos.find(
-                (item) => item.id === storeArchive.selectId,
+                (item) => item.id === storeArchive.selectId
               ) === undefined
             ) {
-              storeArchive.selectId = -1;
-              storeArchive.isSelect = false;
+              storeArchive.selectId = -1
+              storeArchive.isSelect = false
             }
-            storeArchive.vicos = response.data.vicos;
-            storeArchive.vicosSort();
+            storeArchive.vicos = response.data.vicos
+            storeArchive.vicosSort()
           }
-          Loading.hide();
+          Loading.hide()
         })
         .catch(function () {
           Notify.create({
@@ -128,19 +114,19 @@ export default defineComponent({
             message: 'Нет соединения с сервером.',
             icon: 'report_problem',
             timeout: storeGlobal.messagesErrorTime.medium,
-          });
-          Loading.hide();
-        });
-    };
+          })
+          Loading.hide()
+        })
+    }
 
     return {
       role,
       storeArchive,
       updateTable,
       archiveVicoDialogView,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="sass">
@@ -152,5 +138,8 @@ export default defineComponent({
   opacity: 1
 
 .my-button
-  color: #F7F7F7 !important
+  color: black !important
+  padding-left: 14px
+  padding-right: 14px
+  font-size: 22px
 </style>

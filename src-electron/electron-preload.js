@@ -28,35 +28,35 @@
  * }
  */
 
-import os from 'os';
-import { contextBridge, ipcRenderer } from 'electron';
-import { BrowserWindow } from '@electron/remote';
+import os from 'os'
+import { contextBridge, ipcRenderer } from 'electron'
+import { BrowserWindow } from '@electron/remote'
 
 contextBridge.exposeInMainWorld('windowAPI', {
   minimize() {
-    BrowserWindow.getFocusedWindow().minimize();
+    BrowserWindow.getFocusedWindow().minimize()
   },
 
   toggleMaximize() {
-    ipcRenderer.send('notify');
+    ipcRenderer.send('notify')
 
-    const win = BrowserWindow.getFocusedWindow();
+    const win = BrowserWindow.getFocusedWindow()
 
     if (win.isMaximized()) {
-      win.unmaximize();
+      win.unmaximize()
     } else {
-      win.maximize();
+      win.maximize()
     }
   },
 
   close() {
-    BrowserWindow.getFocusedWindow().hide();
+    BrowserWindow.getFocusedWindow().hide()
   },
-});
+})
 
 contextBridge.exposeInMainWorld('userAPI', {
   getData: {
     login: os.userInfo().username,
     computer: os.hostname(),
   },
-});
+})

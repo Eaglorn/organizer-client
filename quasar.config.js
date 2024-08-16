@@ -8,7 +8,7 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-const { configure } = require('quasar/wrappers');
+const { configure } = require('quasar/wrappers')
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -85,7 +85,7 @@ module.exports = configure(function (/* ctx */) {
         cfg.module.rules.push({
           test: /\.pug$/,
           loader: 'pug-plain-loader',
-        });
+        })
       },
     },
 
@@ -205,7 +205,7 @@ module.exports = configure(function (/* ctx */) {
         // https://www.electron.build/configuration/configuration
         appId: 'ru.fns.organizer',
         productName: 'Органайзер',
-        buildVersion: '0.0.7',
+        buildVersion: '0.0.8',
         compression: 'maximum',
         asar: true,
         electronLanguages: ['ru'],
@@ -234,5 +234,5 @@ module.exports = configure(function (/* ctx */) {
       // extendBexScriptsConf (esbuildConf) {}
       // extendBexManifestJson (json) {}
     },
-  };
-});
+  }
+})

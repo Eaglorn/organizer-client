@@ -1,5 +1,5 @@
-import { defineStore } from 'pinia';
-import { _sort } from 'boot/radash';
+import { defineStore } from 'pinia'
+import { _sort } from 'boot/radash'
 
 export const useMainStore = defineStore('main', {
   state: () => ({
@@ -9,28 +9,28 @@ export const useMainStore = defineStore('main', {
   }),
   getters: {
     getVicoById: (state) => {
-      return (vicoId) => state.vicos.find((vico) => vico.id === vicoId);
+      return (vicoId) => state.vicos.find((vico) => vico.id === vicoId)
     },
   },
   actions: {
     vicosSort() {
-      this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, false);
+      this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, false)
     },
     setVico(vico) {
       this.vicos.forEach((item, index) => {
         if (vico.id === item.id) {
-          this.vicos.splice(index, 1, vico);
+          this.vicos.splice(index, 1, vico)
         }
-      });
+      })
     },
     addVico(vico) {
-      this.vicos.push(vico);
-      this.vicosSort();
+      this.vicos.push(vico)
+      this.vicosSort()
     },
     clear() {
-      this.vicos = [];
-      this.selectId = 0;
-      this.isSelect = false;
+      this.vicos = []
+      this.selectId = 0
+      this.isSelect = false
     },
   },
-});
+})

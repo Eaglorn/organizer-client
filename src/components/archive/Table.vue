@@ -13,27 +13,23 @@
       :separator="separator"
       :wrap-cells="true"
       :hide-selected-banner="true"
-      :hide-no-data="true"
-    >
+      :hide-no-data="true">
       <template v-slot:header-cell="props">
         <q-th :props="props" style="font-size: medium">
-          {{ props.col.label }}
+          <span class="text-weight-bold text-indigo-10">
+            {{ props.col.label }}
+          </span>
         </q-th>
       </template>
       <template v-slot:body="props">
         <q-tr
           class="my-table-border"
           :props="props"
-          @click="
-            props.selected = !props.selected;
-            selectAction(props.row.id);
-          "
-        >
+          @click="preSelectAction(props)">
           <q-td class="my-table-border">
             <q-checkbox
               v-model="props.selected"
-              @click="selectAction(props.row.id)"
-            />
+              @click="selectAction(props.row.id)" />
           </q-td>
           <q-td key="id" :props="props" class="my-table-border">
             {{ props.row.id }}
@@ -51,8 +47,7 @@
             key="objectInitiator"
             :props="props"
             class="my-table-border"
-            style="min-width: 250px"
-          >
+            style="min-width: 250px">
             <div>
               {{ props.row.objectInitiator }}
             </div>
@@ -61,8 +56,7 @@
             key="objectInvited"
             :props="props"
             class="my-table-border"
-            style="min-width: 300px"
-          >
+            style="min-width: 300px">
             <ul>
               <li v-for="item in props.row.objectInvited" v-bind:key="item">
                 <div style="border: 1px solid grey; padding: 2px">
@@ -81,21 +75,18 @@
             key="departamentInitiator"
             :props="props"
             class="my-table-border"
-            style="min-width: 250px"
-          >
+            style="min-width: 250px">
             {{ props.row.departamentInitiator }}
           </q-td>
           <q-td
             key="departamentInvited"
             :props="props"
             class="my-table-border"
-            style="min-width: 300px"
-          >
+            style="min-width: 300px">
             <ul>
               <li
                 v-for="item in props.row.departamentInvited"
-                v-bind:key="item"
-              >
+                v-bind:key="item">
                 <div style="border: 1px solid grey; padding: 2px">
                   {{ item }}
                 </div>
@@ -119,8 +110,7 @@
           dense
           flat
           :disable="scope.isFirstPage"
-          @click="scope.firstPage"
-        />
+          @click="scope.firstPage" />
 
         <q-btn
           icon="chevron_left"
@@ -129,8 +119,7 @@
           dense
           flat
           :disable="scope.isFirstPage"
-          @click="scope.prevPage"
-        />
+          @click="scope.prevPage" />
 
         <q-btn
           icon="chevron_right"
@@ -139,8 +128,7 @@
           dense
           flat
           :disable="scope.isLastPage"
-          @click="scope.nextPage"
-        />
+          @click="scope.nextPage" />
 
         <q-btn
           v-if="scope.pagesNumber > 2"
@@ -150,8 +138,7 @@
           dense
           flat
           :disable="scope.isLastPage"
-          @click="scope.lastPage"
-        />
+          @click="scope.lastPage" />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </template>
       <template v-slot:no-data=""> </template>
@@ -160,12 +147,12 @@
 </template>
 
 <script>
-import { defineComponent, ref, computed } from 'vue';
-import { useArchiveStore } from '../../stores/storeArchive';
-import { useGlobalStore } from '../../stores/storeGlobal';
+import { defineComponent, ref, computed } from 'vue'
+import { useArchiveStore } from '../../stores/storeArchive'
+import { useGlobalStore } from '../../stores/storeGlobal'
 
-const storeArchive = useArchiveStore();
-const storeGlobal = useGlobalStore();
+const storeArchive = useArchiveStore()
+const storeGlobal = useGlobalStore()
 
 const columns = [
   {
@@ -243,30 +230,36 @@ const columns = [
     label: 'Контактный номер телефона инициатора ВКС',
     field: 'contactPhone',
   },
-];
+]
 export default defineComponent({
   name: 'MainVicoTable',
   setup() {
-    const rows = computed(() => storeArchive.vicos);
+    const rows = computed(() => storeArchive.vicos)
 
-    const selected = ref([]);
+    const selected = ref([])
+
+    const preSelectAction = (props) => {
+      props.selected = !props.selected
+      selectAction(props.row.id)
+    }
 
     const selectAction = (rowId) => {
-      if (storeArchive.selectId === rowId && storeArchive.isSelect == true) {
-        storeArchive.selectId = -1;
-        storeArchive.isSelect = false;
+      if (storeArchive.selectId === rowId && storeArchive.isSelect === true) {
+        storeArchive.selectId = -1
+        storeArchive.isSelect = false
       } else {
-        storeArchive.selectId = rowId;
-        storeArchive.isSelect = true;
+        storeArchive.selectId = rowId
+        storeArchive.isSelect = true
       }
-    };
+    }
 
-    const getDate = storeGlobal.getDate;
-    const getTime = storeGlobal.getTime;
+    const getDate = storeGlobal.getDate
+    const getTime = storeGlobal.getTime
 
     return {
       rows,
       selected,
+      preSelectAction,
       selectAction,
       separator: 'cell',
       columns,
@@ -278,9 +271,9 @@ export default defineComponent({
       }),
       getDate,
       getTime,
-    };
+    }
   },
-});
+})
 </script>
 
 <style lang="sass">
