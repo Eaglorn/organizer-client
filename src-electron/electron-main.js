@@ -13,6 +13,8 @@ import { initialize, enable } from '@electron/remote/main'
 import path from 'path'
 import os from 'os'
 
+process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true
+
 initialize()
 
 // needed in case process is undefined under Linux
