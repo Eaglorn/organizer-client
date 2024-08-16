@@ -1,3 +1,71 @@
+<script setup>
+defineOptions({
+  name: 'MainLayout',
+})
+
+import { computed, ref } from 'vue'
+import { Loading } from 'quasar'
+import { useRouter } from 'vue-router'
+import { useGlobalStore } from '../stores/storeGlobal.js'
+import { useUserStore } from '../stores/storeUser.js'
+
+const storeGlobal = useGlobalStore()
+const storeUser = useUserStore()
+
+const count = ref(0)
+
+const page = computed(() => storeGlobal.page)
+
+const router = useRouter()
+
+const onClickButtonArchive = () => {
+  Loading.show()
+  router.push('archive')
+  storeGlobal.page = 'archive'
+  Loading.hide()
+}
+const onClickButtonMain = () => {
+  Loading.show()
+  router.push('main')
+  storeGlobal.page = 'main'
+  Loading.hide()
+}
+const onClickButtonAdmin = () => {
+  Loading.show()
+  router.push('admin')
+  storeGlobal.page = 'admin'
+  Loading.hide()
+}
+const onClickButtonProfile = () => {
+  Loading.show()
+  router.push('profile')
+  storeGlobal.page = 'profile'
+  Loading.hide()
+}
+
+function minimize() {
+  if (process.env.MODE === 'electron') {
+    window.windowAPI.minimize()
+  }
+}
+
+function toggleMaximize() {
+  if (process.env.MODE === 'electron') {
+    window.windowAPI.toggleMaximize()
+    count.value = count.value + 1
+  }
+}
+
+function closeApp() {
+  if (process.env.MODE === 'electron') {
+    window.windowAPI.close()
+  }
+}
+
+const version = computed(() => storeGlobal.version)
+const role = computed(() => storeUser.role)
+</script>
+
 <template>
   <q-layout view="lHh lpr lFf" class="shadow-2 rounded-borders">
     <q-header elevated>
@@ -97,172 +165,5 @@
     </q-page-container>
   </q-layout>
 </template>
-
-<script>
-import { io } from 'boot/socket'
-import { defineComponent, computed, ref } from 'vue'
-import { Loading } from 'quasar'
-import { useRouter } from 'vue-router'
-import { useGlobalStore } from '../stores/storeGlobal.js'
-import { useUserStore } from '../stores/storeUser.js'
-import { useMainStore } from '../stores/storeMain.js'
-import { useArchiveStore } from '../stores/storeArchive.js'
-
-const storeGlobal = useGlobalStore()
-const storeUser = useUserStore()
-const storeMain = useMainStore()
-const storeArchive = useArchiveStore()
-
-export default defineComponent({
-  name: 'MainLayout',
-
-  components: {},
-
-  setup() {
-    const count = ref(0)
-
-    const data = window.userAPI.getData
-    storeUser.login = data.login
-    storeUser.computer = data.computer
-
-    const socket = io(storeGlobal.server, {
-      transports: ['websocket'],
-      query: {
-        login: storeUser.login,
-      },
-    })
-    storeGlobal.socket = socket
-
-    const page = computed(() => storeGlobal.page)
-
-    storeGlobal.socket.on('load', (data) => {
-      storeUser.role = data.role
-      storeGlobal.optionObject = []
-      storeGlobal.optionTypeVico = []
-      storeGlobal.optionDepartament = []
-
-      let i = 0
-      data.optionObject.forEach((item) => {
-        storeGlobal.optionObject.push({
-          label: item,
-          value: i,
-        })
-        i++
-      })
-
-      i = 0
-      data.optionTypeVico.forEach((item) => {
-        storeGlobal.optionTypeVico.push({
-          label: item,
-          value: i,
-        })
-        i++
-      })
-
-      i = 0
-      data.optionDepartament.forEach((item) => {
-        storeGlobal.optionDepartament.push({
-          label: item,
-          value: i,
-        })
-        i++
-      })
-    })
-
-    storeGlobal.socket.on('vicoAll', (data) => {
-      storeMain.vicos = data.vicos
-      storeMain.vicosSort()
-    })
-
-    storeGlobal.socket.on('vicoAdd', (data) => {
-      storeMain.addVico(data)
-    })
-
-    storeGlobal.socket.on('vicoEdit', (data) => {
-      storeMain.setVico(data.vico)
-      storeMain.vicosSort()
-    })
-
-    storeGlobal.socket.on('vicoDelete', (data) => {
-      storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id)
-      if (storeMain.selectId === data.id) {
-        storeMain.selectId = -1
-        storeMain.isSelect = false
-      }
-    })
-
-    const router = useRouter()
-    const onClickButtonArchive = () => {
-      Loading.show()
-      storeGlobal.socket.emit('pageArchive')
-      router.push('archive')
-      if (storeGlobal.page === 'main') storeMain.clear()
-      storeGlobal.page = 'archive'
-      Loading.hide()
-    }
-    const onClickButtonMain = () => {
-      Loading.show()
-      storeGlobal.socket.emit('pageMain')
-      router.push('main')
-      if (storeGlobal.page === 'archive') storeArchive.clear()
-      storeGlobal.page = 'main'
-      Loading.hide()
-    }
-    const onClickButtonAdmin = () => {
-      Loading.show()
-      router.push('admin')
-      if (storeGlobal.page === 'archive') storeArchive.clear()
-      if (storeGlobal.page === 'main') storeMain.clear()
-      storeGlobal.page = 'admin'
-      Loading.hide()
-    }
-    const onClickButtonProfile = () => {
-      Loading.show()
-      router.push('profile')
-      if (storeGlobal.page === 'archive') storeArchive.clear()
-      if (storeGlobal.page === 'main') storeMain.clear()
-      storeGlobal.page = 'profile'
-      Loading.hide()
-    }
-
-    function minimize() {
-      if (process.env.MODE === 'electron') {
-        window.windowAPI.minimize()
-      }
-    }
-
-    function toggleMaximize() {
-      if (process.env.MODE === 'electron') {
-        window.windowAPI.toggleMaximize()
-        count.value = count.value + 1
-      }
-    }
-
-    function closeApp() {
-      if (process.env.MODE === 'electron') {
-        window.windowAPI.close()
-      }
-    }
-
-    const version = computed(() => storeGlobal.version)
-
-    const role = computed(() => storeUser.role)
-
-    return {
-      role,
-      count,
-      version,
-      onClickButtonArchive,
-      onClickButtonMain,
-      onClickButtonAdmin,
-      onClickButtonProfile,
-      page,
-      minimize,
-      toggleMaximize,
-      closeApp,
-    }
-  },
-})
-</script>
 
 <style lang="sass"></style>

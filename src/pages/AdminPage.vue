@@ -1,3 +1,143 @@
+<script setup>
+defineOptions({
+  name: 'AdminPage',
+})
+
+import { ref, computed } from 'vue'
+import { useUserStore } from '../stores/storeUser.js'
+import { useVuelidate, required, minLength } from 'boot/vuelidate'
+
+const storeUser = useUserStore()
+
+const loginValidate = (value) => {
+  const regex = /^\d{2}-\d{3}$/
+
+  return regex.test(value)
+}
+
+const login = ref({
+  loginFirst: '2700-',
+  loginLast: '',
+})
+
+const rules = computed(() => ({
+  loginLast: {
+    required,
+    min: minLength(ref(6)),
+    loginValidate,
+  },
+}))
+
+const form = ref()
+
+const formValidate = useVuelidate(rules, login)
+
+const role = ref(null)
+const optionsRole = ref(['Гость', 'Пользователь'])
+if (storeUser.role > 2) {
+  optionsRole.value.push('Модератор')
+}
+if (storeUser.role > 3) {
+  optionsRole.value.push('Администратор')
+}
+if (storeUser.role === 4) {
+  optionsRole.value.push('Суперадминистратор')
+}
+
+const onClickButtonSelect = () => {
+  console.log('admin')
+  Loading.show()
+  if (formValidate.value.$invalid) {
+    form.value.submit()
+    Notify.create({
+      progress: true,
+      color: 'warning',
+      position: 'top',
+      message: 'Неправильно заполнены поля в форме',
+      icon: 'warning',
+      timeout: storeGlobal.messagesErrorTime.low,
+      textColor: 'black',
+    })
+    Loading.hide()
+  } else {
+    api({
+      method: 'post',
+      url: storeGlobal.getAjaxUri('admin/one'),
+      data: {
+        login: login.value.loginFirst + login.value.loginLast,
+        user: {
+          computer: storeUser.computer,
+          login: storeUser.login,
+        },
+      },
+      timeout: 10000,
+      responseType: 'json',
+    })
+  }
+}
+const onClickButtonCreate = () => {}
+const onClickButtonSave = () => {
+  Loading.show()
+  if (formValidate.value.$invalid) {
+    form.value.submit()
+    Notify.create({
+      progress: true,
+      color: 'warning',
+      position: 'top',
+      message: 'Неправильно заполнены поля в форме',
+      icon: 'warning',
+      timeout: storeGlobal.messagesErrorTime.low,
+      textColor: 'black',
+    })
+    Loading.hide()
+  } else {
+    api({
+      method: 'post',
+      url: storeGlobal.getAjaxUri('admin/add'),
+      data: {
+        login: login.value.loginFirst + login.value.loginLast,
+        user: {
+          computer: storeUser.computer,
+          login: storeUser.login,
+        },
+      },
+      timeout: 10000,
+      responseType: 'json',
+    })
+      .then((response) => {
+        if (response.data.success) {
+          //
+        } else {
+          Notify.create({
+            progress: true,
+            color: 'warning',
+            position: 'top',
+            message: '<b>' + response.data.message + '</b>',
+            icon: 'warning',
+            textColor: 'black',
+            html: true,
+            timeout: storeGlobal.messagesErrorTime.medium,
+          })
+          Loading.hide()
+        }
+      })
+      .catch(function () {
+        Notify.create({
+          color: 'negative',
+          position: 'top',
+          html: true,
+          message: '<b>Нет соединения с сервером.</b>',
+          icon: 'report_problem',
+          timeout: storeGlobal.messagesErrorTime.low,
+          textColor: 'black',
+        })
+        Loading.hide()
+      })
+  }
+}
+const onClickButtonDelete = () => {}
+</script>
+
 <template>
   <div class="q-pa-md items-start">
     <q-card>
@@ -75,158 +215,6 @@
     </q-card>
   </div>
 </template>
-<script>
-import { defineComponent, ref, computed } from 'vue'
-import { useUserStore } from '../stores/storeUser.js'
-import { useVuelidate, required, minLength } from 'boot/vuelidate'
-
-export default defineComponent({
-  name: 'AdminPage',
-  setup() {
-    const storeUser = useUserStore()
-
-    const loginValidate = (value) => {
-      const regex = /^\d{2}-\d{3}$/
-
-      return regex.test(value)
-    }
-
-    const login = ref({
-      loginFirst: '2700-',
-      loginLast: '',
-    })
-
-    const rules = computed(() => ({
-      loginLast: {
-        required,
-        min: minLength(ref(6)),
-        loginValidate,
-      },
-    }))
-
-    const form = ref()
-
-    const formValidate = useVuelidate(rules, login)
-
-    const role = ref(null)
-    const optionsRole = ref(['Гость', 'Пользователь'])
-    if (storeUser.role > 2) {
-      optionsRole.value.push('Модератор')
-    }
-    if (storeUser.role > 3) {
-      optionsRole.value.push('Администратор')
-    }
-    if (storeUser.role === 4) {
-      optionsRole.value.push('Суперадминистратор')
-    }
-
-    const onClickButtonSelect = () => {
-      console.log('admin')
-      Loading.show()
-      if (formValidate.value.$invalid) {
-        form.value.submit()
-        Notify.create({
-          progress: true,
-          color: 'warning',
-          position: 'top',
-          message: 'Неправильно заполнены поля в форме',
-          icon: 'warning',
-          timeout: storeGlobal.messagesErrorTime.low,
-          textColor: 'black',
-        })
-        Loading.hide()
-      } else {
-        api({
-          method: 'post',
-          url: storeGlobal.getAjaxUri('admin/one'),
-          data: {
-            login: login.value.loginFirst + login.value.loginLast,
-            user: {
-              computer: storeUser.computer,
-              login: storeUser.login,
-            },
-          },
-          timeout: 10000,
-          responseType: 'json',
-        })
-      }
-    }
-    const onClickButtonCreate = () => {}
-    const onClickButtonSave = () => {
-      Loading.show()
-      if (formValidate.value.$invalid) {
-        form.value.submit()
-        Notify.create({
-          progress: true,
-          color: 'warning',
-          position: 'top',
-          message: 'Неправильно заполнены поля в форме',
-          icon: 'warning',
-          timeout: storeGlobal.messagesErrorTime.low,
-          textColor: 'black',
-        })
-        Loading.hide()
-      } else {
-        api({
-          method: 'post',
-          url: storeGlobal.getAjaxUri('admin/add'),
-          data: {
-            login: login.value.loginFirst + login.value.loginLast,
-            user: {
-              computer: storeUser.computer,
-              login: storeUser.login,
-            },
-          },
-          timeout: 10000,
-          responseType: 'json',
-        })
-          .then((response) => {
-            if (response.data.success) {
-              //
-            } else {
-              Notify.create({
-                progress: true,
-                color: 'warning',
-                position: 'top',
-                message: '<b>' + response.data.message + '</b>',
-                icon: 'warning',
-                textColor: 'black',
-                html: true,
-                timeout: storeGlobal.messagesErrorTime.medium,
-              })
-              Loading.hide()
-            }
-          })
-          .catch(function () {
-            Notify.create({
-              color: 'negative',
-              position: 'top',
-              html: true,
-              message: '<b>Нет соединения с сервером.</b>',
-              icon: 'report_problem',
-              timeout: storeGlobal.messagesErrorTime.low,
-              textColor: 'black',
-            })
-            Loading.hide()
-          })
-      }
-    }
-    const onClickButtonDelete = () => {}
-
-    return {
-      form,
-      formValidate,
-      login,
-      role,
-      optionsRole,
-      onClickButtonSelect,
-      onClickButtonCreate,
-      onClickButtonSave,
-      onClickButtonDelete,
-    }
-  },
-})
-</script>
 
 <style lang="sass">
 .my-button

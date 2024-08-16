@@ -1,3 +1,81 @@
+<script setup>
+defineOptions({
+  name: 'IndexPage',
+})
+
+import { api } from 'boot/axios'
+import { Loading, Notify } from 'quasar'
+import { ref, computed } from 'vue'
+
+import MainTable from 'components/main/Table.vue'
+import MainVicoDialogView from 'components/main/vico/dialog/View.vue'
+import MainVicoDialogAdd from 'components/main/vico/dialog/Add.vue'
+import MainVicoDialogEdit from 'components/main/vico/dialog/Edit.vue'
+import MainVicoDialogArchive from 'components/main/vico/dialog/Archive.vue'
+import MainVicoDialogDelete from 'components/main/vico/dialog/Delete.vue'
+
+import { useGlobalStore } from '../stores/storeGlobal.js'
+import { useUserStore } from '../stores/storeUser.js'
+import { useMainStore } from '../stores/storeMain.js'
+
+const storeGlobal = useGlobalStore()
+const storeUser = useUserStore()
+const storeMain = useMainStore()
+
+const mainVicoDialogView = ref(null)
+const mainVicoDialogAdd = ref(null)
+const mainVicoDialogEdit = ref(null)
+
+const mainVicoDialogArchive = ref(null)
+const mainVicoDialogDelete = ref(null)
+
+const role = computed(() => storeUser.role)
+
+const updateTable = () => {
+  Loading.show()
+  api({
+    method: 'post',
+    url: storeGlobal.getAjaxUri('vico/all'),
+    data: {},
+    timeout: 10000,
+    responseType: 'json',
+  })
+    .then((response) => {
+      if (response.data.success === false) {
+        Notify.create({
+          progress: true,
+          color: 'negative',
+          position: 'top',
+          message: response.data.message,
+          icon: 'report_problem',
+          timeout: storeGlobal.messagesErrorTime.low,
+        })
+      } else {
+        if (
+          response.data.vicos.find((item) => item.id === storeMain.selectId) ===
+          undefined
+        ) {
+          storeMain.selectId = -1
+          storeMain.isSelect = false
+        }
+        storeMain.vicos = response.data.vicos
+        storeMain.vicosSort()
+      }
+      Loading.hide()
+    })
+    .catch(function () {
+      Notify.create({
+        color: 'negative',
+        position: 'top',
+        message: 'Нет соединения с сервером.',
+        icon: 'report_problem',
+        timeout: storeGlobal.messagesErrorTime.medium,
+      })
+      Loading.hide()
+    })
+}
+</script>
+
 <template>
   <div class="q-pa-md">
     <MainTable />
@@ -145,105 +223,6 @@
     </q-btn-group>
   </q-page-sticky>
 </template>
-
-<script>
-import { api } from 'boot/axios'
-import { Loading, Notify } from 'quasar'
-import { defineComponent, ref, computed } from 'vue'
-
-import MainTable from 'components/main/Table.vue'
-import MainVicoDialogView from 'components/main/vico/dialog/View.vue'
-import MainVicoDialogAdd from 'components/main/vico/dialog/Add.vue'
-import MainVicoDialogEdit from 'components/main/vico/dialog/Edit.vue'
-import MainVicoDialogArchive from 'components/main/vico/dialog/Archive.vue'
-import MainVicoDialogDelete from 'components/main/vico/dialog/Delete.vue'
-
-import { useGlobalStore } from '../stores/storeGlobal.js'
-import { useUserStore } from '../stores/storeUser.js'
-import { useMainStore } from '../stores/storeMain.js'
-
-export default defineComponent({
-  name: 'IndexPage',
-  components: {
-    MainTable,
-    MainVicoDialogView,
-    MainVicoDialogAdd,
-    MainVicoDialogEdit,
-    MainVicoDialogArchive,
-    MainVicoDialogDelete,
-  },
-  setup() {
-    const storeGlobal = useGlobalStore()
-    const storeUser = useUserStore()
-    const storeMain = useMainStore()
-
-    const mainVicoDialogView = ref(null)
-    const mainVicoDialogAdd = ref(null)
-    const mainVicoDialogEdit = ref(null)
-
-    const mainVicoDialogArchive = ref(null)
-    const mainVicoDialogDelete = ref(null)
-
-    const role = computed(() => storeUser.role)
-
-    const updateTable = () => {
-      Loading.show()
-      api({
-        method: 'post',
-        url: storeGlobal.getAjaxUri('vico/all'),
-        data: {},
-        timeout: 10000,
-        responseType: 'json',
-      })
-        .then((response) => {
-          if (response.data.success === false) {
-            Notify.create({
-              progress: true,
-              color: 'negative',
-              position: 'top',
-              message: response.data.message,
-              icon: 'report_problem',
-              timeout: storeGlobal.messagesErrorTime.low,
-            })
-          } else {
-            if (
-              response.data.vicos.find(
-                (item) => item.id === storeMain.selectId
-              ) === undefined
-            ) {
-              storeMain.selectId = -1
-              storeMain.isSelect = false
-            }
-            storeMain.vicos = response.data.vicos
-            storeMain.vicosSort()
-          }
-          Loading.hide()
-        })
-        .catch(function () {
-          Notify.create({
-            color: 'negative',
-            position: 'top',
-            message: 'Нет соединения с сервером.',
-            icon: 'report_problem',
-            timeout: storeGlobal.messagesErrorTime.medium,
-          })
-          Loading.hide()
-        })
-    }
-
-    return {
-      role,
-      storeMain,
-      updateTable,
-      mainVicoDialogView,
-      mainVicoDialogAdd,
-      mainVicoDialogEdit,
-      mainVicoDialogArchive,
-      mainVicoDialogDelete,
-    }
-  },
-})
-</script>
 
 <style lang="sass">
 .my-button-group

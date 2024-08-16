@@ -1,6 +1,9 @@
+import { io } from 'boot/socket'
 import { defineStore } from 'pinia'
 import { _clone } from 'boot/radash'
 import { DateTime } from 'boot/luxon'
+import { useUserStore } from '../stores/storeUser.js'
+import { useMainStore } from '../stores/storeMain.js'
 
 export const useGlobalStore = defineStore('global', {
   state: () => ({
@@ -64,6 +67,79 @@ export const useGlobalStore = defineStore('global', {
       return DateTime.fromFormat(date + '-' + time, 'dd.LL.yyyy-HH:mm', {
         numberingSystem: '',
       }).toSeconds()
+    },
+    onSocket() {
+      try {
+        const storeUser = useUserStore()
+        const storeMain = useMainStore()
+
+        const socket = io(this.server, {
+          transports: ['websocket'],
+          query: {
+            login: storeUser.login,
+          },
+        })
+
+        socket.on('load', (data) => {
+          storeUser.role = data.role
+          this.optionObject = []
+          this.optionTypeVico = []
+          this.optionDepartament = []
+
+          let i = 0
+          data.optionObject.forEach((item) => {
+            this.optionObject.push({
+              label: item,
+              value: i,
+            })
+            i++
+          })
+
+          i = 0
+          data.optionTypeVico.forEach((item) => {
+            this.optionTypeVico.push({
+              label: item,
+              value: i,
+            })
+            i++
+          })
+
+          i = 0
+          data.optionDepartament.forEach((item) => {
+            this.optionDepartament.push({
+              label: item,
+              value: i,
+            })
+            i++
+          })
+        })
+
+        socket.on('vicoAll', (data) => {
+          storeMain.vicos = data.vicos
+          storeMain.vicosSort()
+        })
+
+        socket.on('vicoAdd', (data) => {
+          storeMain.addVico(data)
+        })
+
+        socket.on('vicoEdit', (data) => {
+          storeMain.setVico(data.vico)
+          storeMain.vicosSort()
+        })
+
+        socket.on('vicoDelete', (data) => {
+          storeMain.vicos = storeMain.vicos.filter((vico) => vico.id != data.id)
+          if (storeMain.selectId === data.id) {
+            storeMain.selectId = -1
+            storeMain.isSelect = false
+          }
+        })
+
+        this.socket = socket
+      } catch (err) {
+        console.log(err)
+      }
     },
   },
 })

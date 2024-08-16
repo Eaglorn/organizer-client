@@ -1,3 +1,194 @@
+<script setup>
+defineOptions({
+  name: 'MainVicoDialogAdd',
+})
+
+import { api } from 'boot/axios'
+import { DateTime } from 'boot/luxon'
+import { useVuelidate, required, minLength } from 'boot/vuelidate'
+import { Loading, Notify } from 'quasar'
+import { ref, computed } from 'vue'
+import { useGlobalStore } from '../../../../stores/storeGlobal.js'
+import { useUserStore } from '../../../../stores/storeUser.js'
+
+const storeGlobal = useGlobalStore()
+const storeUser = useUserStore()
+
+const dialog = ref(false)
+
+const optionObject = computed(() => storeGlobal.optionObject)
+const optionTypeVico = computed(() => storeGlobal.optionTypeVico)
+const optionDepartament = computed(() => storeGlobal.optionDepartament)
+
+const vico = ref()
+
+const dateValidate = (value) => {
+  const date = DateTime.fromFormat(value, 'dd.LL.yyyy')
+  return date.invalid == null
+}
+
+const timeValidate = (value) => {
+  const date = DateTime.fromFormat(value, 'hh:mm')
+  return date.invalid == null
+}
+
+const rules = computed(() => ({
+  date: {
+    required,
+    min: minLength(ref(10)),
+    dateValidate,
+  },
+  timeStart: { required, min: minLength(ref(5)), timeValidate },
+  timeEnd: { required, min: minLength(ref(5)), timeValidate },
+  objectInitiator: { required },
+  objectInvited: { required },
+  typeVico: { required },
+  topic: { required },
+  departamentInitiator: { required },
+  departamentInvited: { required },
+  contactName: { required },
+  contactPhone: { required },
+}))
+
+const form = ref()
+
+const formValidate = useVuelidate(rules, vico)
+
+const dialogOpen = () => {
+  Loading.show()
+  const d = DateTime.now()
+  vico.value = storeGlobal.getVicoTemplate()
+  vico.value.date = d.toLocaleString()
+  vico.value.timeStart = d.toLocaleString(DateTime.TIME_24_SIMPLE)
+  vico.value.timeEnd = d.toLocaleString(DateTime.TIME_24_SIMPLE)
+  dialog.value = true
+  Loading.hide()
+}
+
+const dialogSave = () => {
+  Loading.show()
+  if (formValidate.value.$invalid) {
+    form.value.submit()
+    Notify.create({
+      progress: true,
+      color: 'warning',
+      position: 'top',
+      message: 'Неправильно заполнены поля в форме',
+      icon: 'warning',
+      timeout: storeGlobal.messagesErrorTime.low,
+      textColor: 'black',
+    })
+    Loading.hide()
+  } else {
+    const newVico = {
+      dateTimeStart: storeGlobal.getSeconds(
+        vico.value.date,
+        vico.value.timeStart
+      ),
+      dateTimeEnd: storeGlobal.getSeconds(vico.value.date, vico.value.timeEnd),
+      objectInitiator: vico.value.objectInitiator?.label ?? '',
+      objectInvited: [],
+      typeVico: vico.value.typeVico?.label ?? '',
+      topic: vico.value.topic,
+      departamentInitiator: vico.value.departamentInitiator?.label ?? '',
+      departamentInvited: [],
+      contactName: vico.value.contactName,
+      contactPhone: vico.value.contactPhone,
+    }
+
+    vico.value.objectInvited.forEach((item) => {
+      newVico.objectInvited.push(item.label)
+    })
+
+    vico.value.departamentInvited.forEach((item) => {
+      newVico.departamentInvited.push(item.label)
+    })
+
+    api({
+      method: 'post',
+      url: storeGlobal.getAjaxUri('vico/add'),
+      data: {
+        vico: newVico,
+        user: {
+          computer: storeUser.computer,
+          login: storeUser.login,
+        },
+      },
+      timeout: 10000,
+      responseType: 'json',
+    })
+      .then((response) => {
+        if (response.data.success) {
+          if (response.data.collision) {
+            let textMessage = ''
+            for (const item of response.data.message) {
+              textMessage +=
+                '<br />' +
+                '<li>' +
+                item.object +
+                '&nbsp&nbsp&nbsp(<b>' +
+                storeGlobal.getTime(item.timeStart) +
+                '</b>--<b>' +
+                storeGlobal.getTime(item.timeEnd) +
+                '</b>)</li>'
+            }
+            Notify.create({
+              progress: true,
+              color: 'warning',
+              position: 'top',
+              message:
+                '<b>В введённое время помещения для проведения ВКС заняты.</b>' +
+                '<ul>' +
+                textMessage +
+                '</ul>',
+              icon: 'warning',
+              html: true,
+              timeout: storeGlobal.messagesErrorTime.high,
+              textColor: 'black',
+            })
+            Loading.hide()
+          } else {
+            dialog.value = false
+            Loading.hide()
+          }
+        } else {
+          Notify.create({
+            progress: true,
+            color: 'warning',
+            position: 'top',
+            message: '<b>' + response.data.message + '</b>',
+            icon: 'warning',
+            textColor: 'black',
+            html: true,
+            timeout: storeGlobal.messagesErrorTime.medium,
+          })
+          Loading.hide()
+        }
+      })
+      .catch(function () {
+        Notify.create({
+          color: 'negative',
+          position: 'top',
+          html: true,
+          message: '<b>Нет соединения с сервером.</b>',
+          icon: 'report_problem',
+          timeout: storeGlobal.messagesErrorTime.low,
+          textColor: 'black',
+        })
+        Loading.hide()
+      })
+  }
+}
+
+const dialogClose = () => {
+  dialog.value = false
+}
+
+defineExpose({
+  dialogOpen,
+})
+</script>
+
 <template>
   <q-dialog v-model="dialog" position="top" persistent>
     <q-card style="min-width: 95vw; top: 10px" flat bordered>
@@ -367,210 +558,5 @@
     </q-card>
   </q-dialog>
 </template>
-
-<script>
-import { api } from 'boot/axios'
-import { DateTime } from 'boot/luxon'
-import { useVuelidate, required, minLength } from 'boot/vuelidate'
-import { Loading, Notify } from 'quasar'
-import { defineComponent, ref, computed } from 'vue'
-import { useGlobalStore } from '../../../../stores/storeGlobal.js'
-import { useUserStore } from '../../../../stores/storeUser.js'
-
-export default defineComponent({
-  name: 'MainVicoDialogAdd',
-  props: {},
-  setup() {
-    const storeGlobal = useGlobalStore()
-    const storeUser = useUserStore()
-
-    const dialog = ref(false)
-
-    const optionObject = computed(() => storeGlobal.optionObject)
-    const optionTypeVico = computed(() => storeGlobal.optionTypeVico)
-    const optionDepartament = computed(() => storeGlobal.optionDepartament)
-
-    const vico = ref()
-
-    const dateValidate = (value) => {
-      const date = DateTime.fromFormat(value, 'dd.LL.yyyy')
-      return date.invalid == null
-    }
-
-    const timeValidate = (value) => {
-      const date = DateTime.fromFormat(value, 'hh:mm')
-      return date.invalid == null
-    }
-
-    const rules = computed(() => ({
-      date: {
-        required,
-        min: minLength(ref(10)),
-        dateValidate,
-      },
-      timeStart: { required, min: minLength(ref(5)), timeValidate },
-      timeEnd: { required, min: minLength(ref(5)), timeValidate },
-      objectInitiator: { required },
-      objectInvited: { required },
-      typeVico: { required },
-      topic: { required },
-      departamentInitiator: { required },
-      departamentInvited: { required },
-      contactName: { required },
-      contactPhone: { required },
-    }))
-
-    const form = ref()
-
-    const formValidate = useVuelidate(rules, vico)
-
-    const dialogOpen = () => {
-      Loading.show()
-      const d = DateTime.now()
-      vico.value = storeGlobal.getVicoTemplate()
-      vico.value.date = d.toLocaleString()
-      vico.value.timeStart = d.toLocaleString(DateTime.TIME_24_SIMPLE)
-      vico.value.timeEnd = d.toLocaleString(DateTime.TIME_24_SIMPLE)
-      dialog.value = true
-      Loading.hide()
-    }
-
-    const dialogSave = () => {
-      Loading.show()
-      if (formValidate.value.$invalid) {
-        form.value.submit()
-        Notify.create({
-          progress: true,
-          color: 'warning',
-          position: 'top',
-          message: 'Неправильно заполнены поля в форме',
-          icon: 'warning',
-          timeout: storeGlobal.messagesErrorTime.low,
-          textColor: 'black',
-        })
-        Loading.hide()
-      } else {
-        const newVico = {
-          dateTimeStart: storeGlobal.getSeconds(
-            vico.value.date,
-            vico.value.timeStart
-          ),
-          dateTimeEnd: storeGlobal.getSeconds(
-            vico.value.date,
-            vico.value.timeEnd
-          ),
-          objectInitiator: vico.value.objectInitiator?.label ?? '',
-          objectInvited: [],
-          typeVico: vico.value.typeVico?.label ?? '',
-          topic: vico.value.topic,
-          departamentInitiator: vico.value.departamentInitiator?.label ?? '',
-          departamentInvited: [],
-          contactName: vico.value.contactName,
-          contactPhone: vico.value.contactPhone,
-        }
-
-        vico.value.objectInvited.forEach((item) => {
-          newVico.objectInvited.push(item.label)
-        })
-
-        vico.value.departamentInvited.forEach((item) => {
-          newVico.departamentInvited.push(item.label)
-        })
-
-        api({
-          method: 'post',
-          url: storeGlobal.getAjaxUri('vico/add'),
-          data: {
-            vico: newVico,
-            user: {
-              computer: storeUser.computer,
-              login: storeUser.login,
-            },
-          },
-          timeout: 10000,
-          responseType: 'json',
-        })
-          .then((response) => {
-            if (response.data.success) {
-              if (response.data.collision) {
-                let textMessage = ''
-                for (const item of response.data.message) {
-                  textMessage +=
-                    '<br />' +
-                    '<li>' +
-                    item.object +
-                    '&nbsp&nbsp&nbsp(<b>' +
-                    storeGlobal.getTime(item.timeStart) +
-                    '</b>--<b>' +
-                    storeGlobal.getTime(item.timeEnd) +
-                    '</b>)</li>'
-                }
-                Notify.create({
-                  progress: true,
-                  color: 'warning',
-                  position: 'top',
-                  message:
-                    '<b>В введённое время помещения для проведения ВКС заняты.</b>' +
-                    '<ul>' +
-                    textMessage +
-                    '</ul>',
-                  icon: 'warning',
-                  html: true,
-                  timeout: storeGlobal.messagesErrorTime.high,
-                  textColor: 'black',
-                })
-                Loading.hide()
-              } else {
-                dialog.value = false
-                Loading.hide()
-              }
-            } else {
-              Notify.create({
-                progress: true,
-                color: 'warning',
-                position: 'top',
-                message: '<b>' + response.data.message + '</b>',
-                icon: 'warning',
-                textColor: 'black',
-                html: true,
-                timeout: storeGlobal.messagesErrorTime.medium,
-              })
-              Loading.hide()
-            }
-          })
-          .catch(function () {
-            Notify.create({
-              color: 'negative',
-              position: 'top',
-              html: true,
-              message: '<b>Нет соединения с сервером.</b>',
-              icon: 'report_problem',
-              timeout: storeGlobal.messagesErrorTime.low,
-              textColor: 'black',
-            })
-            Loading.hide()
-          })
-      }
-    }
-
-    const dialogClose = () => {
-      dialog.value = false
-    }
-
-    return {
-      vico,
-      dialog,
-      form,
-      formValidate,
-      dialogOpen,
-      dialogSave,
-      dialogClose,
-      optionObject,
-      optionTypeVico,
-      optionDepartament,
-    }
-  },
-})
-</script>
 
 <style lang="sass"></style>
