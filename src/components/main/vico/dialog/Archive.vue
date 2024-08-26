@@ -6,13 +6,13 @@ defineOptions({
 import { api } from 'boot/axios'
 import { ref } from 'vue'
 import { Loading, Notify } from 'quasar'
-import { useGlobalStore } from '../../../../stores/storeGlobal.js'
-import { useMainStore } from '../../../../stores/storeMain.js'
-import { useUserStore } from '../../../../stores/storeUser.js'
+import { useStoreGlobal } from '../../../../stores/storeGlobal.js'
+import { useStoreMain } from '../../../../stores/storeMain.js'
+import { useStoreUser } from '../../../../stores/storeUser.js'
 
-const storeGlobal = useGlobalStore()
-const storeMain = useMainStore()
-const storeUser = useUserStore()
+const storeGlobal = useStoreGlobal()
+const storeMain = useStoreMain()
+const storeUser = useStoreUser()
 
 const dialog = ref(false)
 

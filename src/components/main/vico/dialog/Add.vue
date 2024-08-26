@@ -8,11 +8,11 @@ import { DateTime } from 'boot/luxon'
 import { useVuelidate, required, minLength } from 'boot/vuelidate'
 import { Loading, Notify } from 'quasar'
 import { ref, computed } from 'vue'
-import { useGlobalStore } from '../../../../stores/storeGlobal.js'
-import { useUserStore } from '../../../../stores/storeUser.js'
+import { useStoreGlobal } from '../../../../stores/storeGlobal.js'
+import { useStoreUser } from '../../../../stores/storeUser.js'
 
-const storeGlobal = useGlobalStore()
-const storeUser = useUserStore()
+const storeGlobal = useStoreGlobal()
+const storeUser = useStoreUser()
 
 const dialog = ref(false)
 

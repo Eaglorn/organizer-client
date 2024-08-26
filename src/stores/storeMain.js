@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { _sort } from 'boot/radash'
 
-export const useMainStore = defineStore('main', {
+export const useStoreMain = defineStore('main', {
   state: () => ({
     vicos: [],
     selectId: 0,

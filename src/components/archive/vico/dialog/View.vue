@@ -6,11 +6,11 @@ defineOptions({
 import { api } from 'boot/axios'
 import { ref, computed } from 'vue'
 import { Loading, Notify } from 'quasar'
-import { useGlobalStore } from '../../../../stores/storeGlobal.js'
-import { useArchiveStore } from '../../../../stores/storeArchive.js'
+import { useStoreGlobal } from '../../../../stores/storeGlobal.js'
+import { useStoreArchive } from '../../../../stores/storeArchive.js'
 
-const storeGlobal = useGlobalStore()
-const storeArchive = useArchiveStore()
+const storeGlobal = useStoreGlobal()
+const storeArchive = useStoreArchive()
 
 const dialog = ref(false)
 

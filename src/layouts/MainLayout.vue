@@ -5,15 +5,14 @@ defineOptions({
 
 import { useTimeout } from 'quasar'
 import { computed, ref } from 'vue'
-import { Loading } from 'quasar'
 import { useRouter } from 'vue-router'
-import { useGlobalStore } from '../stores/storeGlobal.js'
-import { useUserStore } from '../stores/storeUser.js'
+import { useStoreGlobal } from '../stores/storeGlobal.js'
+import { useStoreUser } from '../stores/storeUser.js'
 
 const { registerTimeout } = useTimeout()
 
-const storeGlobal = useGlobalStore()
-const storeUser = useUserStore()
+const storeGlobal = useStoreGlobal()
+const storeUser = useStoreUser()
 
 const count = ref(0)
 
@@ -21,37 +20,9 @@ const page = computed(() => storeGlobal.page)
 
 const router = useRouter()
 
-const onClickButtonArchive = () => {
-  Loading.show()
-  router.push('archive')
-  storeGlobal.page = 'archive'
-  registerTimeout(() => {
-    Loading.hide()
-  }, 1500)
-}
-const onClickButtonMain = () => {
-  Loading.show()
-  router.push('main')
-  storeGlobal.page = 'main'
-  registerTimeout(() => {
-    Loading.hide()
-  }, 1000)
-}
-const onClickButtonAdmin = () => {
-  Loading.show()
-  router.push('admin')
-  storeGlobal.page = 'admin'
-  registerTimeout(() => {
-    Loading.hide()
-  }, 1000)
-}
-const onClickButtonProfile = () => {
-  Loading.show()
-  router.push('profile')
-  storeGlobal.page = 'profile'
-  registerTimeout(() => {
-    Loading.hide()
-  }, 1000)
+const onClickButtonNavigate = (value) => {
+  router.push(value)
+  storeGlobal.page = value
 }
 
 function minimize() {
@@ -101,7 +72,7 @@ const role = computed(() => storeUser.role)
             v-if="page != 'archive'"
             color="green-3"
             text-color="black"
-            @click="onClickButtonArchive">
+            @click="onClickButtonNavigate('archive')">
             <i class="fa-solid fa-box-archive fa-2x" />
             &nbsp;
             <b>Перейти в архив</b>
@@ -110,7 +81,7 @@ const role = computed(() => storeUser.role)
             v-if="page != 'main'"
             color="green-3"
             text-color="black"
-            @click="onClickButtonMain">
+            @click="onClickButtonNavigate('main')">
             <i class="fa-solid fa-sidebar-flip fa-2x" />
             &nbsp;
             <b>Перейти на главную страницу</b>
@@ -119,7 +90,7 @@ const role = computed(() => storeUser.role)
             v-if="role > 1 && page != 'admin'"
             color="green-3"
             text-color="black"
-            @click="onClickButtonAdmin">
+            @click="onClickButtonNavigate('admin')">
             <i class="fa-solid fa-screwdriver-wrench fa-2x" />
             &nbsp;
             <b>Перейти на страницу администрирования</b>
@@ -137,7 +108,7 @@ const role = computed(() => storeUser.role)
           v-if="page != 'profile'"
           color="green-3"
           text-color="black"
-          @click="onClickButtonProfile">
+          @click="onClickButtonNavigate('profile')">
           <div v-if="role === 0">
             <i class="fa-solid fa-person-circle-question fa-2x">
               <q-tooltip> Пользователь </q-tooltip>

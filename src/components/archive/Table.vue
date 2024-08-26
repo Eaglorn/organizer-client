@@ -4,11 +4,11 @@ defineOptions({
 })
 
 import { ref, computed } from 'vue'
-import { useArchiveStore } from '../../stores/storeArchive'
-import { useGlobalStore } from '../../stores/storeGlobal'
+import { useStoreArchive } from '../../stores/storeArchive'
+import { useStoreGlobal } from '../../stores/storeGlobal'
 
-const storeArchive = useArchiveStore()
-const storeGlobal = useGlobalStore()
+const storeArchive = useStoreArchive()
+const storeGlobal = useStoreGlobal()
 
 const columns = [
   {

@@ -3,12 +3,21 @@ defineOptions({
   name: 'ArchivePage',
 })
 
-import { ref } from 'vue'
+import { ref, onBeforeMount, onMounted } from 'vue'
+import { Loading } from 'quasar'
 
 import ArchiveTable from 'components/archive/Table.vue'
 import ArchiveVicoDialogView from 'components/archive/vico/dialog/View.vue'
 
 const archiveVicoDialogView = ref(null)
+
+onBeforeMount(() => {
+  Loading.show()
+})
+
+onMounted(() => {
+  Loading.hide()
+})
 </script>
 
 <template>

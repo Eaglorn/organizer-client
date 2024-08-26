@@ -5,7 +5,7 @@ defineOptions({
 
 import { api } from 'boot/axios'
 import { Loading, Notify } from 'quasar'
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeMount, onMounted } from 'vue'
 
 import MainTable from 'components/main/Table.vue'
 import MainVicoDialogView from 'components/main/vico/dialog/View.vue'
@@ -14,13 +14,13 @@ import MainVicoDialogEdit from 'components/main/vico/dialog/Edit.vue'
 import MainVicoDialogArchive from 'components/main/vico/dialog/Archive.vue'
 import MainVicoDialogDelete from 'components/main/vico/dialog/Delete.vue'
 
-import { useGlobalStore } from '../stores/storeGlobal.js'
-import { useUserStore } from '../stores/storeUser.js'
-import { useMainStore } from '../stores/storeMain.js'
+import { useStoreGlobal } from '../stores/storeGlobal.js'
+import { useStoreUser } from '../stores/storeUser.js'
+import { useStoreMain } from '../stores/storeMain.js'
 
-const storeGlobal = useGlobalStore()
-const storeUser = useUserStore()
-const storeMain = useMainStore()
+const storeGlobal = useStoreGlobal()
+const storeUser = useStoreUser()
+const storeMain = useStoreMain()
 
 const mainVicoDialogView = ref(null)
 const mainVicoDialogAdd = ref(null)
@@ -74,6 +74,14 @@ const updateTable = () => {
       Loading.hide()
     })
 }
+
+onBeforeMount(() => {
+  Loading.show()
+})
+
+onMounted(() => {
+  Loading.hide()
+})
 </script>
 
 <template>

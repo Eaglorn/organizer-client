@@ -2,10 +2,10 @@ import { io } from 'boot/socket'
 import { defineStore } from 'pinia'
 import { _clone } from 'boot/radash'
 import { DateTime } from 'boot/luxon'
-import { useUserStore } from '../stores/storeUser.js'
-import { useMainStore } from '../stores/storeMain.js'
+import { useStoreUser } from '../stores/storeUser.js'
+import { useStoreMain } from '../stores/storeMain.js'
 
-export const useGlobalStore = defineStore('global', {
+export const useStoreGlobal = defineStore('global', {
   state: () => ({
     version: '0.0.7',
     //server: 'http://26.136.207.192:3000/',
@@ -70,8 +70,8 @@ export const useGlobalStore = defineStore('global', {
     },
     onSocket() {
       try {
-        const storeUser = useUserStore()
-        const storeMain = useMainStore()
+        const storeUser = useStoreUser()
+        const storeMain = useStoreMain()
 
         const socket = io(this.server, {
           transports: ['websocket'],

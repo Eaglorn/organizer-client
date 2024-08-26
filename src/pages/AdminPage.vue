@@ -3,11 +3,14 @@ defineOptions({
   name: 'AdminPage',
 })
 
-import { ref, computed } from 'vue'
-import { useUserStore } from '../stores/storeUser.js'
+import { Loading } from 'quasar'
+import { ref, computed, onBeforeMount, onMounted } from 'vue'
+import { useStoreUser } from '../stores/storeUser.js'
+import { useStoreGlobal } from '../stores/storeGlobal.js'
 import { useVuelidate, required, minLength } from 'boot/vuelidate'
 
-const storeUser = useUserStore()
+const storeUser = useStoreUser()
+const storeGlobal = useStoreGlobal()
 
 const loginValidate = (value) => {
   const regex = /^\d{2}-\d{3}$/
@@ -136,6 +139,14 @@ const onClickButtonSave = () => {
   }
 }
 const onClickButtonDelete = () => {}
+
+onBeforeMount(() => {
+  Loading.show()
+})
+
+onMounted(() => {
+  Loading.hide()
+})
 </script>
 
 <template>

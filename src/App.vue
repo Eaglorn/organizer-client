@@ -1,13 +1,13 @@
 <script>
 import { defineComponent } from 'vue'
-import { useGlobalStore } from './stores/storeGlobal.js'
-import { useUserStore } from './stores/storeUser.js'
+import { useStoreGlobal } from './stores/storeGlobal.js'
+import { useStoreUser } from './stores/storeUser.js'
 
 export default defineComponent({
   name: 'App',
   setup() {
-    const storeGlobal = useGlobalStore()
-    const storeUser = useUserStore()
+    const storeGlobal = useStoreGlobal()
+    const storeUser = useStoreUser()
 
     const data = window.userAPI.getData
     storeUser.login = data.login

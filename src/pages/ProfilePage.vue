@@ -2,17 +2,25 @@
 defineOptions({
   name: 'ProfilePage',
 })
+import { Loading } from 'quasar'
+import { ref, computed, onBeforeMount, onMounted } from 'vue'
+import { useStoreGlobal } from '../stores/storeGlobal.js'
 
-import { ref, computed } from 'vue'
-import { useGlobalStore } from '../stores/storeGlobal.js'
-
-const storeGlobal = useGlobalStore()
+const storeGlobal = useStoreGlobal()
 
 const objectInvited = ref([])
 const departamentInvited = ref([])
 
 const optionObject = computed(() => storeGlobal.optionObject)
 const optionDepartament = computed(() => storeGlobal.optionDepartament)
+
+onBeforeMount(() => {
+  Loading.show()
+})
+
+onMounted(() => {
+  Loading.hide()
+})
 </script>
 
 <template>
