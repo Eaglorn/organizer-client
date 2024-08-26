@@ -27,6 +27,7 @@ export const useStoreGlobal = defineStore('global', {
       departamentInvited: [],
       contactName: '',
       contactPhone: '',
+      videoRecord: false,
     },
     socket: null,
     page: 'main',

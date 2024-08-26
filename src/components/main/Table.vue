@@ -86,6 +86,12 @@ const columns = [
     label: 'Контактный номер телефона инициатора ВКС',
     field: 'contactPhone',
   },
+  {
+    name: 'videoRecord',
+    align: 'center',
+    label: 'Запись ВКС',
+    field: 'videoRecord',
+  },
 ]
 
 const rows = computed(() => storeMain.vicos)
@@ -216,6 +222,14 @@ const pagination = ref({
           </q-td>
           <q-td key="contactPhone" :props="props" class="my-table-border">
             {{ props.row.contactPhone }}
+          </q-td>
+          <q-td key="videoRecord" :props="props" class="my-table-border">
+            <span v-if="props.row.videoRecord">
+              <i class="fa-solid fa-video fa-xl" />
+            </span>
+            <span v-else>
+              <i class="fa-solid fa-video-slash fa-xl" />
+            </span>
           </q-td>
         </q-tr>
       </template>

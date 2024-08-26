@@ -94,6 +94,7 @@ const dialogSave = () => {
       departamentInvited: [],
       contactName: vico.value.contactName,
       contactPhone: vico.value.contactPhone,
+      videoRecord: vico.value.videoRecord,
     }
 
     vico.value.objectInvited.forEach((item) => {
@@ -501,6 +502,20 @@ defineExpose({
                   </span>
                 </template>
               </q-input>
+            </div>
+            <div class="col-1">
+              <q-checkbox
+                class="text-weight-bold text-indigo-10"
+                left-label
+                v-model="vico.videoRecord"
+                outlined
+                label="Запись ВКС"
+                size="xl"
+                val="xl"
+                color="indigo-10"
+                checked-icon="fa-solid fa-video"
+                unchecked-icon="fa-solid fa-video-slash"
+                keep-color />
             </div>
           </div>
           <div class="row justify-evenly">
