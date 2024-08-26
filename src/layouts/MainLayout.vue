@@ -3,11 +3,14 @@ defineOptions({
   name: 'MainLayout',
 })
 
+import { useTimeout } from 'quasar'
 import { computed, ref } from 'vue'
 import { Loading } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useGlobalStore } from '../stores/storeGlobal.js'
 import { useUserStore } from '../stores/storeUser.js'
+
+const { registerTimeout } = useTimeout()
 
 const storeGlobal = useGlobalStore()
 const storeUser = useUserStore()
@@ -22,25 +25,33 @@ const onClickButtonArchive = () => {
   Loading.show()
   router.push('archive')
   storeGlobal.page = 'archive'
-  Loading.hide()
+  registerTimeout(() => {
+    Loading.hide()
+  }, 1500)
 }
 const onClickButtonMain = () => {
   Loading.show()
   router.push('main')
   storeGlobal.page = 'main'
-  Loading.hide()
+  registerTimeout(() => {
+    Loading.hide()
+  }, 1000)
 }
 const onClickButtonAdmin = () => {
   Loading.show()
   router.push('admin')
   storeGlobal.page = 'admin'
-  Loading.hide()
+  registerTimeout(() => {
+    Loading.hide()
+  }, 1000)
 }
 const onClickButtonProfile = () => {
   Loading.show()
   router.push('profile')
   storeGlobal.page = 'profile'
-  Loading.hide()
+  registerTimeout(() => {
+    Loading.hide()
+  }, 1000)
 }
 
 function minimize() {
