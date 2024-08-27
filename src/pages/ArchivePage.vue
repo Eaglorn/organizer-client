@@ -21,10 +21,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="q-pa-md">
-    <ArchiveTable />
-    <ArchiveVicoDialogView ref="archiveVicoDialogView" />
-  </div>
+  <ArchiveTable />
+  <ArchiveVicoDialogView ref="archiveVicoDialogView" />
   <q-page-sticky
     class="my-button-group"
     position="bottom-left"

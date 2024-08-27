@@ -3,13 +3,10 @@ defineOptions({
   name: 'MainLayout',
 })
 
-import { useTimeout } from 'quasar'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStoreGlobal } from '../stores/storeGlobal.js'
 import { useStoreUser } from '../stores/storeUser.js'
-
-const { registerTimeout } = useTimeout()
 
 const storeGlobal = useStoreGlobal()
 const storeUser = useStoreUser()
@@ -141,9 +138,7 @@ const role = computed(() => storeUser.role)
     </q-header>
 
     <q-page-container>
-      <q-page class="q-pa-md">
-        <router-view />
-      </q-page>
+      <router-view />
     </q-page-container>
   </q-layout>
 </template>

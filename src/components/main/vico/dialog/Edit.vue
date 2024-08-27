@@ -580,9 +580,7 @@ defineExpose({
                   </q-item>
                 </template>
                 <template #label>
-                  <span class="text-weight-bold text-indigo-10">
-                    Тип совещания
-                  </span>
+                  <span class="text-weight-bold text-indigo-10"> Тип ВКС </span>
                 </template>
               </q-select>
             </div>
@@ -599,7 +597,7 @@ defineExpose({
                 ]">
                 <template #label>
                   <span class="text-weight-bold text-indigo-10">
-                    Тема совещания
+                    Тема ВКС
                   </span>
                 </template>
               </q-input>

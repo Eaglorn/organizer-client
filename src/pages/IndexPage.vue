@@ -85,9 +85,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="q-pa-md">
-    <MainTable />
-  </div>
+  <MainTable />
   <MainVicoDialogView ref="mainVicoDialogView" />
   <MainVicoDialogAdd ref="mainVicoDialogAdd" />
   <MainVicoDialogEdit ref="mainVicoDialogEdit" />
@@ -235,7 +233,7 @@ onMounted(() => {
 <style lang="sass">
 .my-button-group
   z-index: 999
-  opacity: 0.78
+  opacity: 0.48
 
 .my-button-group:hover
   opacity: 1
@@ -244,5 +242,5 @@ onMounted(() => {
   color: black !important
   padding-left: 14px
   padding-right: 14px
-  font-size: 22px
+  font-size: 24px
 </style>

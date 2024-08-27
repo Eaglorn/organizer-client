@@ -53,13 +53,13 @@ const columns = [
   {
     name: 'typeVico',
     align: 'center',
-    label: 'Тип совещания',
+    label: 'Тип ВКС',
     field: 'typeVico',
   },
   {
     name: 'topic',
     align: 'center',
-    label: 'Тема совещания',
+    label: 'Тема ВКС',
     field: 'topic',
   },
   {
@@ -179,17 +179,24 @@ const pagination = ref({
           <q-td
             key="objectInvited"
             :props="props"
-            class="my-table-border"
+            class="my-table-border text-center"
             style="min-width: 300px">
-            <ul>
-              <li v-for="item in props.row.objectInvited" v-bind:key="item">
-                <div style="border: 1px solid grey; padding: 2px">
+            <div class="column">
+              <div
+                class="col"
+                v-for="item in props.row.objectInvited"
+                v-bind:key="item">
+                <div style="border: 1px solid grey; margin: 2px; padding: 2px">
                   {{ item }}
                 </div>
-              </li>
-            </ul>
+              </div>
+            </div>
           </q-td>
-          <q-td key="typeVico" :props="props" class="my-table-border">
+          <q-td
+            key="typeVico"
+            :props="props"
+            class="my-table-border"
+            style="min-width: 100px">
             {{ props.row.typeVico }}
           </q-td>
           <q-td key="topic" :props="props" class="my-table-border">
@@ -199,23 +206,24 @@ const pagination = ref({
             key="departamentInitiator"
             :props="props"
             class="my-table-border"
-            style="min-width: 250px">
+            style="min-width: 170px">
             {{ props.row.departamentInitiator }}
           </q-td>
           <q-td
             key="departamentInvited"
             :props="props"
             class="my-table-border"
-            style="min-width: 300px">
-            <ul>
-              <li
+            style="min-width: 240px">
+            <div class="column">
+              <div
+                class="col"
                 v-for="item in props.row.departamentInvited"
                 v-bind:key="item">
-                <div style="border: 1px solid grey; padding: 2px">
+                <div style="border: 1px solid grey; margin: 2px; padding: 2px">
                   {{ item }}
                 </div>
-              </li>
-            </ul>
+              </div>
+            </div>
           </q-td>
           <q-td key="contactName" :props="props" class="my-table-border">
             {{ props.row.contactName }}
@@ -239,14 +247,13 @@ const pagination = ref({
 
 <style lang="sass">
 .my-sticky-table
-  max-height: 82vh
   tr th
     position: sticky
     z-index: 2
     background: #afc7be
   thead
     tr:last-child th
-      top: 48px
+      top: 14px
       z-index: 3
     tr:first-child th
       top: 0
@@ -261,13 +268,14 @@ const pagination = ref({
     z-index: 1
     background-color: #afc7be
   tbody
-    scroll-margin-top: 48px
+    scroll-margin-top: 14px
   li
     list-style-type: none
   td, tr, th
-    padding: 3px
-    margin: 3px
+    padding: 1px
+    margin: 1px
     border: solid black 1px
+    align-items: center
   .q-item--active
     color: #21BA45
   .text-left
@@ -277,5 +285,5 @@ const pagination = ref({
   border: solid black 1px
 
 .selected
-  background-color: #DFEFD8
+  background-color: $green-1
 </style>
