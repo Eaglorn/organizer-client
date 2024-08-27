@@ -3,6 +3,7 @@ defineOptions({
   name: 'AdminPage',
 })
 
+import { api } from 'boot/axios'
 import { Loading } from 'quasar'
 import { ref, computed } from 'vue'
 import { useStoreUser } from '../stores/storeUser.js'
@@ -30,6 +31,8 @@ const rules = computed(() => ({
     loginValidate,
   },
 }))
+
+const techWork = computed(() => storeGlobal.techWork)
 
 const form = ref()
 
@@ -138,6 +141,49 @@ const onClickButtonSave = () => {
       })
   }
 }
+
+const onClickButtonTechWork = () => {
+  Loading.show()
+  api({
+    method: 'post',
+    url: storeGlobal.getAjaxUri('admin/tech/work'),
+    data: {
+      user: {
+        computer: storeUser.computer,
+        login: storeUser.login,
+      },
+    },
+    timeout: 10000,
+    responseType: 'json',
+  })
+    .then((response) => {
+      if (!response.data.success) {
+        Notify.create({
+          progress: true,
+          color: 'warning',
+          position: 'top',
+          message: '<b>' + response.data.message + '</b>',
+          icon: 'warning',
+          textColor: 'black',
+          html: true,
+          timeout: storeGlobal.messagesErrorTime.medium,
+        })
+      }
+      Loading.hide()
+    })
+    .catch(function () {
+      Notify.create({
+        color: 'negative',
+        position: 'top',
+        html: true,
+        message: '<b>Нет соединения с сервером.</b>',
+        icon: 'report_problem',
+        timeout: storeGlobal.messagesErrorTime.low,
+        textColor: 'black',
+      })
+      Loading.hide()
+    })
+}
 const onClickButtonDelete = () => {}
 </script>
 
@@ -215,6 +261,21 @@ const onClickButtonDelete = () => {}
           </div>
         </div>
       </q-form>
+    </q-card>
+    <q-card>
+      <q-btn-group style="min-height: 75%; height: 75%; max-height: 75%">
+        <q-btn
+          push
+          color="warning"
+          class="my-button"
+          @click="onClickButtonTechWork">
+          <i class="fa-solid fa-check fa-2x" />&nbsp;&nbsp;
+          <b>
+            <span v-if="techWork">Закончить технические работы</span>
+            <span v-else>Начать технические работы</span>
+          </b>
+        </q-btn>
+      </q-btn-group>
     </q-card>
   </div>
 </template>

@@ -1,3 +1,4 @@
+import { Loading } from 'quasar'
 import { io } from 'boot/socket'
 import { defineStore } from 'pinia'
 import { _clone } from 'boot/radash'
@@ -7,7 +8,7 @@ import { useStoreMain } from '../stores/storeMain.js'
 
 export const useStoreGlobal = defineStore('global', {
   state: () => ({
-    version: '0.0.7',
+    version: '0.1.0',
     //server: 'http://26.136.207.192:3000/',
     server: 'http://10.27.0.243:3000/',
     //server: 'http://127.0.0.1:3000/',
@@ -39,21 +40,22 @@ export const useStoreGlobal = defineStore('global', {
     pageLoadFirst: {
       main: {
         value: true,
-        delay: 250,
+        delay: 1,
       },
       admin: {
         value: true,
-        delay: 1000,
+        delay: 1,
       },
       profile: {
         value: true,
-        delay: 1000,
+        delay: 1,
       },
       archive: {
         value: true,
-        delay: 1500,
+        delay: 1,
       },
     },
+    techWork: false,
   }),
   getters: {
     getAjaxUri(state) {
@@ -100,6 +102,10 @@ export const useStoreGlobal = defineStore('global', {
         })
 
         socket.on('load', (data) => {
+          if (data.techWork) {
+            if (data.role < 4) Loading.show()
+            this.techWork = true
+          }
           storeUser.role = data.role
           this.optionObject = []
           this.optionTypeVico = []
@@ -131,6 +137,16 @@ export const useStoreGlobal = defineStore('global', {
             })
             i++
           })
+        })
+
+        socket.on('techWorkStart', (data) => {
+          if (storeUser.role < 4) Loading.show()
+          this.techWork = true
+        })
+
+        socket.on('techWorkEnd', (data) => {
+          if (storeUser.role < 4) Loading.show()
+          this.techWork = false
         })
 
         socket.on('vicoAll', (data) => {

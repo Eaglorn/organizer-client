@@ -205,7 +205,7 @@ module.exports = configure(function (/* ctx */) {
         // https://www.electron.build/configuration/configuration
         appId: 'ru.fns.organizer',
         productName: 'Органайзер',
-        buildVersion: '0.0.8',
+        buildVersion: '0.1.0',
         compression: 'maximum',
         asar: true,
         electronLanguages: ['ru'],
