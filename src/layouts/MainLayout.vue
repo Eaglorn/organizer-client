@@ -3,6 +3,7 @@ defineOptions({
   name: 'MainLayout',
 })
 
+import { useTimeout, Loading } from 'quasar'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStoreGlobal } from '../stores/storeGlobal.js'
@@ -10,6 +11,8 @@ import { useStoreUser } from '../stores/storeUser.js'
 
 const storeGlobal = useStoreGlobal()
 const storeUser = useStoreUser()
+
+const { registerTimeout } = useTimeout()
 
 const count = ref(0)
 
@@ -20,6 +23,13 @@ const router = useRouter()
 const onClickButtonNavigate = (value) => {
   router.push(value)
   storeGlobal.page = value
+  if (storeGlobal.pageLoadFirst[value].value) {
+    Loading.show()
+    storeGlobal.pageLoadFirst[value].value = false
+    registerTimeout(() => {
+      Loading.hide()
+    }, storeGlobal.pageLoadFirst[value].delay)
+  }
 }
 
 function minimize() {

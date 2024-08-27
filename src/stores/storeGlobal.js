@@ -36,6 +36,24 @@ export const useStoreGlobal = defineStore('global', {
       medium: 3000,
       high: 3500,
     },
+    pageLoadFirst: {
+      main: {
+        value: true,
+        delay: 250,
+      },
+      admin: {
+        value: true,
+        delay: 1000,
+      },
+      profile: {
+        value: true,
+        delay: 1000,
+      },
+      archive: {
+        value: true,
+        delay: 1500,
+      },
+    },
   }),
   getters: {
     getAjaxUri(state) {

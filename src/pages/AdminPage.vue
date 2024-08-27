@@ -4,7 +4,7 @@ defineOptions({
 })
 
 import { Loading } from 'quasar'
-import { ref, computed, onBeforeMount, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useStoreUser } from '../stores/storeUser.js'
 import { useStoreGlobal } from '../stores/storeGlobal.js'
 import { useVuelidate, required, minLength } from 'boot/vuelidate'
@@ -139,14 +139,6 @@ const onClickButtonSave = () => {
   }
 }
 const onClickButtonDelete = () => {}
-
-onBeforeMount(() => {
-  Loading.show()
-})
-
-onMounted(() => {
-  Loading.hide()
-})
 </script>
 
 <template>

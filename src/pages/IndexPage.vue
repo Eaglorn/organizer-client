@@ -5,7 +5,7 @@ defineOptions({
 
 import { api } from 'boot/axios'
 import { Loading, Notify } from 'quasar'
-import { ref, computed, onBeforeMount, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 
 import MainTable from 'components/main/Table.vue'
 import MainVicoDialogView from 'components/main/vico/dialog/View.vue'
@@ -74,14 +74,6 @@ const updateTable = () => {
       Loading.hide()
     })
 }
-
-onBeforeMount(() => {
-  Loading.show()
-})
-
-onMounted(() => {
-  Loading.hide()
-})
 </script>
 
 <template>
