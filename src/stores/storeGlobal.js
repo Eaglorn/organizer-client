@@ -8,11 +8,11 @@ import { useStoreMain } from '../stores/storeMain.js'
 
 export const useStoreGlobal = defineStore('global', {
   state: () => ({
-    version: '0.1.0',
+    version: '0.0.9',
     //server: 'http://26.136.207.192:3000/',
-    server: 'http://10.27.0.243:3000/',
+    //server: 'http://10.27.0.243:3000/',
     //server: 'http://127.0.0.1:3000/',
-    //server: 'http://192.168.0.10:3000/',
+    server: 'http://192.168.0.10:3000/',
     optionObject: [],
     optionTypeVico: [],
     optionDepartament: [],
@@ -103,7 +103,13 @@ export const useStoreGlobal = defineStore('global', {
 
         socket.on('load', (data) => {
           if (data.techWork) {
-            if (data.role < 4) Loading.show()
+            if (data.role < 3) {
+              Loading.show({
+                message: 'Ведутся технические работы.',
+                boxClass: 'bg-grey-2 text-grey-9',
+                spinnerColor: 'primary',
+              })
+            }
             this.techWork = true
           }
           storeUser.role = data.role
@@ -140,13 +146,25 @@ export const useStoreGlobal = defineStore('global', {
         })
 
         socket.on('techWorkStart', (data) => {
-          if (storeUser.role < 4) Loading.show()
+          console.log('techWorkStart')
+          if (storeUser.role < 3) {
+            Loading.show({
+              message: 'Ведутся технические работы.',
+              boxClass: 'bg-grey-2 text-grey-9',
+              spinnerColor: 'primary',
+            })
+          }
           this.techWork = true
         })
 
         socket.on('techWorkEnd', (data) => {
-          if (storeUser.role < 4) Loading.show()
-          this.techWork = false
+          console.log('techWorkEnd')
+          if (storeUser.role < 3 && data.type != 0) {
+            Loading.hide()
+            this.techWork = false
+          } else if (process.env.MODE === 'electron') {
+            window.appAPI.checkUpdate()
+          }
         })
 
         socket.on('vicoAll', (data) => {

@@ -114,6 +114,7 @@ app
         mainWindow.show()
       }
     })
+    autoUpdater.checkForUpdates()
   })
 
 app.on('window-all-closed', () => {
@@ -129,13 +130,6 @@ app.on('activate', () => {
 })
 
 if (app.isPackaged) {
-  setInterval(
-    () => {
-      autoUpdater.checkForUpdates()
-    },
-    60 * 1000 * 60 * 2
-  )
-
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     const dialogOpts = {
       type: 'info',
@@ -147,7 +141,15 @@ if (app.isPackaged) {
     }
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
-      if (returnValue.response === 0) autoUpdater.quitAndInstall()
+      if (returnValue.response === 0) {
+        tray.destroy()
+        mainWindow.destroy()
+        tray = null
+        mainWindow = null
+        setTimeout(() => {
+          autoUpdater.quitAndInstall()
+        }, 3000)
+      }
     })
   })
 
@@ -156,6 +158,10 @@ if (app.isPackaged) {
     console.error(message)
   })
 }
+
+ipcMain.on('checkUpdate', () => {
+  autoUpdater.checkForUpdates()
+})
 
 ipcMain.on('notify', () => {
   try {

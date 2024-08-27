@@ -4,7 +4,7 @@ defineOptions({
 })
 
 import { api } from 'boot/axios'
-import { Loading } from 'quasar'
+import { Loading, Notify, useTimeout } from 'quasar'
 import { ref, computed } from 'vue'
 import { useStoreUser } from '../stores/storeUser.js'
 import { useStoreGlobal } from '../stores/storeGlobal.js'
@@ -12,6 +12,10 @@ import { useVuelidate, required, minLength } from 'boot/vuelidate'
 
 const storeUser = useStoreUser()
 const storeGlobal = useStoreGlobal()
+
+const { registerTimeout } = useTimeout()
+
+const buttonTechWork = ref(false)
 
 const loginValidate = (value) => {
   const regex = /^\d{2}-\d{3}$/
@@ -81,7 +85,9 @@ const onClickButtonSelect = () => {
     })
   }
 }
+
 const onClickButtonCreate = () => {}
+
 const onClickButtonSave = () => {
   Loading.show()
   if (formValidate.value.$invalid) {
@@ -143,7 +149,7 @@ const onClickButtonSave = () => {
 }
 
 const onClickButtonTechWork = () => {
-  Loading.show()
+  buttonTechWork.value = true
   api({
     method: 'post',
     url: storeGlobal.getAjaxUri('admin/tech/work'),
@@ -152,12 +158,34 @@ const onClickButtonTechWork = () => {
         computer: storeUser.computer,
         login: storeUser.login,
       },
+      type: 0,
     },
     timeout: 10000,
     responseType: 'json',
   })
     .then((response) => {
-      if (!response.data.success) {
+      if (response.data.success) {
+        let message = ''
+        if (response.data.result) {
+          message = 'Выполнен ввод приложения в режим технических работ.'
+        } else {
+          message = 'Выполнен вывод приложения из режима технических работ.'
+        }
+
+        registerTimeout(() => {
+          Notify.create({
+            progress: true,
+            color: 'positive',
+            position: 'top',
+            message: '<b>' + message + '</b>',
+            icon: 'fa-solid fa-check',
+            textColor: 'black',
+            html: true,
+            timeout: storeGlobal.messagesErrorTime.low,
+          })
+          buttonTechWork.value = false
+        }, 2000)
+      } else {
         Notify.create({
           progress: true,
           color: 'warning',
@@ -168,8 +196,8 @@ const onClickButtonTechWork = () => {
           html: true,
           timeout: storeGlobal.messagesErrorTime.medium,
         })
+        buttonTechWork.value = false
       }
-      Loading.hide()
     })
     .catch(function () {
       Notify.create({
@@ -181,7 +209,7 @@ const onClickButtonTechWork = () => {
         timeout: storeGlobal.messagesErrorTime.low,
         textColor: 'black',
       })
-      Loading.hide()
+      buttonTechWork.value = true
     })
 }
 const onClickButtonDelete = () => {}
@@ -268,7 +296,8 @@ const onClickButtonDelete = () => {}
           push
           color="warning"
           class="my-button"
-          @click="onClickButtonTechWork">
+          @click="onClickButtonTechWork"
+          :disable="buttonTechWork">
           <i class="fa-solid fa-check fa-2x" />&nbsp;&nbsp;
           <b>
             <span v-if="techWork">Закончить технические работы</span>

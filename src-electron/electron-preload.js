@@ -60,3 +60,9 @@ contextBridge.exposeInMainWorld('userAPI', {
     computer: os.hostname(),
   },
 })
+
+contextBridge.exposeInMainWorld('appAPI', {
+  checkUpdate() {
+    ipcRenderer.send('checkUpdate')
+  },
+})

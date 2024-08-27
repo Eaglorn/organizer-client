@@ -205,7 +205,7 @@ module.exports = configure(function (/* ctx */) {
         // https://www.electron.build/configuration/configuration
         appId: 'ru.fns.organizer',
         productName: 'Органайзер',
-        buildVersion: '0.1.0',
+        buildVersion: '0.0.9',
         compression: 'maximum',
         asar: true,
         electronLanguages: ['ru'],
@@ -216,12 +216,13 @@ module.exports = configure(function (/* ctx */) {
           oneClick: true,
           perMachine: false,
           deleteAppDataOnUninstall: true,
-          runAfterFinish: false,
+          runAfterFinish: true,
         },
         publish: [
           {
             provider: 'generic',
-            url: 'http://10.27.0.243:3000/update',
+            url: 'http://192.168.0.10:3000/update',
+            //url: 'http://10.27.0.243:3000/update',
           },
         ],
       },
