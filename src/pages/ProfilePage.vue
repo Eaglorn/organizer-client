@@ -2,8 +2,7 @@
 defineOptions({
   name: 'ProfilePage',
 })
-import { Loading } from 'quasar'
-import { ref, computed, onBeforeMount, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useStoreGlobal } from '../stores/storeGlobal.js'
 
 const storeGlobal = useStoreGlobal()
@@ -13,14 +12,6 @@ const departamentInvited = ref([])
 
 const optionObject = computed(() => storeGlobal.optionObject)
 const optionDepartament = computed(() => storeGlobal.optionDepartament)
-
-onBeforeMount(() => {
-  Loading.show()
-})
-
-onMounted(() => {
-  Loading.hide()
-})
 </script>
 
 <template>

@@ -239,9 +239,7 @@ defineExpose({
                 readonly
                 label-slot>
                 <template #label>
-                  <span class="text-weight-bold text-indigo-10">
-                    Тип совещания
-                  </span>
+                  <span class="text-weight-bold text-indigo-10"> Тип ВКС </span>
                 </template>
               </q-select>
             </div>
@@ -249,7 +247,7 @@ defineExpose({
               <q-input v-model="vico.topic" outlined readonly label-slot>
                 <template #label>
                   <span class="text-weight-bold text-indigo-10">
-                    Тема совещания
+                    Тема ВКС
                   </span>
                 </template>
               </q-input>

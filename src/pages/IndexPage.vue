@@ -5,7 +5,7 @@ defineOptions({
 
 import { api } from 'boot/axios'
 import { Loading, Notify } from 'quasar'
-import { ref, computed, onBeforeMount, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 
 import MainTable from 'components/main/Table.vue'
 import MainVicoDialogView from 'components/main/vico/dialog/View.vue'
@@ -74,20 +74,10 @@ const updateTable = () => {
       Loading.hide()
     })
 }
-
-onBeforeMount(() => {
-  Loading.show()
-})
-
-onMounted(() => {
-  Loading.hide()
-})
 </script>
 
 <template>
-  <div class="q-pa-md">
-    <MainTable />
-  </div>
+  <MainTable />
   <MainVicoDialogView ref="mainVicoDialogView" />
   <MainVicoDialogAdd ref="mainVicoDialogAdd" />
   <MainVicoDialogEdit ref="mainVicoDialogEdit" />
@@ -235,7 +225,7 @@ onMounted(() => {
 <style lang="sass">
 .my-button-group
   z-index: 999
-  opacity: 0.78
+  opacity: 0.48
 
 .my-button-group:hover
   opacity: 1
@@ -244,5 +234,5 @@ onMounted(() => {
   color: black !important
   padding-left: 14px
   padding-right: 14px
-  font-size: 22px
+  font-size: 24px
 </style>

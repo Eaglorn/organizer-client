@@ -133,13 +133,13 @@ if (app.isPackaged) {
     () => {
       autoUpdater.checkForUpdates()
     },
-    60 * 1000 * 60 * 24
+    60 * 1000 * 60 * 2
   )
 
   autoUpdater.on('update-downloaded', (event, releaseNotes, releaseName) => {
     const dialogOpts = {
       type: 'info',
-      buttons: ['Перезагрузить', 'Позднее'],
+      buttons: ['Перезагрузить'],
       title: 'Обновление приложения Органайзер ВКС',
       message: process.platform === 'win32' ? releaseNotes : releaseName,
       detail:
@@ -159,12 +159,12 @@ if (app.isPackaged) {
 
 ipcMain.on('notify', () => {
   try {
-    /*const notify = new Notification({
-      title: 'Измение состояния приложения',
-      body: 'Нажата кнопка изменения размера окна приложения',
+    const notify = new Notification({
+      title: 'Событие',
+      body: '',
       timeoutType: 'never',
-    });
-    notify.show();*/
+    })
+    notify.show()
   } catch (err) {
     console.log(err)
   }

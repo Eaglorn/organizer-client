@@ -3,28 +3,17 @@ defineOptions({
   name: 'ArchivePage',
 })
 
-import { ref, onBeforeMount, onMounted } from 'vue'
-import { Loading } from 'quasar'
+import { ref } from 'vue'
 
 import ArchiveTable from 'components/archive/Table.vue'
 import ArchiveVicoDialogView from 'components/archive/vico/dialog/View.vue'
 
 const archiveVicoDialogView = ref(null)
-
-onBeforeMount(() => {
-  Loading.show()
-})
-
-onMounted(() => {
-  Loading.hide()
-})
 </script>
 
 <template>
-  <div class="q-pa-md">
-    <ArchiveTable />
-    <ArchiveVicoDialogView ref="archiveVicoDialogView" />
-  </div>
+  <ArchiveTable />
+  <ArchiveVicoDialogView ref="archiveVicoDialogView" />
   <q-page-sticky
     class="my-button-group"
     position="bottom-left"
