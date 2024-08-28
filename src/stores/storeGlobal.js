@@ -8,11 +8,11 @@ import { useStoreMain } from '../stores/storeMain.js'
 
 export const useStoreGlobal = defineStore('global', {
   state: () => ({
-    version: '0.0.9',
+    version: '0.1.0',
     //server: 'http://26.136.207.192:3000/',
-    //server: 'http://10.27.0.243:3000/',
+    server: 'http://10.27.0.243:3000/',
     //server: 'http://127.0.0.1:3000/',
-    server: 'http://192.168.0.10:3000/',
+    //server: 'http://192.168.0.10:3000/',
     optionObject: [],
     optionTypeVico: [],
     optionDepartament: [],
@@ -98,6 +98,7 @@ export const useStoreGlobal = defineStore('global', {
           transports: ['websocket'],
           query: {
             login: storeUser.login,
+            version: this.version,
           },
         })
 
@@ -146,7 +147,6 @@ export const useStoreGlobal = defineStore('global', {
         })
 
         socket.on('techWorkStart', (data) => {
-          console.log('techWorkStart')
           if (storeUser.role < 3) {
             Loading.show({
               message: 'Ведутся технические работы.',
@@ -158,12 +158,16 @@ export const useStoreGlobal = defineStore('global', {
         })
 
         socket.on('techWorkEnd', (data) => {
-          console.log('techWorkEnd')
-          if (storeUser.role < 3 && data.type != 0) {
+          if (data.type === 0 && storeUser.role < 3) {
+            this.techWork = false
+            if (process.env.MODE === 'electron') {
+              window.appAPI.checkUpdate()
+            }
+          } else if (data.type > 0 && storeUser.role < 3) {
             Loading.hide()
             this.techWork = false
-          } else if (process.env.MODE === 'electron') {
-            window.appAPI.checkUpdate()
+          } else {
+            this.techWork = false
           }
         })
 

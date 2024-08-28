@@ -42,6 +42,8 @@ const form = ref()
 
 const formValidate = useVuelidate(rules, login)
 
+const numberTechWork = ref(0)
+
 const role = ref(null)
 const optionsRole = ref(['Гость', 'Пользователь'])
 if (storeUser.role > 2) {
@@ -158,7 +160,7 @@ const onClickButtonTechWork = () => {
         computer: storeUser.computer,
         login: storeUser.login,
       },
-      type: 0,
+      type: numberTechWork.value,
     },
     timeout: 10000,
     responseType: 'json',
@@ -304,6 +306,19 @@ const onClickButtonDelete = () => {}
             <span v-else>Начать технические работы</span>
           </b>
         </q-btn>
+        <q-input
+          v-if="!techWork"
+          v-model.number="numberTechWork"
+          type="number"
+          outlined
+          label-slot
+          style="max-width: 300px">
+          <template #label>
+            <span class="text-weight-bold text-indigo-10">
+              Тип выполняемой технической работы
+            </span>
+          </template>
+        </q-input>
       </q-btn-group>
     </q-card>
   </div>
