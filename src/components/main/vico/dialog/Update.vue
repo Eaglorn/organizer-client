@@ -1,6 +1,6 @@
 <script setup>
 defineOptions({
-  name: 'MainVicoDialogEdit',
+  name: 'MainVicoDialogUpdate',
 })
 
 import { api } from 'boot/axios'
@@ -64,6 +64,8 @@ const dialogOpen = () => {
       url: storeGlobal.getAjaxUri('vico/one'),
       data: {
         id: storeMain.selectId,
+        computer: storeUser.computer,
+        login: storeUser.login,
       },
       timeout: 10000,
       responseType: 'json',
@@ -206,15 +208,12 @@ const dialogSave = () => {
 
     api({
       method: 'post',
-      url: storeGlobal.getAjaxUri('vico/edit'),
+      url: storeGlobal.getAjaxUri('vico/update'),
       data: {
         id: storeMain.selectId,
         vico: vicoEdit,
-        user: {
-          computer: storeUser.computer,
-          login: storeUser.login,
-          role: storeUser.role,
-        },
+        computer: storeUser.computer,
+        login: storeUser.login,
       },
       timeout: 10000,
       responseType: 'json',

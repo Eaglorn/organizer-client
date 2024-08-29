@@ -1,6 +1,6 @@
 <script setup>
 defineOptions({
-  name: 'MainVicoDialogView',
+  name: 'MainVicoDialogOne',
 })
 
 import { api } from 'boot/axios'
@@ -26,7 +26,11 @@ const dialogOpen = () => {
     api({
       method: 'post',
       url: storeGlobal.getAjaxUri('vico/one'),
-      data: { id: storeMain.selectId },
+      data: {
+        id: storeMain.selectId,
+        computer: storeUser.computer,
+        login: storeUser.login,
+      },
       timeout: 10000,
       responseType: 'json',
     })

@@ -1,6 +1,6 @@
 <script setup>
 defineOptions({
-  name: 'MainVicoDialogAdd',
+  name: 'MainVicoDialogCreate',
 })
 
 import { api } from 'boot/axios'
@@ -107,7 +107,7 @@ const dialogSave = () => {
 
     api({
       method: 'post',
-      url: storeGlobal.getAjaxUri('vico/add'),
+      url: storeGlobal.getAjaxUri('vico/create'),
       data: {
         vico: newVico,
         computer: storeUser.computer,

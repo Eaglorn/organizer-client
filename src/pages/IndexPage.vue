@@ -8,9 +8,9 @@ import { Loading, Notify } from 'quasar'
 import { ref, computed } from 'vue'
 
 import MainTable from 'components/main/Table.vue'
-import MainVicoDialogView from 'components/main/vico/dialog/View.vue'
-import MainVicoDialogAdd from 'components/main/vico/dialog/Add.vue'
-import MainVicoDialogEdit from 'components/main/vico/dialog/Edit.vue'
+import MainVicoDialogOne from 'src/components/main/vico/dialog/One.vue'
+import MainVicoDialogCreate from 'src/components/main/vico/dialog/Create.vue'
+import MainVicoDialogUpdate from 'components/main/vico/dialog/Update.vue'
 import MainVicoDialogArchive from 'components/main/vico/dialog/Archive.vue'
 import MainVicoDialogDelete from 'components/main/vico/dialog/Delete.vue'
 
@@ -22,9 +22,9 @@ const storeGlobal = useStoreGlobal()
 const storeUser = useStoreUser()
 const storeMain = useStoreMain()
 
-const mainVicoDialogView = ref(null)
-const mainVicoDialogAdd = ref(null)
-const mainVicoDialogEdit = ref(null)
+const mainVicoDialogOne = ref(null)
+const mainVicoDialogCreate = ref(null)
+const mainVicoDialogUpdate = ref(null)
 
 const mainVicoDialogArchive = ref(null)
 const mainVicoDialogDelete = ref(null)
@@ -78,9 +78,9 @@ const updateTable = () => {
 
 <template>
   <MainTable />
-  <MainVicoDialogView ref="mainVicoDialogView" />
-  <MainVicoDialogAdd ref="mainVicoDialogAdd" />
-  <MainVicoDialogEdit ref="mainVicoDialogEdit" />
+  <MainVicoDialogOne ref="mainVicoDialogOne" />
+  <MainVicoDialogCreate ref="mainVicoDialogCreate" />
+  <MainVicoDialogUpdate ref="mainVicoDialogUpdate" />
   <MainVicoDialogArchive ref="mainVicoDialogArchive" />
   <MainVicoDialogDelete ref="mainVicoDialogDelete" />
   <q-page-sticky
@@ -91,7 +91,7 @@ const updateTable = () => {
       <q-btn
         class="my-button"
         color="brown-5"
-        @click="mainVicoDialogView.dialogOpen()">
+        @click="mainVicoDialogOne.dialogOpen()">
         <i class="fa-solid fa-eye">
           <q-tooltip
             transition-show="scale"
@@ -109,7 +109,7 @@ const updateTable = () => {
         push
         class="my-button"
         color="brown-5"
-        @click="mainVicoDialogView.dialogOpen()">
+        @click="mainVicoDialogOne.dialogOpen()">
         <i class="fa-solid fa-eye">
           <q-tooltip
             transition-show="scale"
@@ -125,7 +125,7 @@ const updateTable = () => {
         push
         class="my-button"
         color="green"
-        @click="mainVicoDialogAdd.dialogOpen()">
+        @click="mainVicoDialogCreate.dialogOpen()">
         <i class="fa-solid fa-plus">
           <q-tooltip
             transition-show="scale"
@@ -141,7 +141,7 @@ const updateTable = () => {
         push
         class="my-button"
         color="orange"
-        @click="mainVicoDialogEdit.dialogOpen()">
+        @click="mainVicoDialogUpdate.dialogOpen()">
         <i class="fa-solid fa-pen">
           <q-tooltip
             transition-show="scale"

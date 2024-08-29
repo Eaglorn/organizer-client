@@ -10,9 +10,9 @@ export const useStoreGlobal = defineStore('global', {
   state: () => ({
     version: '0.1.0',
     //server: 'http://26.136.207.192:3000/',
-    server: 'http://10.27.0.243:3000/',
+    //server: 'http://10.27.0.243:3000/',
     //server: 'http://127.0.0.1:3000/',
-    //server: 'http://192.168.0.10:3000/',
+    server: 'http://192.168.0.10:3000/',
     optionObject: [],
     optionTypeVico: [],
     optionDepartament: [],
@@ -177,11 +177,11 @@ export const useStoreGlobal = defineStore('global', {
           storeMain.vicosSort()
         })
 
-        socket.on('vicoAdd', (data) => {
+        socket.on('vicoCreate', (data) => {
           storeMain.addVico(data)
         })
 
-        socket.on('vicoEdit', (data) => {
+        socket.on('vicoUpdate', (data) => {
           storeMain.setVico(data.vico)
           storeMain.vicosSort()
         })
