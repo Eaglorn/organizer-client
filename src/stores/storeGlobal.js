@@ -59,7 +59,7 @@ export const useStoreGlobal = defineStore('global', {
   }),
   getters: {
     getAjaxUri(state) {
-      return (response) => state.server + 'api/' + response
+      return (response) => state.server + response
     },
     getOptionObjectByName: (state) => {
       return (objectName) =>
@@ -119,6 +119,7 @@ export const useStoreGlobal = defineStore('global', {
           this.optionDepartament = []
 
           let i = 0
+
           data.optionObject.forEach((item) => {
             this.optionObject.push({
               label: item,
