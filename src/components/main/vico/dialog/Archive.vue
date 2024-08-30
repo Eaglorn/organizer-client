@@ -53,7 +53,6 @@ const dialogSave = () => {
     .then((response) => {
       if (response.data.success) {
         dialog.value = false
-        Loading.hide()
       } else {
         Notify.create({
           progress: true,
@@ -65,8 +64,8 @@ const dialogSave = () => {
           textColor: 'black',
           html: true,
         })
-        Loading.hide()
       }
+      Loading.hide()
     })
     .catch(function () {
       Notify.create({

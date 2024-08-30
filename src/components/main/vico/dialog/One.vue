@@ -8,9 +8,11 @@ import { ref, computed } from 'vue'
 import { Loading, Notify } from 'quasar'
 import { useStoreGlobal } from '../../../../stores/storeGlobal.js'
 import { useStoreMain } from '../../../../stores/storeMain.js'
+import { useStoreUser } from '../../../../stores/storeUser.js'
 
 const storeGlobal = useStoreGlobal()
 const storeMain = useStoreMain()
+const storeUser = useStoreUser()
 
 const dialog = ref(false)
 
