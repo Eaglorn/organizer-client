@@ -74,7 +74,7 @@ const dialogSave = () => {
       color: 'warning',
       position: 'top',
       message: 'Неправильно заполнены поля в форме',
-      icon: 'warning',
+      icon: 'fa-solid fa-triangle-exclamation',
       timeout: storeGlobal.messagesErrorTime.low,
       textColor: 'black',
     })
@@ -140,7 +140,7 @@ const dialogSave = () => {
                 '<ul>' +
                 textMessage +
                 '</ul>',
-              icon: 'warning',
+              icon: 'fa-solid fa-triangle-exclamation',
               html: true,
               timeout: storeGlobal.messagesErrorTime.high,
               textColor: 'black',
@@ -156,7 +156,7 @@ const dialogSave = () => {
             color: 'warning',
             position: 'top',
             message: '<b>' + response.data.message + '</b>',
-            icon: 'warning',
+            icon: 'fa-solid fa-triangle-exclamation',
             textColor: 'black',
             html: true,
             timeout: storeGlobal.messagesErrorTime.medium,
@@ -170,7 +170,7 @@ const dialogSave = () => {
           position: 'top',
           html: true,
           message: '<b>Нет соединения с сервером.</b>',
-          icon: 'report_problem',
+          icon: 'fa-solid fa-rectangle-xmark',
           timeout: storeGlobal.messagesErrorTime.low,
           textColor: 'black',
         })

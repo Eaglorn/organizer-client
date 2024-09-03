@@ -66,7 +66,7 @@ const onClickButtonSelect = () => {
       color: 'warning',
       position: 'top',
       message: 'Неправильно заполнены поля в форме',
-      icon: 'warning',
+      icon: 'fa-solid fa-triangle-exclamation',
       timeout: storeGlobal.messagesErrorTime.low,
       textColor: 'black',
     })
@@ -99,7 +99,7 @@ const onClickButtonSave = () => {
       color: 'warning',
       position: 'top',
       message: 'Неправильно заполнены поля в форме',
-      icon: 'warning',
+      icon: 'fa-solid fa-triangle-exclamation',
       timeout: storeGlobal.messagesErrorTime.low,
       textColor: 'black',
     })
@@ -127,7 +127,7 @@ const onClickButtonSave = () => {
             color: 'warning',
             position: 'top',
             message: '<b>' + response.data.message + '</b>',
-            icon: 'warning',
+            icon: 'fa-solid fa-triangle-exclamation',
             textColor: 'black',
             html: true,
             timeout: storeGlobal.messagesErrorTime.medium,
@@ -141,7 +141,7 @@ const onClickButtonSave = () => {
           position: 'top',
           html: true,
           message: '<b>Нет соединения с сервером.</b>',
-          icon: 'report_problem',
+          icon: 'fa-solid fa-rectangle-xmark',
           timeout: storeGlobal.messagesErrorTime.low,
           textColor: 'black',
         })
@@ -193,7 +193,7 @@ const onClickButtonTechWork = () => {
           color: 'warning',
           position: 'top',
           message: '<b>' + response.data.message + '</b>',
-          icon: 'warning',
+          icon: 'fa-solid fa-triangle-exclamation',
           textColor: 'black',
           html: true,
           timeout: storeGlobal.messagesErrorTime.medium,
@@ -207,7 +207,7 @@ const onClickButtonTechWork = () => {
         position: 'top',
         html: true,
         message: '<b>Нет соединения с сервером.</b>',
-        icon: 'report_problem',
+        icon: 'fa-solid fa-rectangle-xmark',
         timeout: storeGlobal.messagesErrorTime.low,
         textColor: 'black',
       })

@@ -64,13 +64,13 @@ const role = computed(() => storeUser.role)
         <q-space />
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <q-btn dense flat @click="minimize">
-          <i class="fa-solid fa-window-minimize fa-2x" />
+          <i class="fa-regular fa-window-minimize fa-2x" />
         </q-btn>
         <q-btn dense flat @click="toggleMaximize">
-          <i class="fa-regular fa-square fa-2x" />
+          <i class="fa-regular fa-window-maximize fa-2x" />
         </q-btn>
         <q-btn dense flat @click="closeApp">
-          <i class="fa-solid fa-xmark-large fa-2x" />
+          <i class="fa-regular fa-rectangle-xmark fa-2x" />
         </q-btn>
       </q-bar>
       <q-toolbar class="bg-primary shadow-1 shadow-up-1">

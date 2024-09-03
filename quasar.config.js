@@ -8,9 +8,9 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js
 
-const { configure } = require('quasar/wrappers')
+import { configure } from 'quasar/wrappers'
 
-module.exports = configure(function (/* ctx */) {
+export default configure((/* ctx */) => {
   return {
     eslint: {
       // fix: true,
@@ -35,24 +35,21 @@ module.exports = configure(function (/* ctx */) {
     // https://github.com/quasarframework/quasar/tree/dev/extras
     extras: [
       // 'ionicons-v4',
-      // 'mdi-v5',
-      //'fontawesome-v6',
+      // 'mdi-v7',
+      // 'fontawesome-v6',
       // 'eva-icons',
       // 'themify',
       // 'line-awesome',
       // 'roboto-font-latin-ext', // this or either 'roboto-font', NEVER both!
-
-      // optional, you are not bound to it
-      'roboto-font',
-      // optional, you are not bound to it
-      'material-icons',
+      // 'roboto-font', // optional, you are not bound to it
+      // 'material-icons', // optional, you are not bound to it
     ],
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#build
     build: {
       target: {
-        browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
-        node: 'node16',
+        browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
+        node: 'node20',
       },
 
       // available values: 'hash', 'history'
@@ -71,6 +68,7 @@ module.exports = configure(function (/* ctx */) {
       // minify: false,
       // polyfillModulePreload: true,
       // distDir
+      htmlMinifyOptions: true,
 
       // extendViteConf (viteConf) {},
       // viteVuePluginOptions: {},
@@ -82,6 +80,18 @@ module.exports = configure(function (/* ctx */) {
       minify: true,
 
       extendWebpack(cfg) {},
+
+      vitePlugins: [
+        [
+          'vite-plugin-checker',
+          {
+            eslint: {
+              lintCommand: 'eslint "./**/*.{js,mjs,cjs,vue}"',
+            },
+          },
+          { server: false },
+        ],
+      ],
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
@@ -94,6 +104,7 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
       config: {},
+      iconSet: 'fontawesome-v6-pro',
 
       // iconSet: 'material-icons', // Quasar icon set
       // Quasar language pack
@@ -152,11 +163,11 @@ module.exports = configure(function (/* ctx */) {
     // https://v2.quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
       // or 'injectManifest'
-      workboxMode: 'generateSW',
-      injectPwaMetaTags: true,
-      swFilename: 'sw.js',
-      manifestFilename: 'manifest.json',
-      useCredentialsForManifestTag: false,
+      workboxMode: 'GenerateSW',
+      // injectPwaMetaTags: true,
+      // swFilename: 'sw.js',
+      // manifestFilename: 'manifest.json',
+      // useCredentialsForManifestTag: false,
       // useFilenameHashes: true,
       // extendGenerateSWOptions (cfg) {}
       // extendInjectManifestOptions (cfg) {},
@@ -178,6 +189,9 @@ module.exports = configure(function (/* ctx */) {
     electron: {
       // extendElectronMainConf (esbuildConf)
       // extendElectronPreloadConf (esbuildConf)
+
+      // Electron preload scripts (if any) from /src-electron, WITHOUT file extension
+      preloadScripts: ['electron-preload'],
 
       // specify the debugging port to use for the Electron app when running in development mode
       inspectPort: 5858,
@@ -216,7 +230,7 @@ module.exports = configure(function (/* ctx */) {
         publish: [
           {
             provider: 'generic',
-            url: 'http://10.27.0.243:3000/update',
+            url: 'http://10.27.0.243:3001/update',
           },
         ],
       },

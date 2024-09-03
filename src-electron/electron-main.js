@@ -7,34 +7,26 @@ import {
   dialog,
   ipcMain,
   Notification,
+  screen,
 } from 'electron'
-const { autoUpdater } = require('electron-updater')
-import { initialize, enable } from '@electron/remote/main'
-import path from 'path'
-import os from 'os'
+import electronUpdater from 'electron-updater'
+const { autoUpdater } = electronUpdater
+import { initialize, enable } from '@electron/remote/main/index.js'
+import path from 'node:path'
+import os from 'node:os'
+import { fileURLToPath } from 'node:url'
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = true
 
-initialize()
-
-// needed in case process is undefined under Linux
 const platform = process.platform || os.platform()
 
-try {
-  if (platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
-    require('fs').unlinkSync(
-      path.join(app.getPath('userData'), 'DevTools Extensions')
-    )
-  }
-} catch (_) {}
+const currentDir = fileURLToPath(new URL('.', import.meta.url))
 
-app.setAppUserModelId('Органайзер')
+initialize()
 
 let mainWindow
 
 function createWindow() {
-  const { screen } = require('electron')
-
   const primaryDisplay = screen.getPrimaryDisplay()
   const { width, height } = primaryDisplay.workAreaSize
 
@@ -42,7 +34,7 @@ function createWindow() {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    icon: path.resolve(__dirname, 'icons/icon.png'), // tray icon
+    icon: path.resolve(currentDir, 'icons/icon.png'), // tray icon
     width: width,
     height: height,
     useContentSize: true,
@@ -51,15 +43,31 @@ function createWindow() {
       contextIsolation: true,
       sandbox: false,
       // More info: https://v2.quasar.dev/quasar-cli-vite/developing-electron-apps/electron-preload-script
-      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD),
+      preload: path.resolve(
+        currentDir,
+        path.join(
+          process.env.QUASAR_ELECTRON_PRELOAD_FOLDER,
+          'electron-preload' + process.env.QUASAR_ELECTRON_PRELOAD_EXTENSION
+        )
+      ),
     },
   })
+
+  if (process.env.DEV) {
+    mainWindow.loadURL(process.env.APP_URL)
+  } else {
+    mainWindow.loadFile('index.html')
+  }
 
   mainWindow.removeMenu()
 
   enable(mainWindow.webContents)
 
-  mainWindow.loadURL(process.env.APP_URL)
+  if (process.env.DEV) {
+    mainWindow.loadURL(process.env.APP_URL)
+  } else {
+    mainWindow.loadFile('index.html')
+  }
 
   if (process.env.DEBUGGING) {
     // if on DEV or Production with debug enabled
@@ -89,7 +97,7 @@ app
   .whenReady()
   .then(createWindow)
   .then(() => {
-    tray = new Tray(path.resolve(__dirname, 'icons/icon.png'))
+    tray = new Tray(path.resolve(currentDir, 'icons/icon.png'))
     tray.setToolTip('Органайзер')
     const contextMenu = Menu.buildFromTemplate([
       {

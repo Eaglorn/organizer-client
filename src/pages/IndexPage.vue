@@ -47,7 +47,7 @@ const updateTable = () => {
           color: 'negative',
           position: 'top',
           message: response.data.message,
-          icon: 'report_problem',
+          icon: 'fa-solid fa-rectangle-xmark',
           timeout: storeGlobal.messagesErrorTime.low,
         })
       } else {
@@ -68,7 +68,7 @@ const updateTable = () => {
         color: 'negative',
         position: 'top',
         message: 'Нет соединения с сервером.',
-        icon: 'report_problem',
+        icon: 'fa-solid fa-rectangle-xmark',
         timeout: storeGlobal.messagesErrorTime.medium,
       })
       Loading.hide()
@@ -91,6 +91,7 @@ const updateTable = () => {
       <q-btn
         class="my-button"
         color="brown-5"
+        text-color="grey-9"
         @click="mainVicoDialogOne.dialogOpen()">
         <i class="fa-solid fa-eye">
           <q-tooltip
@@ -109,6 +110,7 @@ const updateTable = () => {
         push
         class="my-button"
         color="brown-5"
+        text-color="grey-9"
         @click="mainVicoDialogOne.dialogOpen()">
         <i class="fa-solid fa-eye">
           <q-tooltip
@@ -125,6 +127,7 @@ const updateTable = () => {
         push
         class="my-button"
         color="green"
+        text-color="grey-9"
         @click="mainVicoDialogCreate.dialogOpen()">
         <i class="fa-solid fa-plus">
           <q-tooltip
@@ -141,6 +144,7 @@ const updateTable = () => {
         push
         class="my-button"
         color="orange"
+        text-color="grey-9"
         @click="mainVicoDialogUpdate.dialogOpen()">
         <i class="fa-solid fa-pen">
           <q-tooltip
@@ -160,7 +164,12 @@ const updateTable = () => {
     position="bottom-right"
     :offset="[18, 18]">
     <div v-show="role <= 0">
-      <q-btn push class="my-button" color="green" @click="updateTable">
+      <q-btn
+        push
+        class="my-button"
+        color="green"
+        text-color="grey-9"
+        @click="updateTable">
         <i class="fa-solid fa-arrows-rotate">
           <q-tooltip
             transition-show="scale"
@@ -174,7 +183,12 @@ const updateTable = () => {
       </q-btn>
     </div>
     <q-btn-group v-show="role > 0" push>
-      <q-btn push class="my-button" color="green" @click="updateTable">
+      <q-btn
+        push
+        class="my-button"
+        color="green"
+        text-color="grey-9"
+        @click="updateTable">
         <i class="fa-solid fa-arrows-rotate">
           <q-tooltip
             transition-show="scale"
@@ -190,6 +204,7 @@ const updateTable = () => {
         push
         class="my-button"
         color="blue"
+        text-color="grey-9"
         @click="mainVicoDialogArchive.dialogOpen()">
         <i class="fa-solid fa-box-archive">
           <q-tooltip
@@ -206,6 +221,7 @@ const updateTable = () => {
         push
         class="my-button"
         color="red"
+        text-color="grey-9"
         @click="mainVicoDialogDelete.dialogOpen()">
         <i class="fa-solid fa-trash">
           <q-tooltip
@@ -225,13 +241,12 @@ const updateTable = () => {
 <style lang="sass">
 .my-button-group
   z-index: 999
-  opacity: 0.48
+  opacity: 0.38
 
 .my-button-group:hover
   opacity: 1
 
 .my-button
-  color: black !important
   padding-left: 14px
   padding-right: 14px
   font-size: 24px

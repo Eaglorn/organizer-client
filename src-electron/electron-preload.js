@@ -28,7 +28,7 @@
  * }
  */
 
-import os from 'os'
+import os from 'node:os'
 import { contextBridge, ipcRenderer } from 'electron'
 import { BrowserWindow } from '@electron/remote'
 

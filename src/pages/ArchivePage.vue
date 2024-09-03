@@ -23,6 +23,7 @@ const archiveVicoDialogView = ref(null)
         push
         class="my-button"
         color="brown-5"
+        text-color="grey-9"
         @click="archiveVicoDialogView.dialogOpen()">
         <i class="fa-solid fa-eye">
           <q-tooltip
@@ -42,13 +43,12 @@ const archiveVicoDialogView = ref(null)
 <style lang="sass">
 .my-button-group
   z-index: 999
-  opacity: 0.85
+  opacity: 0.38
 
 .my-button-group:hover
   opacity: 1
 
 .my-button
-  color: black !important
   padding-left: 14px
   padding-right: 14px
   font-size: 22px
