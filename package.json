@@ -1,8 +1,8 @@
 {
-  "name": "organizer-client",
+  "name": "organizer-site",
   "version": "0.1.0",
-  "description": "organizer-client",
-  "productName": "organizer-client",
+  "description": "organizer-site",
+  "productName": "organizer-site",
   "author": "fns",
   "private": true,
   "scripts": {

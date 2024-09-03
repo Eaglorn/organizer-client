@@ -81,12 +81,7 @@ module.exports = configure(function (/* ctx */) {
 
       minify: true,
 
-      extendWebpack(cfg) {
-        cfg.module.rules.push({
-          test: /\.pug$/,
-          loader: 'pug-plain-loader',
-        })
-      },
+      extendWebpack(cfg) {},
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
@@ -221,7 +216,6 @@ module.exports = configure(function (/* ctx */) {
         publish: [
           {
             provider: 'generic',
-            //url: 'http://192.168.0.10:3000/update',
             url: 'http://10.27.0.243:3000/update',
           },
         ],
