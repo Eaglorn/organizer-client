@@ -150,13 +150,13 @@ if (app.isPackaged) {
 
     dialog.showMessageBox(dialogOpts).then((returnValue) => {
       if (returnValue.response === 0) {
+        setTimeout(() => {
+          autoUpdater.quitAndInstall(true, true)
+        }, 6000)
         tray.destroy()
         mainWindow.destroy()
         tray = null
         mainWindow = null
-        setTimeout(() => {
-          autoUpdater.quitAndInstall()
-        }, 3000)
       }
     })
   })

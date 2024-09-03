@@ -110,10 +110,8 @@ const onClickButtonSave = () => {
       url: storeGlobal.getAjaxUri('admin/add'),
       data: {
         login: login.value.loginFirst + login.value.loginLast,
-        user: {
-          computer: storeUser.computer,
-          login: storeUser.login,
-        },
+        computer: storeUser.computer,
+        login: storeUser.login,
       },
       timeout: 10000,
       responseType: 'json',
@@ -154,12 +152,10 @@ const onClickButtonTechWork = () => {
   buttonTechWork.value = true
   api({
     method: 'post',
-    url: storeGlobal.getAjaxUri('admin/tech/work'),
+    url: storeGlobal.getAjaxUri('admin/techWork'),
     data: {
-      user: {
-        computer: storeUser.computer,
-        login: storeUser.login,
-      },
+      computer: storeUser.computer,
+      login: storeUser.login,
       type: numberTechWork.value,
     },
     timeout: 10000,
