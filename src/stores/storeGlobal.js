@@ -9,7 +9,7 @@ import { useStoreMain } from '../stores/storeMain.js'
 export const useStoreGlobal = defineStore('global', {
   state: () => ({
     version: '0.1.0',
-    server: 'http://10.27.0.243:3000/',
+    server: 'http://192.168.0.10:3000/',
     optionObject: [],
     optionTypeVico: [],
     optionDepartament: [],
@@ -86,7 +86,7 @@ export const useStoreGlobal = defineStore('global', {
         numberingSystem: '',
       }).toSeconds()
     },
-    onSocket() {
+    async onSocket() {
       try {
         const storeUser = useStoreUser()
         const storeMain = useStoreMain()

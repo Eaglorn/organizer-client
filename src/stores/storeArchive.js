@@ -13,10 +13,10 @@ export const useStoreArchive = defineStore('archive', {
     },
   },
   actions: {
-    vicosSort() {
+    async vicosSort() {
       this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, false)
     },
-    clear() {
+    async clear() {
       this.vicos = []
       this.selectId = 0
       this.isSelect = false

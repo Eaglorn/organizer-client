@@ -230,7 +230,7 @@ export default configure((/* ctx */) => {
         publish: [
           {
             provider: 'generic',
-            url: 'http://10.27.0.243:3001/update',
+            url: 'http://192.168.0.10:3001/update',
           },
         ],
       },

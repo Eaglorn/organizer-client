@@ -13,17 +13,17 @@ export const useStoreMain = defineStore('main', {
     },
   },
   actions: {
-    vicosSort() {
+    async vicosSort() {
       this.vicos = _sort(this.vicos, (item) => item.dateTimeStart, false)
     },
-    setVico(vico) {
+    async setVico(vico) {
       this.vicos.forEach((item, index) => {
         if (vico.id === item.id) {
           this.vicos.splice(index, 1, vico)
         }
       })
     },
-    addVico(vico) {
+    async addVico(vico) {
       this.vicos.push(vico)
       this.vicosSort()
     },
