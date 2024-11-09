@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@electron/remote": "^2.1.2",
-    "@quasar/extras": "^1.16.12",
+    "@quasar/extras": "^1.16.13",
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
     "@vueuse/core": "^11.2.0",
@@ -27,7 +27,7 @@
     "jschardet": "^3.1.4",
     "luxon": "^3.5.0",
     "pinia": "^2.2.6",
-    "quasar": "^2.17.1",
+    "quasar": "^2.17.2",
     "radash": "^12.1.0",
     "socket.io-client": "^4.8.1",
     "vue": "^3.5.12",
@@ -36,7 +36,7 @@
   "devDependencies": {
     "@quasar/app-vite": "^2.0.0-beta.24",
     "autoprefixer": "^10.4.20",
-    "electron": "33.0.2",
+    "electron": "33.2.0",
     "electron-builder": "^25.1.8",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
