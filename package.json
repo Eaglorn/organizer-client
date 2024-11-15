@@ -30,7 +30,7 @@
     "quasar": "^2.17.2",
     "radash": "^12.1.0",
     "socket.io-client": "^4.8.1",
-    "vue": "^3.5.12",
+    "vue": "^3.5.13",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
@@ -38,10 +38,10 @@
     "autoprefixer": "^10.4.20",
     "electron": "33.2.0",
     "electron-builder": "^25.1.8",
-    "eslint": "^8.57.0",
+    "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-vue": "^9.30.0",
-    "postcss": "^8.4.48",
+    "eslint-plugin-vue": "^9.31.0",
+    "postcss": "^8.4.49",
     "prettier": "^3.3.3",
     "prettier-eslint": "^16.3.0",
     "vue-eslint-parser": "^9.4.3"
